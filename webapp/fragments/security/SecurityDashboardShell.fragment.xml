@@ -1,0 +1,41 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <HBox
+        class="jhahDashboardGrid"
+        renderType="Bare"
+        wrap="Wrap"
+        alignItems="Stretch"
+        width="100%"
+    >
+        <VBox class="jhahDashboardColMain" renderType="Bare" width="100%">
+            <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.StickerManagementKpis"
+                type="XML"
+            />
+            <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.ScheduledAppointments"
+                type="XML"
+            />
+            <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.IDManagement"
+                type="XML"
+            />
+        </VBox>
+        <VBox class="jhahDashboardColSide" renderType="Bare" width="100%">
+            <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.ViolationsOverview"
+                type="XML"
+            />
+            <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.coordinator.VendorManagement"
+                type="XML"
+            />
+            <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.coordinator.VisitorCategoryChart"
+                type="XML"
+            />
+        </VBox>
+    </HBox>
+</core:FragmentDefinition>

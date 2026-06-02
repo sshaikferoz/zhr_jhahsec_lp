@@ -1,0 +1,55 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+    <VBox class="jhahSection" renderType="Bare" width="100%">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
+            <HBox alignItems="Center">
+                <core:Icon src="sap-icon://calendar" class="jhahMutedText sapUiTinyMarginEnd" />
+                <Title text="Scheduled Appointments (36)" level="H5" class="jhahSectionTitle" />
+            </HBox>
+            <Link text="View more >" />
+        </HBox>
+        <f:Card class="jhahDataCard">
+            <f:content>
+                <Table
+                    items="{dashboard>/scheduledAppointments}"
+                    growing="false"
+                    class="jhahInnerTable"
+                    fixedLayout="false"
+                >
+                    <columns>
+                        <Column width="12rem"><Text text="Security Officer" /></Column>
+                        <Column><Text text="Request Type" /></Column>
+                        <Column width="11rem"><Text text="Time Slot" /></Column>
+                        <Column width="8rem" hAlign="End"><Text text="Status" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <HBox alignItems="Center">
+                                    <Avatar
+                                        displayShape="Circle"
+                                        initials="{dashboard>officerInitials}"
+                                        displaySize="XS"
+                                        class="sapUiTinyMarginEnd"
+                                        backgroundColor="Accent6"
+                                    />
+                                    <Text text="{dashboard>officerName}" />
+                                </HBox>
+                                <Text text="{dashboard>requestType}" />
+                                <Text text="{dashboard>timeSlot}" />
+                                <ObjectStatus
+                                    text="{dashboard>status}"
+                                    state="{dashboard>statusState}"
+                                    class="jhahBadgeStatus"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </f:content>
+        </f:Card>
+    </VBox>
+</core:FragmentDefinition>

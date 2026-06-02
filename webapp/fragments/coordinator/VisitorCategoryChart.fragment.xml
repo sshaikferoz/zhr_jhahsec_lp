@@ -1,0 +1,46 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+>
+    <VBox class="jhahSection" renderType="Bare">
+        <Title text="Visitor Type by Category" level="H5" class="jhahSectionTitle" />
+        <f:Card class="jhahDataCard">
+            <f:content>
+                <VBox alignItems="Center" width="100%" class="jhahChartWrap">
+                    <viz:VizFrame
+                        id="visitorCategoryChart"
+                        uiConfig="{applicationSet:'fiori'}"
+                        vizType="donut"
+                        width="500px"
+                        height="300px"
+                    >
+                        <viz:dataset>
+                            <viz.data:FlattenedDataset data="{dashboard>/visitorChart/data}">
+                                <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition
+                                        name="Category"
+                                        value="{dashboard>Category}"
+                                    />
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    <viz.data:MeasureDefinition
+                                        name="Count"
+                                        value="{dashboard>Count}"
+                                    />
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem uid="size" type="Measure" values="Count" />
+                            <viz.feeds:FeedItem uid="color" type="Dimension" values="Category" />
+                        </viz:feeds>
+                    </viz:VizFrame>
+                </VBox>
+            </f:content>
+        </f:Card>
+    </VBox>
+</core:FragmentDefinition>

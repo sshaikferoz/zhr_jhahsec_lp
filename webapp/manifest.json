@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:basic",
       "version": "1.25.0",
-      "toolsId": "70531e54-f8ae-4b70-8548-91b944f05c34"
+      "toolsId": "b5e329c0-8a01-4a65-bea8-39c3403452d2"
     },
     "dataSources": {
       "mainService": {
@@ -49,7 +49,11 @@
       "minUI5Version": "1.120.39",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.ui.layout": {},
+        "sap.tnt": {},
+        "sap.f": {},
+        "sap.viz": {}
       }
     },
     "contentDensities": {

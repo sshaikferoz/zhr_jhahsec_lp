@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+    <f:Card class="jhahKpiCard {dashboard>accent}">
+        <f:content>
+            <VBox class="jhahKpiCardInner" renderType="Bare">
+                <Title text="{dashboard>title}" level="H6" class="jhahKpiTitle" />
+                <ObjectNumber
+                    number="{dashboard>value}"
+                    emphasized="true"
+                    class="jhahKpiValue"
+                />
+            </VBox>
+        </f:content>
+    </f:Card>
+</core:FragmentDefinition>

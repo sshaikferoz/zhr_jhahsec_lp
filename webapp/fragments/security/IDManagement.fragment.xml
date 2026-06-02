@@ -1,0 +1,82 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+    <VBox class="jhahSection" renderType="Bare">
+        <Title text="ID Management System" level="H5" class="jhahSectionTitle" />
+        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/idKpis/0/title}" level="H6" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/idKpis/0/value}"
+                            emphasized="true"
+                            state="{dashboard>/idKpis/0/valueState}"
+                            class="jhahKpiValue"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard">
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/idKpis/1/title}" level="H6" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/idKpis/1/value}"
+                            emphasized="true"
+                            state="{dashboard>/idKpis/1/valueState}"
+                            class="jhahKpiValue"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard">
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/idKpis/2/title}" level="H6" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/idKpis/2/value}"
+                            emphasized="true"
+                            state="{dashboard>/idKpis/2/valueState}"
+                            class="jhahKpiValue"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+        </HBox>
+        <f:Card class="jhahDataCard">
+            <f:content>
+                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://id-card" class="jhahMutedText sapUiTinyMarginEnd" />
+                        <Title text="ID Card Requests (36)" level="H6" />
+                    </HBox>
+                    <Table items="{dashboard>/idRequests}" class="jhahInnerTable" fixedLayout="false">
+                        <columns>
+                            <Column><Text text="REQUEST ID" /></Column>
+                            <Column><Text text="EMPLOYEE NAME" /></Column>
+                            <Column><Text text="DEPARTMENT" /></Column>
+                            <Column hAlign="End"><Text text="STATUS" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Link text="{dashboard>requestId}" />
+                                    <Text text="{dashboard>employee}" wrapping="false" />
+                                    <Text text="{dashboard>department}" />
+                                    <ObjectStatus
+                                        text="{dashboard>status}"
+                                        state="{dashboard>statusState}"
+                                        class="jhahBadgeStatus"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </f:content>
+        </f:Card>
+    </VBox>
+</core:FragmentDefinition>

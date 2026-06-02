@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+>
+    <VBox class="jhahSideNavWrap" renderType="Bare" height="100%" justifyContent="SpaceBetween">
+        <VBox renderType="Bare">
+            <VBox class="jhahBrandArea" renderType="Bare" justifyContent="Start">
+                <HBox class="jhahBrand" alignItems="Center" justifyContent="SpaceBetween">
+                    <HBox alignItems="Center">
+                        <Image
+                            src="assets/logo.png"
+                            alt="JHAH Logo"
+                            densityAware="false"
+                            class="jhahBrandLogo"
+                        />
+                        <VBox class="sapUiTinyMarginBegin" renderType="Bare">
+                            <Title text="JHAH" level="H4" class="jhahBrandTitle" />
+                            <Text text="Security Application" class="jhahBrandSub" />
+                        </VBox>
+                    </HBox>
+                   
+                </HBox>
+            </VBox>
+            <tnt:SideNavigation
+                expanded="true"
+                class="jhahSideNav"
+                selectedKey="{dashboard>/selectedNavKey}"
+                itemSelect=".onNavItemSelect"
+            >
+                <tnt:item>
+                    <tnt:NavigationList items="{dashboard>/navItems}">
+                        <tnt:NavigationListItem
+                            key="{dashboard>key}"
+                            text="{dashboard>title}"
+                            icon="{dashboard>icon}"
+                        />
+                    </tnt:NavigationList>
+                </tnt:item>
+            </tnt:SideNavigation>
+        </VBox>
+        <VBox class="jhahSideNavFooter" renderType="Bare">
+            <VBox class="jhahSidebarPatternBanner" renderType="Bare">
+                <Image src="assets/Pattern.png" alt="" densityAware="false" class="jhahSidebarPattern" />
+            </VBox>
+            <VBox class="jhahSidebarMetaCard">
+                <Label text="Position" class="jhahSidebarLabel" />
+                <Text text="{dashboard>/user/position}" class="jhahSidebarValue" />
+                <Text text="ID: {dashboard>/user/id}" class="jhahSidebarValue sapUiTinyMarginTop" />
+            </VBox>
+            <VBox class="jhahSidebarProfileCard">
+                <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                    <Avatar
+                        displayShape="Circle"
+                        initials="{dashboard>/user/initials}"
+                        displaySize="M"
+                        backgroundColor="Accent6"
+                    />
+                    <VBox class="sapUiTinyMarginBegin" renderType="Bare">
+                        <Text text="{dashboard>/user/name}" class="jhahSidebarName" />
+                        <Text text="{dashboard>/user/role}" class="jhahSidebarRole" />
+                    </VBox>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                    <Label text="Badge No." class="jhahSidebarLabel" />
+                    <Text text="{dashboard>/user/badgeNo}" class="jhahSidebarValue" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Department" class="jhahSidebarLabel" />
+                    <Text text="{dashboard>/user/department}" class="jhahSidebarValue" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

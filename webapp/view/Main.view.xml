@@ -1,6 +1,38 @@
-<mvc:View controllerName="com.jhah.zhrjhahseclp.controller.Main"
+<mvc:View
+    controllerName="com.jhah.zhrjhahseclp.controller.Main"
+    xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-    </Page>
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    height="100%"
+>
+    <HBox class="jhahAppShell" renderType="Bare" fitContainer="true" height="100%">
+        <core:Fragment
+            fragmentName="com.jhah.zhrjhahseclp.fragments.common.SideNavigation"
+            type="XML"
+        />
+        <VBox class="jhahMainColumn" renderType="Bare" height="100%" fitContainer="true">
+            <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.common.Header"
+                type="XML"
+            />
+            <ScrollContainer
+                id="mainScroll"
+                width="100%"
+                vertical="true"
+                horizontal="false"
+                class="jhahMainScroll"
+            >
+                <layoutData>
+                    <FlexItemData growFactor="1" baseSize="0%" />
+                </layoutData>
+                <VBox
+                    id="dashboardContent"
+                    class="jhahDashboardContent"
+                    renderType="Bare"
+                    width="100%"
+                />
+            </ScrollContainer>
+        </VBox>
+    </HBox>
 </mvc:View>

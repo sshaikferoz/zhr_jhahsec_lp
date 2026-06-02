@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+    <VBox class="jhahSection" renderType="Bare">
+        <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
+        <!-- Side-by-side alert KPI cards -->
+        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+            <f:Card class="jhahAlertCard jhahAlertCardError jhahHalfCard">
+                <f:content>
+                    <HBox alignItems="Start" class="jhahAlertCardInner">
+                        <VBox renderType="Bare" class="jhahAlertCardText">
+                            <Label text="Active Violations" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/violations/securityActive}"
+                                emphasized="true"
+                                class="jhahAlertNumber"
+                            />
+                            <Text
+                                text="Requires immediate disciplinary action"
+                                class="jhahMutedText"
+                            />
+                        </VBox>
+                        <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconError" />
+                    </HBox>
+                </f:content>
+            </f:Card>
+            <f:Card class="jhahAlertCard jhahAlertCardInfo jhahHalfCard">
+                <f:content>
+                    <HBox alignItems="Start" class="jhahAlertCardInner">
+                        <VBox renderType="Bare" class="jhahAlertCardText">
+                            <Label text="Year to date Violations" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/violations/securityYtd}"
+                                emphasized="true"
+                                class="jhahAlertNumber jhahAlertNumberInfo"
+                            />
+                            <Text
+                                text="Requires immediate disciplinary action"
+                                class="jhahMutedText"
+                            />
+                        </VBox>
+                        <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconInfo" />
+                    </HBox>
+                </f:content>
+            </f:Card>
+        </HBox>
+        <!-- Top 3 Violations by Category -->
+        <f:Card class="jhahDataCard">
+            <f:content>
+                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <Title
+                        text="Top 3 Violations by Category"
+                        level="H6"
+                        class="sapUiSmallMarginBottom"
+                    />
+                    <VBox class="sapUiSmallMarginBottom"  renderType="Bare">
+                        <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                            <Label text="{dashboard>/violations/categories/0/label}" />
+                            <Text text="{dashboard>/violations/categories/0/percent}%" />
+                        </HBox>
+                        <ProgressIndicator
+                            percentValue="{dashboard>/violations/categories/0/percent}"
+                            state="None"
+                            showValue="false"
+                            class="jhahTealProgress"
+                        />
+                    </VBox>
+                    <VBox class="sapUiSmallMarginBottom" renderType="Bare">
+                        <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                            <Label text="{dashboard>/violations/categories/1/label}" />
+                            <Text text="{dashboard>/violations/categories/1/percent}%" />
+                        </HBox>
+                        <ProgressIndicator
+                            percentValue="{dashboard>/violations/categories/1/percent}"
+                            state="None"
+                            showValue="false"
+                            class="jhahTealProgress"
+                        />
+                    </VBox>
+                    <VBox renderType="Bare">
+                        <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                            <Label text="{dashboard>/violations/categories/2/label}" />
+                            <Text text="{dashboard>/violations/categories/2/percent}%" />
+                        </HBox>
+                        <ProgressIndicator
+                            percentValue="{dashboard>/violations/categories/2/percent}"
+                            state="None"
+                            showValue="false"
+                            class="jhahTealProgress"
+                        />
+                    </VBox>
+                </VBox>
+            </f:content>
+        </f:Card>
+    </VBox>
+</core:FragmentDefinition>

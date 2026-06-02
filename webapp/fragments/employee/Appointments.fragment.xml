@@ -1,0 +1,44 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+    <VBox class="jhahSection" renderType="Bare">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
+            <Title text="Upcoming Appointments" level="H5" class="jhahSectionTitle" />
+            <Link text="View Calendar" />
+        </HBox>
+        <f:Card class="jhahDataCard">
+            <f:content>
+                <List
+                    items="{dashboard>/appointments}"
+                    showSeparators="Inner"
+                    class="jhahAppointmentList"
+                >
+                    <CustomListItem class="jhahAppointmentItem">
+                        <HBox alignItems="Center" width="100%">
+                            <VBox
+                                class="jhahDateBadge"
+                                renderType="Bare"
+                                alignItems="Center"
+                                justifyContent="Center"
+                            >
+                                <Title text="{dashboard>day}" level="H4" />
+                                <Text text="{dashboard>month}" />
+                            </VBox>
+                            <VBox class="sapUiSmallMarginBegin jhahAppointmentDetails" renderType="Bare">
+                                <Title text="{dashboard>title}" level="H5" />
+                                <Text text="{dashboard>location}" class="jhahMutedText" />
+                                <Text text="Ref: {dashboard>ref}" class="jhahMutedText" />
+                            </VBox>
+                            <VBox renderType="Bare" class="jhahAppointmentMeta">
+                                <Text text="{dashboard>time}" class="jhahMutedText" />
+                                <ObjectStatus text="{dashboard>status}" state="Information" />
+                            </VBox>
+                        </HBox>
+                    </CustomListItem>
+                </List>
+            </f:content>
+        </f:Card>
+    </VBox>
+</core:FragmentDefinition>
