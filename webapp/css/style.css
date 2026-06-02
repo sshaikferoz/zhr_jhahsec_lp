@@ -215,8 +215,12 @@ html.jhahHtml body,
   padding: 0.65rem;
   width: calc(100% - 1.5rem);
   max-width: 14rem;
-  margin: 0 auto;
+  margin: 0 auto ;
   box-sizing: border-box;
+}
+
+.jhahSidebarProfileCard {
+  margin-bottom: 4rem;
 }
 
 .jhahSidebarLabel {

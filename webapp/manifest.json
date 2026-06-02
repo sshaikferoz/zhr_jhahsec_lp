@@ -37,6 +37,7 @@
       "tablet": "",
       "tablet@2": ""
     },
+    "fullWidth": true,
     "deviceTypes": {
       "desktop": true,
       "tablet": true,

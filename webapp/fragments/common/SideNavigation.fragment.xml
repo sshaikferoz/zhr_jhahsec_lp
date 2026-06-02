@@ -8,7 +8,7 @@
             <VBox class="jhahBrandArea" renderType="Bare" justifyContent="Start">
                 <HBox class="jhahBrand" alignItems="Center">
                     <Image
-                        src="assets/logo.svg"
+                        src="../assets/logo.png"
                         alt="JHAH Logo"
                         densityAware="false"
                         class="jhahBrandLogo"
@@ -35,7 +35,7 @@
         </VBox>
         <VBox class="jhahSideNavFooter" renderType="Bare">
             <VBox class="jhahSidebarPatternBanner" renderType="Bare">
-                <Image src="assets/Pattern.png" alt="" densityAware="false" class="jhahSidebarPattern" />
+                <Image src="../assets/Pattern.png" alt="" densityAware="false" class="jhahSidebarPattern" />
             </VBox>
             <VBox class="jhahSidebarMetaCard">
                 <Label text="Position" class="jhahSidebarLabel" />
@@ -43,7 +43,7 @@
                 <Text text="ID: {dashboard>/user/id}" class="jhahSidebarValue sapUiTinyMarginTop" />
             </VBox>
             <VBox class="jhahSidebarProfileCard">
-                <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                <HBox alignItems="Center" class="sapUiTinyMarginBottom">
                     <Avatar
                         displayShape="Circle"
                         initials="{dashboard>/user/initials}"
