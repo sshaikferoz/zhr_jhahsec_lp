@@ -64,7 +64,7 @@ html.jhahHtml body,
 
 .jhahBrand {
   width: 100%;
-  max-width: 14rem;
+  max-width: 17rem;
   margin: 0 auto;
 }
 
@@ -78,15 +78,8 @@ html.jhahHtml body,
   font-size: 0.75rem;
 }
 
-.jhahBrandLogo {
-  width: 6.75rem;
-  height: 2.75rem;
-  flex-shrink: 0;
-  background-color: rgba(255, 255, 255, 1);
-}
-
 .jhahBrandLogo img {
-  width: 100%;
+  width: 120%;
   height: 100%;
   object-fit: contain;
 }

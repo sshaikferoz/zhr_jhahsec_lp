@@ -6,20 +6,14 @@
     <VBox class="jhahSideNavWrap" renderType="Bare" height="100%" justifyContent="SpaceBetween">
         <VBox renderType="Bare">
             <VBox class="jhahBrandArea" renderType="Bare" justifyContent="Start">
-                <HBox class="jhahBrand" alignItems="Center" justifyContent="SpaceBetween">
-                    <HBox alignItems="Center">
-                        <Image
-                            src="assets/logo.png"
-                            alt="JHAH Logo"
-                            densityAware="false"
-                            class="jhahBrandLogo"
-                        />
-                        <VBox class="sapUiTinyMarginBegin" renderType="Bare">
-                            <Title text="JHAH" level="H4" class="jhahBrandTitle" />
-                            <Text text="Security Application" class="jhahBrandSub" />
-                        </VBox>
-                    </HBox>
-                   
+                <HBox class="jhahBrand" alignItems="Center">
+                    <Image
+                        src="assets/logo.svg"
+                        alt="JHAH Logo"
+                        densityAware="false"
+                        class="jhahBrandLogo"
+                    />
+            
                 </HBox>
             </VBox>
             <tnt:SideNavigation
