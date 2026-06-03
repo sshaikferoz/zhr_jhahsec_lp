@@ -19,7 +19,7 @@
             class="sapUiSmallMarginEnd"
         >
             <items>
-                <SegmentedButtonItem key="org" icon="sap-icon://org-chart"  text="Org View" />
+                <SegmentedButtonItem key="org" icon="sap-icon://group"  text="All Employees" />
                 <SegmentedButtonItem key="my"  icon="sap-icon://person-placeholder" text="My View" />
             </items>
         </SegmentedButton>
