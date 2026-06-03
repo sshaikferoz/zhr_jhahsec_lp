@@ -68,11 +68,15 @@ sap.ui.define([
             var sRole = this._getInitialRole();
             var oPersona = PERSONA_CONFIG[sRole] || PERSONA_CONFIG.EMPLOYEE;
 
+            var sAssetBase = sap.ui.require.toUrl("com/jhah/zhrjhahseclp") + "/assets/";
+
             var oDashboardModel = new JSONModel({
                 role: sRole,
                 pageTitle: oPersona.pageTitle,
                 selectedNavKey: "dashboard",
                 isEmbedFrame: false,
+                logoUrl: sAssetBase + "logo.png",
+                patternUrl: sAssetBase + "Pattern.png",
                 user: {
                     name: "Sultan Saleh",
                     role: oPersona.roleLabel,
