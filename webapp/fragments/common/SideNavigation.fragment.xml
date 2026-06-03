@@ -11,7 +11,7 @@
                         src="../assets/logo.png"
                         alt="JHAH Logo"
                         densityAware="false"
-                        class="jhahBrandLogo"
+                        width="150px"
                     />
             
                 </HBox>
