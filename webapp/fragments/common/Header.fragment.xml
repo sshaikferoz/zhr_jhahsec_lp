@@ -10,6 +10,20 @@
             class="jhahPageTitle sapUiSmallMarginBegin"
         />
         <ToolbarSpacer />
+
+        <!-- Admin / My View toggle — only visible for Security role -->
+        <SegmentedButton
+            visible="{= ${dashboard>/role} === 'SECURITY' }"
+            selectedKey="{dashboard>/viewMode}"
+            selectionChange=".onViewModeChange"
+            class="jhahViewToggle sapUiSmallMarginEnd"
+        >
+            <items>
+                <SegmentedButtonItem key="org" icon="sap-icon://org-chart"  text="Org View" />
+                <SegmentedButtonItem key="my"  icon="sap-icon://person-placeholder" text="My View" />
+            </items>
+        </SegmentedButton>
+
         <Button icon="sap-icon://bell" type="Transparent" class="jhahHeaderIcon" />
         <Button icon="sap-icon://sys-help" type="Transparent" class="jhahHeaderIcon sapUiSmallMarginEnd" />
     </Toolbar>

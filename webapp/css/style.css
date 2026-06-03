@@ -253,6 +253,24 @@ html.jhahHtml body,
   font-weight: 600;
 }
 
+/* Admin / My View toggle */
+.jhahViewToggle.sapMSegB {
+  border: 1.5px solid #1d7db5;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.jhahViewToggle .sapMSegBBtn {
+  color: #1d7db5;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.jhahViewToggle .sapMSegBBtnSel {
+  background: #1d7db5 !important;
+  color: #ffffff !important;
+}
+
 .jhahHeaderIcon {
   color: #153a54;
 }

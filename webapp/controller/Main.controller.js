@@ -80,6 +80,23 @@ sap.ui.define(
         }
       },
 
+      onViewModeChange: function (oEvent) {
+        var sKey = oEvent.getParameter("item").getKey(); // "org" | "my"
+        var bAdmin = sKey === "org";
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+
+        oDashboardModel.setProperty("/viewMode", sKey);
+        oDashboardModel.setProperty("/isAdmin", bAdmin);
+
+        // Re-fetch KPIs with the new admin flag
+        this._fetchLandingKpis(bAdmin);
+
+        // If vendor frame is currently open, reload it with the updated flag
+        if (oDashboardModel.getProperty("/isEmbedFrame")) {
+          this._loadAppInFrame("BusiVisitorAccess", "manage");
+        }
+      },
+
       _loadAppInFrame: function (sSemanticObject, sAction) {
         var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
         oDashboardModel.setProperty("/isEmbedFrame", true);
@@ -88,13 +105,19 @@ sap.ui.define(
         var oContainer = this.byId("dashboardContent");
         oContainer.destroyItems();
 
+        var bAdmin = oDashboardModel.getProperty("/isAdmin");
+
         var sUrl;
         try {
           sUrl = sap.ushell.Container.getService("CrossApplicationNavigation")
-            .hrefForExternal({ target: { semanticObject: sSemanticObject, action: sAction } });
+            .hrefForExternal({
+              target: { semanticObject: sSemanticObject, action: sAction },
+              params: { admin: bAdmin ? "true" : "false" }
+            });
         } catch (e) {
           // fallback for local development outside FLP
-          sUrl = window.location.origin + "/sap/bc/ui2/flp#" + sSemanticObject + "-" + sAction;
+          sUrl = window.location.origin + "/sap/bc/ui2/flp#" + sSemanticObject + "-" + sAction +
+                 "&admin=" + (bAdmin ? "true" : "false");
         }
 
         var sFrameId = "jhahEmbedFrame";
