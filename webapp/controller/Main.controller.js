@@ -61,8 +61,15 @@ sap.ui.define(
       },
 
       onNavItemSelect: function (oEvent) {
-        var sKey = oEvent.getParameter("item").getKey();
+        var oItem = oEvent.getParameter("listItem");
+        var sKey = oItem.getCustomData()[0].getValue();
         var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+
+        // Update selected flag on each nav item so binding reflects new state
+        var aNavItems = oDashboardModel.getProperty("/navItems");
+        aNavItems.forEach(function (oNav, i) {
+          oDashboardModel.setProperty("/navItems/" + i + "/selected", oNav.key === sKey);
+        });
         oDashboardModel.setProperty("/selectedNavKey", sKey);
 
         if (sKey === "vendor") {
