@@ -97,10 +97,53 @@ sap.ui.define(
           sUrl = window.location.origin + "/sap/bc/ui2/flp#" + sSemanticObject + "-" + sAction;
         }
 
+        var sFrameId = "jhahEmbedFrame";
+
         var oHtml = new HTML({
-          content: "<iframe src=\"" + sUrl + "\" style=\"width:100%;height:100%;min-height:calc(100vh - 3.5rem);border:none;display:block;\"></iframe>",
+          content: "<iframe id=\"" + sFrameId + "\" src=\"" + sUrl + "\" style=\"width:100%;height:100%;min-height:calc(100vh - 3.5rem);border:none;display:block;\"></iframe>",
           sanitizeContent: false,
           preferDOM: true
+        });
+
+        oHtml.attachAfterRendering(function () {
+          var oIframe = document.getElementById(sFrameId);
+          if (!oIframe) { return; }
+
+          var fnHideShell = function () {
+            try {
+              var oDoc = oIframe.contentDocument || oIframe.contentWindow.document;
+              if (!oDoc || !oDoc.body) { return; }
+
+              // Directly hide the confirmed shell header element
+              var oHeader = oDoc.querySelector("header#shell-header");
+              if (oHeader) {
+                oHeader.style.setProperty("display", "none", "important");
+              }
+
+              // Inject a persistent style so it survives re-renders
+              if (!oDoc.getElementById("jhahShellHide")) {
+                var oStyle = oDoc.createElement("style");
+                oStyle.id = "jhahShellHide";
+                oStyle.textContent =
+                  "header#shell-header { display: none !important; height: 0 !important; }" +
+                  "body, .sapUiBody, #canvas { padding-top: 0 !important; margin-top: 0 !important; }";
+                (oDoc.head || oDoc.documentElement).appendChild(oStyle);
+              }
+            } catch (e) { /* cross-origin — silent fail */ }
+          };
+
+          oIframe.addEventListener("load", function () {
+            fnHideShell();
+            // Watch for late re-renders (FLP loads shell asynchronously)
+            try {
+              var oDoc = oIframe.contentDocument || oIframe.contentWindow.document;
+              var oObserver = new MutationObserver(fnHideShell);
+              oObserver.observe(oDoc.body, { childList: true, subtree: true });
+              setTimeout(function () { oObserver.disconnect(); }, 8000);
+            } catch (e) { /* cross-origin */ }
+          });
+
+          fnHideShell(); // try immediately in case iframe was cached
         });
 
         oContainer.addItem(oHtml);
