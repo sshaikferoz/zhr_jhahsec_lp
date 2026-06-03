@@ -16,7 +16,7 @@
             visible="{= ${dashboard>/role} === 'SECURITY' }"
             selectedKey="{dashboard>/viewMode}"
             selectionChange=".onViewModeChange"
-            class="jhahViewToggle sapUiSmallMarginEnd"
+            class="sapUiSmallMarginEnd"
         >
             <items>
                 <SegmentedButtonItem key="org" icon="sap-icon://org-chart"  text="Org View" />

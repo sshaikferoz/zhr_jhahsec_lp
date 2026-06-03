@@ -114,8 +114,14 @@ html.jhahHtml body,
 
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB::before,
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB::after,
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected::before,
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected::after {
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBSelected::before,
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBSelected::after {
   display: none !important;
   content: none !important;
   border: none !important;
@@ -129,7 +135,10 @@ html.jhahHtml body,
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB:focus-visible,
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBFocused,
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBActive,
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBHoverable:hover {
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBHoverable:hover {
   outline: none !important;
   box-shadow: none !important;
   border: none !important;
@@ -172,9 +181,18 @@ html.jhahHtml body,
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected,
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected:hover,
 .jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected:focus,
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected:focus-visible,
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected.sapMLIBFocused,
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected.sapMLIBActive {
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBSelected:focus-visible,
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBSelected.sapMLIBFocused,
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBSelected.sapMLIBActive {
   background: #ffffff !important;
   background-color: #ffffff !important;
   border: none !important;
@@ -183,11 +201,19 @@ html.jhahHtml body,
   border-radius: 0.65rem !important;
 }
 
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected .jhahNavItemIcon.sapUiIcon {
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBSelected
+  .jhahNavItemIcon.sapUiIcon {
   color: #153a54 !important;
 }
 
-.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected .jhahNavItemText.sapMText {
+.jhahSideNavWrap
+  .jhahNavList
+  .sapMListItems
+  .jhahNavItem.sapMLIBSelected
+  .jhahNavItemText.sapMText {
   color: #153a54 !important;
   font-weight: 700 !important;
 }
@@ -251,24 +277,6 @@ html.jhahHtml body,
 .jhahPageTitle {
   color: #2f3b4c;
   font-weight: 600;
-}
-
-/* Admin / My View toggle */
-.jhahViewToggle.sapMSegB {
-  border: 1.5px solid #1d7db5;
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.jhahViewToggle .sapMSegBBtn {
-  color: #1d7db5;
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-.jhahViewToggle .sapMSegBBtnSel {
-  background: #1d7db5 !important;
-  color: #ffffff !important;
 }
 
 .jhahHeaderIcon {

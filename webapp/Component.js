@@ -381,7 +381,7 @@ sap.ui.define(
       },
 
       _getInitialRole: function () {
-        return "COORDINATOR";
+        return "SECURITY";
       },
     });
   },
