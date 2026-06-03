@@ -28,7 +28,7 @@ html.jhahHtml body,
 /* ── App Shell ───────────────────────────────────────────── */
 .jhahAppShell {
   height: 100%;
-  min-height: 100vh;
+  max-height: 100%;
   width: 100%;
   box-sizing: border-box;
 }
@@ -196,7 +196,7 @@ html.jhahHtml body,
   margin-left: -0.75rem;
   margin-right: -0.75rem;
   overflow: hidden;
-  height: 14rem;
+  height: 9rem;
 }
 
 .jhahSidebarPatternBanner .sapMImg,
@@ -215,12 +215,8 @@ html.jhahHtml body,
   padding: 0.65rem;
   width: calc(100% - 1.5rem);
   max-width: 14rem;
-  margin: 0 auto ;
+  margin: 0 auto;
   box-sizing: border-box;
-}
-
-.jhahSidebarProfileCard {
-  margin-bottom: 4rem;
 }
 
 .jhahSidebarLabel {

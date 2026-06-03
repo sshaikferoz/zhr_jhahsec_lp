@@ -10,7 +10,7 @@
             class="jhahPageTitle sapUiSmallMarginBegin"
         />
         <ToolbarSpacer />
-        <Button icon="sap-icon://bell-notification" type="Transparent" class="jhahHeaderIcon" />
-        <Button icon="sap-icon://download-from-cloud" type="Transparent" class="jhahHeaderIcon sapUiSmallMarginEnd" />
+        <Button icon="sap-icon://bell" type="Transparent" class="jhahHeaderIcon" />
+        <Button icon="sap-icon://sys-help" type="Transparent" class="jhahHeaderIcon sapUiSmallMarginEnd" />
     </Toolbar>
 </core:FragmentDefinition>
