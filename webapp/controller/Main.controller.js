@@ -42,10 +42,19 @@ sap.ui.define(
             oDashboardModel.setProperty("/pageTitle", oPersona.pageTitle);
             oDashboardModel.setProperty("/navItems", oPersona.navItems);
             oDashboardModel.setProperty("/showVendorSection", true);
-            oDashboardModel.setProperty("/user/name", oUser.UserName || oDashboardModel.getProperty("/user/name"));
-            oDashboardModel.setProperty("/user/role", oPersona.roleLabel);
-            oDashboardModel.setProperty("/user/department", oUser.OrganizationText || oDashboardModel.getProperty("/user/department"));
-            oDashboardModel.setProperty("/user/id", oUser.Pernr || oDashboardModel.getProperty("/user/id"));
+            var sName = oUser.UserName || oDashboardModel.getProperty("/user/name");
+            var sInitials = sName.split(" ").map(function(w){ return w[0]; }).join("").substring(0,2).toUpperCase();
+            oDashboardModel.setProperty("/user/name",         sName);
+            oDashboardModel.setProperty("/user/initials",     sInitials);
+            oDashboardModel.setProperty("/user/role",         oPersona.roleLabel);
+            oDashboardModel.setProperty("/user/position",     oUser.PostionText   || oDashboardModel.getProperty("/user/position"));
+            oDashboardModel.setProperty("/user/id",           oUser.Pernr         || oDashboardModel.getProperty("/user/id"));
+            oDashboardModel.setProperty("/user/loginId",      oUser.Usrid         || oDashboardModel.getProperty("/user/loginId"));
+            oDashboardModel.setProperty("/user/badgeNo",      oUser.UserPosition  || oDashboardModel.getProperty("/user/badgeNo"));
+            oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID   || oDashboardModel.getProperty("/user/governmentId"));
+            oDashboardModel.setProperty("/user/department",   oUser.OrganizationText || oDashboardModel.getProperty("/user/department"));
+            oDashboardModel.setProperty("/user/bloodGroup",   oUser.BloodGroup    || oDashboardModel.getProperty("/user/bloodGroup"));
+            oDashboardModel.setProperty("/user/email",        oUser.EMail         || oDashboardModel.getProperty("/user/email"));
           }
           this._loadDashboardForRole(sRole);
           this._fetchLandingKpis(bAdmin);

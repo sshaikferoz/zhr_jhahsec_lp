@@ -4,7 +4,7 @@
     xmlns:f="sap.f"
 >
     <VBox class="jhahSection" renderType="Bare">
-        <Title text="Vendor Management" level="H5" class="jhahSectionTitle" />
+        <Title text="Business Visitor Access" level="H5" class="jhahSectionTitle" />
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
             <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
                 <f:content>

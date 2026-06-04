@@ -10,7 +10,7 @@
                         src="{dashboard>/logoUrl}"
                         alt="JHAH Logo"
                         densityAware="false"
-                        width="150px"
+                        width="220px"
                     />
                 </HBox>
             </VBox>
@@ -37,35 +37,62 @@
             </List>
         </VBox>
         <VBox class="jhahSideNavFooter" renderType="Bare">
-            <VBox class="jhahSidebarPatternBanner" renderType="Bare">
-                <Image src="{dashboard>/patternUrl}" alt="" densityAware="false" class="jhahSidebarPattern" />
-            </VBox>
-            <VBox class="jhahSidebarMetaCard">
-                <Label text="Position" class="jhahSidebarLabel" />
-                <Text text="{dashboard>/user/position}" class="jhahSidebarValue" />
-                <Text text="ID: {dashboard>/user/id}" class="jhahSidebarValue sapUiTinyMarginTop" />
-            </VBox>
-            <VBox class="jhahSidebarProfileCard">
-                <HBox alignItems="Center" class="sapUiTinyMarginBottom">
+            <!-- Pattern banner sits visibly between nav items and profile card -->
+            <Image src="{dashboard>/patternUrl}" alt="" densityAware="false" class="jhahFooterPattern" />
+
+            <VBox class="jhahSidebarUserCard" renderType="Bare">
+
+                <!-- Avatar + Name + Role -->
+                <HBox alignItems="Center" class="jhahUserCardHeader" renderType="Bare">
                     <Avatar
                         displayShape="Circle"
                         initials="{dashboard>/user/initials}"
-                        displaySize="M"
+                        displaySize="S"
                         backgroundColor="Accent6"
+                        class="jhahUserAvatar"
                     />
-                    <VBox class="sapUiTinyMarginBegin" renderType="Bare">
+                    <VBox renderType="Bare" class="jhahUserCardNameWrap">
                         <Text text="{dashboard>/user/name}" class="jhahSidebarName" />
-                        <Text text="{dashboard>/user/role}" class="jhahSidebarRole" />
+                        <Text text="{dashboard>/user/role}" class="jhahSidebarRole jhahSidebarSub" />
                     </VBox>
                 </HBox>
-                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
-                    <Label text="Badge No." class="jhahSidebarLabel" />
-                    <Text text="{dashboard>/user/badgeNo}" class="jhahSidebarValue" />
+
+                <VBox class="jhahUserCardDivider" renderType="Bare" />
+
+                <!-- Field rows in same sequence as ObjectHeader -->
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="JHAH ID" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/id}" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
-                <HBox justifyContent="SpaceBetween">
-                    <Label text="Department" class="jhahSidebarLabel" />
-                    <Text text="{dashboard>/user/department}" class="jhahSidebarValue" />
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Login ID" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/loginId}" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Badge No." class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/badgeNo}" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Gov. ID" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/governmentId}" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Organization" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/department}" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Position" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/position}" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Blood Group" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/bloodGroup}" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow jhahUserCardRowLast" renderType="Bare">
+                    <Label text="E-Mail" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/email}" class="jhahSidebarValue jhahUserCardVal jhahUserCardEmail" />
+                </HBox>
+
             </VBox>
         </VBox>
     </VBox>

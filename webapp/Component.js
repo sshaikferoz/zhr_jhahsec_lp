@@ -47,7 +47,7 @@ sap.ui.define(
           },
           {
             key: "vendor",
-            title: "Vendor Management",
+            title: "Business Visitor Access",
             icon: "sap-icon://supplier",
           },
           {
@@ -80,7 +80,7 @@ sap.ui.define(
           },
           {
             key: "vendor",
-            title: "Vendor Management",
+            title: "Business Visitor Access",
             icon: "sap-icon://supplier",
           },
           {
@@ -112,7 +112,7 @@ sap.ui.define(
           },
           {
             key: "vendor",
-            title: "Vendor Management",
+            title: "Business Visitor Access",
             icon: "sap-icon://supplier",
           },
           {
@@ -165,8 +165,13 @@ sap.ui.define(
             role: oPersona.roleLabel,
             position: "Internal Staffing Div",
             id: "8966570041",
+            loginId: "ssaleh",
             badgeNo: "005005IT1502/JHV",
+            governmentId: "1234567890",
             department: oPersona.department || "CDIP",
+            dob: "15/04/1985",
+            bloodGroup: "O+",
+            email: "sultan.saleh@jhah.com",
             initials: "SS",
           },
           navItems: oPersona.navItems,

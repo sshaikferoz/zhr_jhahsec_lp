@@ -218,40 +218,108 @@ html.jhahHtml body,
   font-weight: 700 !important;
 }
 
-/* Sidebar footer cards */
+/* Sidebar footer — pattern banner visible between nav and profile card */
 .jhahSideNavFooter {
-  gap: 0.65rem;
-  padding: 0.75rem;
+  padding: 0 0 0.75rem 0;
   width: 100%;
   box-sizing: border-box;
+  flex-shrink: 0;
+  gap: 0;
 }
 
-.jhahSidebarPatternBanner {
-  width: calc(100% + 1.5rem);
-  margin-left: -0.75rem;
-  margin-right: -0.75rem;
-  overflow: hidden;
-  height: 9rem;
+/* Pattern — normal flow, full-width banner between nav and card */
+.jhahFooterPattern {
+  width: calc(100% + 0px) !important;
+  height: 8rem !important;
+  display: block !important;
+  flex-shrink: 0;
 }
 
-.jhahSidebarPatternBanner .sapMImg,
-.jhahSidebarPatternBanner img {
+.jhahFooterPattern .sapMImg,
+.jhahFooterPattern img {
   width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-  display: block;
+
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
 }
 
-.jhahSidebarMetaCard,
-.jhahSidebarProfileCard {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+/* ── Unified User Card ───────────────────────────────────── */
+.jhahSidebarUserCard {
+  margin: 0 0.75rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.65rem;
-  padding: 0.65rem;
-  width: calc(100% - 1.5rem);
-  max-width: 14rem;
-  margin: 0 auto;
+  padding: 0.65rem 0.75rem;
   box-sizing: border-box;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Avatar + name row */
+.jhahUserCardHeader {
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+
+.jhahUserAvatar.sapFAvatar {
+  flex-shrink: 0;
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.jhahUserCardNameWrap {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Thin separator line */
+.jhahUserCardDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+  margin-bottom: 0.45rem;
+  width: 100%;
+}
+
+/* Field rows */
+.jhahUserCardRow {
+  margin-bottom: 0.3rem;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+.jhahUserCardRowLast {
+  margin-bottom: 0;
+}
+
+.jhahUserCardLabel.sapMLbl {
+  color: #a8cde0 !important;
+  font-size: 0.7rem !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.jhahUserCardVal.sapMText {
+  color: #ffffff !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  text-align: right;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+.jhahUserCardEmail.sapMText {
+  font-size: 0.67rem !important;
+  word-break: break-all;
+}
+
+.jhahSidebarSub.sapMText {
+  font-size: 0.72rem !important;
+  opacity: 0.8;
 }
 
 .jhahSidebarLabel {
