@@ -136,7 +136,7 @@ sap.ui.define(
         var sFrameId = "jhahEmbedFrame";
 
         var oHtml = new HTML({
-          content: "<iframe id=\"" + sFrameId + "\" src=\"" + sUrl + "\" style=\"width:100%;height:100%;min-height:calc(100vh - 3.5rem);border:none;display:block;\"></iframe>",
+          content: "<iframe id=\"" + sFrameId + "\" src=\"" + sUrl + "\" style=\"width:100%;height:calc(100vh - 6.25rem);min-height:calc(100vh - 6.25rem);border:none;display:block;\"></iframe>",
           sanitizeContent: false,
           preferDOM: true
         });

@@ -338,13 +338,16 @@ html.jhahHtml body,
 
 /* ── Embed Title Bar ─────────────────────────────────────── */
 .jhahEmbedTitleBar {
-  padding: 0.6rem 1.25rem;
+  padding: 0.65rem 1.25rem;
   background: #ffffff;
-  border-bottom: 1px solid #e8edf2;
+  border-bottom: 2px solid #e8edf2;
   gap: 0.5rem;
   flex-shrink: 0;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .jhahEmbedTitleIcon.sapUiIcon {
