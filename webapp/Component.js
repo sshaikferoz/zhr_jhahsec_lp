@@ -156,6 +156,7 @@ sap.ui.define(
           pageTitle: oPersona.pageTitle,
           selectedNavKey: "dashboard",
           isEmbedFrame: false,
+          embedTitle: "",
           viewMode: "org", // "org" = admin/full-org view, "my" = personal view
           isAdmin: true, // Security role starts in admin (org) mode
           logoUrl: sAssetBase + "logo.png",

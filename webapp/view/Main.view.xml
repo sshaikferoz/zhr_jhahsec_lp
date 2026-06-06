@@ -16,6 +16,17 @@
                 fragmentName="com.jhah.zhrjhahseclp.fragments.common.Header"
                 type="XML"
             />
+            <!-- Embed title bar — shows selected menu title above the iframe -->
+            <HBox
+                visible="{dashboard>/isEmbedFrame}"
+                alignItems="Center"
+                class="jhahEmbedTitleBar"
+                renderType="Bare"
+            >
+                <core:Icon src="sap-icon://slim-arrow-right" class="jhahEmbedTitleIcon" />
+                <Title text="{dashboard>/embedTitle}" level="H5" class="jhahEmbedTitle" />
+            </HBox>
+
             <ScrollContainer
                 id="mainScroll"
                 width="100%"

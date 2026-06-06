@@ -76,10 +76,14 @@ sap.ui.define(
 
         // Update selected flag on each nav item so binding reflects new state
         var aNavItems = oDashboardModel.getProperty("/navItems");
+        var sTitle = "";
         aNavItems.forEach(function (oNav, i) {
-          oDashboardModel.setProperty("/navItems/" + i + "/selected", oNav.key === sKey);
+          var bSelected = oNav.key === sKey;
+          oDashboardModel.setProperty("/navItems/" + i + "/selected", bSelected);
+          if (bSelected) { sTitle = oNav.title; }
         });
         oDashboardModel.setProperty("/selectedNavKey", sKey);
+        oDashboardModel.setProperty("/embedTitle", sTitle);
 
         if (sKey === "vendor") {
           this._loadAppInFrame("BusiVisitorAccess", "manage");

@@ -336,6 +336,29 @@ html.jhahHtml body,
   font-weight: 600;
 }
 
+/* ── Embed Title Bar ─────────────────────────────────────── */
+.jhahEmbedTitleBar {
+  padding: 0.6rem 1.25rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e8edf2;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.jhahEmbedTitleIcon.sapUiIcon {
+  color: #1d7db5;
+  font-size: 0.875rem;
+}
+
+.jhahEmbedTitle.sapMTitle {
+  color: #2f3b4c !important;
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+
 /* ── Header Toolbar ──────────────────────────────────────── */
 .jhahToolHeader {
   background: #ffffff;
