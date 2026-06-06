@@ -85,6 +85,10 @@
                     <Text text="{dashboard>/user/position}" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Date of Birth" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/dob}" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Blood Group" class="jhahSidebarLabel jhahUserCardLabel" />
                     <Text text="{dashboard>/user/bloodGroup}" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>

@@ -53,6 +53,15 @@ sap.ui.define(
             oDashboardModel.setProperty("/user/badgeNo",      oUser.UserPosition  || oDashboardModel.getProperty("/user/badgeNo"));
             oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID   || oDashboardModel.getProperty("/user/governmentId"));
             oDashboardModel.setProperty("/user/department",   oUser.OrganizationText || oDashboardModel.getProperty("/user/department"));
+
+            // Format DOB from yyyyMMdd → dd/MM/yyyy
+            var sDob = oDashboardModel.getProperty("/user/dob");
+            if (oUser.DOB && oUser.DOB.length === 8) {
+              sDob = oUser.DOB.substring(6, 8) + "/" +
+                     oUser.DOB.substring(4, 6) + "/" +
+                     oUser.DOB.substring(0, 4);
+            }
+            oDashboardModel.setProperty("/user/dob",          sDob);
             oDashboardModel.setProperty("/user/bloodGroup",   oUser.BloodGroup    || oDashboardModel.getProperty("/user/bloodGroup"));
             oDashboardModel.setProperty("/user/email",        oUser.EMail         || oDashboardModel.getProperty("/user/email"));
           }
