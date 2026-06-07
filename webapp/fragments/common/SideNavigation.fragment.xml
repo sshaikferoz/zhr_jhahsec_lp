@@ -62,39 +62,39 @@
                 <!-- Field rows in same sequence as ObjectHeader -->
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="JHAH ID" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/id}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/id}" tooltip="{dashboard>/user/id}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Login ID" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/loginId}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/loginId}" tooltip="{dashboard>/user/loginId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Badge No." class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/badgeNo}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/badgeNo}" tooltip="{dashboard>/user/badgeNo}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Gov. ID" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/governmentId}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/governmentId}" tooltip="{dashboard>/user/governmentId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Organization" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/department}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/department}" tooltip="{dashboard>/user/department}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Position" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/position}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/position}" tooltip="{dashboard>/user/position}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Date of Birth" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/dob}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/dob}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Blood Group" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/bloodGroup}" class="jhahSidebarValue jhahUserCardVal" />
+                    <Text text="{dashboard>/user/bloodGroup}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow jhahUserCardRowLast" renderType="Bare">
                     <Label text="E-Mail" class="jhahSidebarLabel jhahUserCardLabel" />
-                    <Text text="{dashboard>/user/email}" class="jhahSidebarValue jhahUserCardVal jhahUserCardEmail" />
+                    <Text text="{dashboard>/user/email}" tooltip="{dashboard>/user/email}" wrapping="false" class="jhahSidebarValue jhahUserCardVal jhahUserCardEmail" />
                 </HBox>
 
             </VBox>

@@ -308,13 +308,28 @@ html.jhahHtml body,
   font-size: 0.72rem !important;
   font-weight: 500 !important;
   text-align: right;
-  word-break: break-word;
   line-height: 1.5;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Also truncate the inner span SAP renders inside the Text control */
+.jhahUserCardVal.sapMText .sapMTextMaxLine,
+.jhahUserCardVal.sapMText span {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  display: block !important;
 }
 
 .jhahUserCardEmail.sapMText {
   font-size: 0.67rem !important;
-  word-break: break-all;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .jhahSidebarSub.sapMText {

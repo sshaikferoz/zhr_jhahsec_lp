@@ -42,28 +42,30 @@ sap.ui.define(
             oDashboardModel.setProperty("/pageTitle", oPersona.pageTitle);
             oDashboardModel.setProperty("/navItems", oPersona.navItems);
             oDashboardModel.setProperty("/showVendorSection", true);
-            var sName = oUser.UserName || oDashboardModel.getProperty("/user/name");
-            var sInitials = sName.split(" ").map(function(w){ return w[0]; }).join("").substring(0,2).toUpperCase();
+            var sName = oUser.UserName || "-";
+            var sInitials = sName !== "-"
+              ? sName.split(" ").map(function(w){ return w[0]; }).join("").substring(0, 2).toUpperCase()
+              : "?";
             oDashboardModel.setProperty("/user/name",         sName);
             oDashboardModel.setProperty("/user/initials",     sInitials);
             oDashboardModel.setProperty("/user/role",         oPersona.roleLabel);
-            oDashboardModel.setProperty("/user/position",     oUser.PostionText   || oDashboardModel.getProperty("/user/position"));
-            oDashboardModel.setProperty("/user/id",           oUser.Pernr         || oDashboardModel.getProperty("/user/id"));
-            oDashboardModel.setProperty("/user/loginId",      oUser.Usrid         || oDashboardModel.getProperty("/user/loginId"));
-            oDashboardModel.setProperty("/user/badgeNo",      oUser.UserPosition  || oDashboardModel.getProperty("/user/badgeNo"));
-            oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID   || oDashboardModel.getProperty("/user/governmentId"));
-            oDashboardModel.setProperty("/user/department",   oUser.OrganizationText || oDashboardModel.getProperty("/user/department"));
+            oDashboardModel.setProperty("/user/position",     oUser.PostionText      || "-");
+            oDashboardModel.setProperty("/user/id",           oUser.Pernr            || "-");
+            oDashboardModel.setProperty("/user/loginId",      oUser.Usrid            || "-");
+            oDashboardModel.setProperty("/user/badgeNo",      oUser.UserPosition     || "-");
+            oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID      || "-");
+            oDashboardModel.setProperty("/user/department",   oUser.OrganizationText || "-");
 
-            // Format DOB from yyyyMMdd → dd/MM/yyyy
-            var sDob = oDashboardModel.getProperty("/user/dob");
+            // Format DOB from yyyyMMdd → dd/MM/yyyy, else show "-"
+            var sDob = "-";
             if (oUser.DOB && oUser.DOB.length === 8) {
               sDob = oUser.DOB.substring(6, 8) + "/" +
                      oUser.DOB.substring(4, 6) + "/" +
                      oUser.DOB.substring(0, 4);
             }
             oDashboardModel.setProperty("/user/dob",          sDob);
-            oDashboardModel.setProperty("/user/bloodGroup",   oUser.BloodGroup    || oDashboardModel.getProperty("/user/bloodGroup"));
-            oDashboardModel.setProperty("/user/email",        oUser.EMail         || oDashboardModel.getProperty("/user/email"));
+            oDashboardModel.setProperty("/user/bloodGroup",   oUser.BloodGroup || "-");
+            oDashboardModel.setProperty("/user/email",        oUser.EMail      || "-");
           }
           this._loadDashboardForRole(sRole);
           this._fetchLandingKpis(bAdmin);
