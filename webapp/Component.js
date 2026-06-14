@@ -159,8 +159,8 @@ sap.ui.define(
           embedTitle: "",
           viewMode: "org", // "org" = admin/full-org view, "my" = personal view
           isAdmin: true, // Security role starts in admin (org) mode
-          logoUrl: sAssetBase + "logo.png",
-          patternUrl: sAssetBase + "Pattern.png",
+          logoUrl: sAssetBase + "logo_new.png",
+          patternUrl: sAssetBase + "Pattern_new.png",
           user: {
             name: "-",
             role: "-",

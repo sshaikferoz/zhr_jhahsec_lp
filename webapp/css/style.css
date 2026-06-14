@@ -57,31 +57,19 @@ html.jhahHtml body,
 }
 
 .jhahBrandArea {
-  padding: 1rem 0.75rem 0.5rem;
+  padding: 0;
   width: 100%;
   box-sizing: border-box;
 }
 
-.jhahBrand {
-  width: 100%;
-  max-width: 17rem;
-  margin: 0 auto;
-}
-
-.jhahBrandTitle {
-  color: #ffffff;
-  margin: 0 !important;
-}
-
-.jhahBrandSub {
-  color: #d7e8f6;
-  font-size: 0.75rem;
-}
-
+/* Full-bleed brand banner — logo asset carries title + arc pattern + navy bg */
+.jhahBrandLogo,
+.jhahBrandLogo .sapMImg,
 .jhahBrandLogo img {
-  width: 120%;
-  height: 100%;
-  object-fit: contain;
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  object-fit: cover !important;
 }
 
 /* ── Custom Nav List (replaces tnt:SideNavigation) ──────── */
@@ -227,20 +215,23 @@ html.jhahHtml body,
   gap: 0;
 }
 
-/* Pattern — normal flow, full-width banner between nav and card */
-.jhahFooterPattern {
-  width: calc(100% + 0px) !important;
-  height: 8rem !important;
+/* Pattern watermark — fills the flexible gap from the menu down to the user card */
+.jhahMenuPattern {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
   display: block !important;
-  flex-shrink: 0;
+  align-self: stretch !important;
+  object-fit: cover !important;
+  object-position: bottom center !important;
 }
 
-.jhahFooterPattern .sapMImg,
-.jhahFooterPattern img {
+.jhahMenuPattern .sapMImg,
+.jhahMenuPattern img {
   width: 100% !important;
-
+  height: 100% !important;
   object-fit: cover !important;
-  object-position: center !important;
+  object-position: bottom center !important;
   display: block !important;
 }
 
@@ -267,6 +258,18 @@ html.jhahHtml body,
   flex-shrink: 0;
   min-width: 2rem;
   min-height: 2rem;
+}
+
+/* Solid teal avatar with white initials, matching the design */
+.jhahUserAvatar.sapFAvatar,
+.jhahUserAvatar.sapFAvatar .sapFAvatarInitialsHolder {
+  background-color: #0fb6c0 !important;
+  background-image: none !important;
+}
+
+.jhahUserAvatar.sapFAvatar .sapFAvatarInitialsHolder,
+.jhahUserAvatar.sapFAvatar .sapUiIcon {
+  color: #ffffff !important;
 }
 
 .jhahUserCardNameWrap {
@@ -296,7 +299,7 @@ html.jhahHtml body,
 }
 
 .jhahUserCardLabel.sapMLbl {
-  color: #a8cde0 !important;
+  color: #0fb6c0 !important;
   font-size: 0.7rem !important;
   white-space: nowrap;
   flex-shrink: 0;

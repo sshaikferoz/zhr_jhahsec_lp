@@ -2,17 +2,16 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
 >
-    <VBox class="jhahSideNavWrap" renderType="Bare" height="100%" justifyContent="SpaceBetween">
+    <VBox class="jhahSideNavWrap" renderType="Bare" height="100%" justifyContent="Start">
         <VBox renderType="Bare">
             <VBox class="jhahBrandArea" renderType="Bare" justifyContent="Start">
-                <HBox class="jhahBrand" alignItems="Center">
-                    <Image
-                        src="{dashboard>/logoUrl}"
-                        alt="JHAH Logo"
-                        densityAware="false"
-                        width="220px"
-                    />
-                </HBox>
+                <Image
+                    src="{dashboard>/logoUrl}"
+                    alt="Security Management System"
+                    densityAware="false"
+                    class="jhahBrandLogo"
+                    width="100%"
+                />
             </VBox>
             <List
                 items="{dashboard>/navItems}"
@@ -36,9 +35,11 @@
                 </CustomListItem>
             </List>
         </VBox>
+
+        <!-- Pattern fills the gap from the end of the menu down to the user card -->
+        <Image src="{dashboard>/patternUrl}" alt="" densityAware="false" class="jhahMenuPattern" />
+
         <VBox class="jhahSideNavFooter" renderType="Bare">
-            <!-- Pattern banner sits visibly between nav items and profile card -->
-            <Image src="{dashboard>/patternUrl}" alt="" densityAware="false" class="jhahFooterPattern" />
 
             <VBox class="jhahSidebarUserCard" renderType="Bare">
 
