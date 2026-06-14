@@ -362,24 +362,24 @@ html.jhahHtml body,
 /* ── Embed Title Bar ─────────────────────────────────────── */
 .jhahEmbedTitleBar {
   padding: 1rem 1rem;
-  background: #ffffff;
-  border-bottom: 2px solid #e8edf2;
+  background: linear-gradient(135deg, #21b4e8 0%, #10bbbe 60%);
+  border-bottom: none;
   gap: 0.5rem;
   flex-shrink: 0;
   width: 100%;
   box-sizing: border-box;
   position: relative;
   z-index: 10;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .jhahEmbedTitleIcon.sapUiIcon {
-  color: #1d7db5;
+  color: #173a54;
   font-size: 0.875rem;
 }
 
 .jhahEmbedTitle.sapMTitle {
-  color: #2f3b4c !important;
+  color: #173a54 !important;
   font-size: 0.9375rem !important;
   font-weight: 600 !important;
   margin: 0 !important;
