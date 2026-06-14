@@ -386,18 +386,20 @@ html.jhahHtml body,
 }
 
 /* ── Header Toolbar ──────────────────────────────────────── */
-.jhahToolHeader {
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+/* JHAH "Harmony Gradient" — Cool Blue (#21B4E8) -> Teal (#10BBBE), linear -45deg */
+.jhahToolHeader,
+.jhahToolHeader.sapMTB {
+  background: linear-gradient(135deg, #21b4e8 0%, #10bbbe 60%) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .jhahPageTitle {
-  color: #2f3b4c;
+  color: #173a54;
   font-weight: 600;
 }
 
 .jhahHeaderIcon {
-  color: #153a54;
+  color: #173a54;
 }
 
 /* ── Scroll / Content Area ───────────────────────────────── */
