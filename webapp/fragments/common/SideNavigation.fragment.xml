@@ -68,10 +68,10 @@
                     <Label text="Login ID" class="jhahSidebarLabel jhahUserCardLabel" />
                     <Text text="{dashboard>/user/loginId}" tooltip="{dashboard>/user/loginId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
-                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                <!-- <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Badge No." class="jhahSidebarLabel jhahUserCardLabel" />
                     <Text text="{dashboard>/user/badgeNo}" tooltip="{dashboard>/user/badgeNo}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
-                </HBox>
+                </HBox> -->
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Gov. ID" class="jhahSidebarLabel jhahUserCardLabel" />
                     <Text text="{dashboard>/user/governmentId}" tooltip="{dashboard>/user/governmentId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
@@ -87,6 +87,10 @@
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Date of Birth" class="jhahSidebarLabel jhahUserCardLabel" />
                     <Text text="{dashboard>/user/dob}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Gender" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/gender}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
                     <Label text="Blood Group" class="jhahSidebarLabel jhahUserCardLabel" />

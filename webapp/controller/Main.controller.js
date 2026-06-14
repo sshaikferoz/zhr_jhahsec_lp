@@ -55,6 +55,7 @@ sap.ui.define(
             oDashboardModel.setProperty("/user/badgeNo",      oUser.UserPosition     || "-");
             oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID      || "-");
             oDashboardModel.setProperty("/user/department",   oUser.OrganizationText || "-");
+            oDashboardModel.setProperty("/user/gender",   oUser.GenderDesc || "-");
 
             // Format DOB from yyyyMMdd → dd/MM/yyyy, else show "-"
             var sDob = "-";
