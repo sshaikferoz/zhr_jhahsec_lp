@@ -228,7 +228,7 @@ html.jhahHtml body,
   display: block !important;
   align-self: stretch !important;
   object-fit: contain !important;
-  object-position: bottom center !important;
+  object-position: center center !important;
 }
 
 .jhahMenuPattern .sapMImg,
@@ -236,7 +236,7 @@ html.jhahHtml body,
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
-  object-position: bottom center !important;
+  object-position: center center !important;
   display: block !important;
 }
 
