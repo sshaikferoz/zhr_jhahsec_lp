@@ -227,7 +227,7 @@ html.jhahHtml body,
   width: 100% !important;
   display: block !important;
   align-self: stretch !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: bottom center !important;
 }
 
@@ -235,7 +235,7 @@ html.jhahHtml body,
 .jhahMenuPattern img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: bottom center !important;
   display: block !important;
 }
