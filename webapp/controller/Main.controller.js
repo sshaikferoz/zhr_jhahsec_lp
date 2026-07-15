@@ -44,29 +44,29 @@ sap.ui.define(
             oDashboardModel.setProperty("/showVendorSection", true);
             var sName = oUser.UserName || "-";
             var sInitials = sName !== "-"
-              ? sName.split(" ").map(function(w){ return w[0]; }).join("").substring(0, 2).toUpperCase()
+              ? sName.split(" ").map(function (w) { return w[0]; }).join("").substring(0, 2).toUpperCase()
               : "?";
-            oDashboardModel.setProperty("/user/name",         sName);
-            oDashboardModel.setProperty("/user/initials",     sInitials);
-            oDashboardModel.setProperty("/user/role",         oPersona.roleLabel);
-            oDashboardModel.setProperty("/user/position",     oUser.PostionText      || "-");
-            oDashboardModel.setProperty("/user/id",           oUser.Pernr            || "-");
-            oDashboardModel.setProperty("/user/loginId",      oUser.Usrid            || "-");
-            oDashboardModel.setProperty("/user/badgeNo",      oUser.UserPosition     || "-");
-            oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID      || "-");
-            oDashboardModel.setProperty("/user/department",   oUser.OrganizationText || "-");
-            oDashboardModel.setProperty("/user/gender",   oUser.GenderDesc || "-");
+            oDashboardModel.setProperty("/user/name", sName);
+            oDashboardModel.setProperty("/user/initials", sInitials);
+            oDashboardModel.setProperty("/user/role", oPersona.roleLabel);
+            oDashboardModel.setProperty("/user/position", oUser.PostionText || "-");
+            oDashboardModel.setProperty("/user/id", oUser.Pernr || "-");
+            oDashboardModel.setProperty("/user/loginId", oUser.Usrid || "-");
+            oDashboardModel.setProperty("/user/badgeNo", oUser.UserPosition || "-");
+            oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID || "-");
+            oDashboardModel.setProperty("/user/department", oUser.OrganizationText || "-");
+            oDashboardModel.setProperty("/user/gender", oUser.GenderDesc || "-");
 
             // Format DOB from yyyyMMdd → dd/MM/yyyy, else show "-"
             var sDob = "-";
             if (oUser.DOB && oUser.DOB.length === 8) {
               sDob = oUser.DOB.substring(6, 8) + "/" +
-                     oUser.DOB.substring(4, 6) + "/" +
-                     oUser.DOB.substring(0, 4);
+                oUser.DOB.substring(4, 6) + "/" +
+                oUser.DOB.substring(0, 4);
             }
-            oDashboardModel.setProperty("/user/dob",          sDob);
-            oDashboardModel.setProperty("/user/bloodGroup",   oUser.BloodGroup || "-");
-            oDashboardModel.setProperty("/user/email",        oUser.EMail      || "-");
+            oDashboardModel.setProperty("/user/dob", sDob);
+            oDashboardModel.setProperty("/user/bloodGroup", oUser.BloodGroup || "-");
+            oDashboardModel.setProperty("/user/email", oUser.EMail || "-");
           }
           this._loadDashboardForRole(sRole);
           this._fetchLandingKpis(bAdmin);
@@ -99,7 +99,13 @@ sap.ui.define(
 
         if (sKey === "vendor") {
           this._loadAppInFrame("BusiVisitorAccess", "manage");
-        } else if (sKey === "dashboard") {
+        } else if (sKey === "violations") {
+          this._loadAppInFrame("TrafficViolationSystem", "manage");
+        }
+        else if (sKey === "sticker") {
+          this._loadAppInFrame("StickerMaster", "manage");
+        }
+        else if (sKey === "dashboard") {
           var sRole = oDashboardModel.getProperty("/role");
           this._loadDashboardForRole(sRole);
         }
@@ -142,7 +148,7 @@ sap.ui.define(
         } catch (e) {
           // fallback for local development outside FLP
           sUrl = window.location.origin + "/sap/bc/ui2/flp#" + sSemanticObject + "-" + sAction +
-                 "&admin=" + (bAdmin ? "true" : "false");
+            "&admin=" + (bAdmin ? "true" : "false");
         }
 
         var sFrameId = "jhahEmbedFrame";
