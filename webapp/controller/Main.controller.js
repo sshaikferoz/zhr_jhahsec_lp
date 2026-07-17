@@ -38,10 +38,17 @@ sap.ui.define(
             sRole = bAdmin ? "SECURITY" : "COORDINATOR";
 
             var oPersona = this.getOwnerComponent()._getPersonaConfig(sRole);
+            var bVarAuthorized = oUser.VARAuthorized === "X";
+
+            // Show "Business Visitor Access" (vendor) only when VARAuthorized is "X"
+            var aNavItems = oPersona.navItems.filter(function (oNav) {
+              return oNav.key !== "vendor" || bVarAuthorized;
+            });
+
             oDashboardModel.setProperty("/role", sRole);
             oDashboardModel.setProperty("/pageTitle", oPersona.pageTitle);
-            oDashboardModel.setProperty("/navItems", oPersona.navItems);
-            oDashboardModel.setProperty("/showVendorSection", true);
+            oDashboardModel.setProperty("/navItems", aNavItems);
+            oDashboardModel.setProperty("/showVendorSection", bVarAuthorized);
             var sName = oUser.UserName || "-";
             var sInitials = sName !== "-"
               ? sName.split(" ").map(function (w) { return w[0]; }).join("").substring(0, 2).toUpperCase()
