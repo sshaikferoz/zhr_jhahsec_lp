@@ -40,9 +40,17 @@ sap.ui.define(
             var oPersona = this.getOwnerComponent()._getPersonaConfig(sRole);
             var bVarAuthorized = oUser.VARAuthorized === "X";
 
-            // Show "Business Visitor Access" (vendor) only when VARAuthorized is "X"
+            // Show "Business Visitor Access" (vendor) only when VARAuthorized is "X".
+            // Show TVS (violations), Sticker Management and ID Management only for Admins.
+            var aAdminOnlyKeys = ["violations", "sticker", "id"];
             var aNavItems = oPersona.navItems.filter(function (oNav) {
-              return oNav.key !== "vendor" || bVarAuthorized;
+              if (oNav.key === "vendor") {
+                return bVarAuthorized;
+              }
+              if (aAdminOnlyKeys.indexOf(oNav.key) !== -1) {
+                return bAdmin;
+              }
+              return true;
             });
 
             oDashboardModel.setProperty("/role", sRole);
