@@ -14,16 +14,8 @@
                 <f:Card class="jhahDataCard" width="100%">
                     <f:content>
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
-                            <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
-                                <Label text="ACTIVE STICKER" class="jhahMutedText" />
-                                <ObjectStatus text="{dashboard>/sticker/status}" state="Success" icon="sap-icon://status-positive" />
-                            </HBox>
-                            <Title text="{dashboard>/sticker/plate}" level="H2" class="jhahHighlightValue" />
-                            <Text text="{dashboard>/sticker/vehicle}" class="jhahMutedText" />
-                            <HBox class="sapUiSmallMarginTop" alignItems="Center">
-                                <Label text="Expires:" class="jhahMutedText sapUiTinyMarginEnd" />
-                                <Text text="{dashboard>/sticker/expiry}" />
-                            </HBox>
+                            <Label text="ACTIVE STICKER" class="jhahMutedText" />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                     </f:content>
                 </f:Card>
@@ -38,28 +30,16 @@
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
                             <Title text="Request Status" level="H6" class="sapUiSmallMarginBottom" />
                             <Table
-                                items="{dashboard>/sticker/requests}"
                                 showSeparators="Inner"
                                 class="jhahInnerTable"
                                 fixedLayout="false"
+                                noDataText="No data available"
                             >
                                 <columns>
                                     <Column><Text text="Request No" /></Column>
                                     <Column><Text text="Expiry" /></Column>
                                     <Column hAlign="End"><Text text="Status" /></Column>
                                 </columns>
-                                <items>
-                                    <ColumnListItem>
-                                        <cells>
-                                            <Link text="{dashboard>requestNo}" />
-                                            <Text text="{dashboard>expiry}" />
-                                            <ObjectStatus
-                                                text="{dashboard>status}"
-                                                state="{dashboard>statusState}"
-                                            />
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
                             </Table>
                         </VBox>
                     </f:content>

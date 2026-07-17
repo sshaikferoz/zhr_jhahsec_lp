@@ -9,39 +9,24 @@
             <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
                 <f:content>
                     <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/stickerKpis/0/title}" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/stickerKpis/0/value}"
-                            emphasized="true"
-                            state="{dashboard>/stickerKpis/0/valueState}"
-                            class="jhahKpiValue"
-                        />
+                        <Label text="Total In Progress" class="jhahKpiTitle" />
+                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                     </VBox>
                 </f:content>
             </f:Card>
             <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard">
                 <f:content>
                     <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Title text="{dashboard>/stickerKpis/1/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/stickerKpis/1/value}"
-                            emphasized="true"
-                            state="{dashboard>/stickerKpis/1/valueState}"
-                            class="jhahKpiValue"
-                        />
+                        <Label text="Total Raised" class="jhahKpiTitle" />
+                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                     </VBox>
                 </f:content>
             </f:Card>
             <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
                 <f:content>
                     <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Title text="{dashboard>/stickerKpis/2/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/stickerKpis/2/value}"
-                            emphasized="true"
-                            state="{dashboard>/stickerKpis/2/valueState}"
-                            class="jhahKpiValue"
-                        />
+                        <Label text="Total Completed" class="jhahKpiTitle" />
+                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                     </VBox>
                 </f:content>
             </f:Card>

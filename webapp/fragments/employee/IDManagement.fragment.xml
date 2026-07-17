@@ -14,26 +14,8 @@
                 <f:Card class="jhahDataCard" width="100%">
                     <f:content>
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
-                            <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
-                                <Label text="BADGE ID" class="jhahMutedText" />
-                                <ObjectStatus text="Active" state="Success" icon="sap-icon://status-positive" />
-                            </HBox>
-                            <Title text="{dashboard>/idCard/badgeId}" level="H2" class="jhahHighlightValue" />
-                            <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginTop">
-                                <Label text="Days until Expiration" class="jhahMutedText" />
-                                <Text text="{dashboard>/idCard/daysUntilExpiry}" class="jhahHighlightValue" />
-                            </HBox>
-                            <ProgressIndicator
-                                percentValue="{dashboard>/idCard/expiryPercent}"
-                                showValue="false"
-                                state="None"
-                                class="jhahExpiryProgress"
-                                height="0.5rem"
-                            />
-                            <HBox class="sapUiTinyMarginTop" alignItems="Center">
-                                <Label text="JHAH ID:" class="jhahMutedText sapUiTinyMarginEnd" />
-                                <Text text="{dashboard>/idCard/jhahId}" />
-                            </HBox>
+                            <Label text="BADGE ID" class="jhahMutedText" />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                     </f:content>
                 </f:Card>
@@ -46,9 +28,8 @@
                 <f:Card class="jhahDataCard" width="100%">
                     <f:content>
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
-                            <Label text="IN PROGRESS REQUEST" class="jhahMutedText sapUiSmallMarginBottom" />
-                            <Title text="{dashboard>/idCard/inProgressId}" level="H4" />
-                            <Text text="{dashboard>/idCard/inProgressType}" class="jhahMutedText" />
+                            <Label text="IN PROGRESS REQUEST" class="jhahMutedText" />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                     </f:content>
                 </f:Card>

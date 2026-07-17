@@ -12,15 +12,7 @@
                     <HBox alignItems="Start" class="jhahAlertCardInner">
                         <VBox renderType="Bare" class="jhahAlertCardText">
                             <Label text="Active Violations" class="jhahKpiTitle" />
-                            <ObjectNumber
-                                number="{dashboard>/violations/active}"
-                                emphasized="true"
-                                class="jhahAlertNumber"
-                            />
-                            <Text
-                                text="Requires immediate disciplinary action"
-                                class="jhahMutedText"
-                            />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                         <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconError" />
                     </HBox>
@@ -32,15 +24,7 @@
                     <HBox alignItems="Start" class="jhahAlertCardInner">
                         <VBox renderType="Bare" class="jhahAlertCardText">
                             <Label text="Year to date Violations" class="jhahKpiTitle" />
-                            <ObjectNumber
-                                number="{dashboard>/violations/ytd}"
-                                emphasized="true"
-                                class="jhahAlertNumber jhahAlertNumberInfo"
-                            />
-                            <Text
-                                text="Requires immediate disciplinary action"
-                                class="jhahMutedText"
-                            />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                         <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconInfo" />
                     </HBox>
@@ -51,31 +35,8 @@
             <f:Card class="jhahDataCard jhahStackedCard jhahViolationsPointsCard">
                 <f:content>
                     <VBox class="jhahPairCardInner" renderType="Bare" width="100%">
-                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
-                            <Title text="Current Violations Points" level="H6" />
-                            <ObjectStatus text="2 Active" state="Error" />
-                        </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="End" class="sapUiSmallMarginBottom">
-                            <VBox renderType="Bare">
-                                <Label text="Total Points" class="jhahMutedText" />
-                                <ObjectNumber
-                                    number="{dashboard>/violations/totalPoints}"
-                                    unit="pts"
-                                    emphasized="true"
-                                    state="Error"
-                                />
-                            </VBox>
-                            <VBox renderType="Bare" class="jhahAlignEnd">
-                                <Label text="Last Violation" class="jhahMutedText" />
-                                <Text text="{dashboard>/violations/lastViolation}" />
-                            </VBox>
-                        </HBox>
-                        <MessageStrip
-                            text="{dashboard>/violations/alertMessage}"
-                            type="Error"
-                            showIcon="true"
-                            showCloseButton="false"
-                        />
+                        <Title text="Current Violations Points" level="H6" class="sapUiSmallMarginBottom" />
+                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
                     </VBox>
                 </f:content>
             </f:Card>

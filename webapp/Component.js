@@ -180,6 +180,10 @@ sap.ui.define(
             sRole === "COORDINATOR" ||
             sRole === "SECURITY" ||
             sRole === "ADMIN",
+          /* NOTE: Mock data below is temporarily unused — the Sticker, ID
+             Management, Traffic Violation and Appointments sections now render
+             a "No data available" placeholder until the real endpoints are
+             wired up. Kept for reference / re-enabling later.
           sticker: {
             plate: "RYD-8821",
             vehicle: "Toyota Land Cruiser - White",
@@ -345,6 +349,7 @@ sap.ui.define(
               statusState: "Warning",
             },
           ],
+          */
           vendorKpis: [
             {
               title: "Total Requests",

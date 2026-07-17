@@ -606,6 +606,29 @@ html.jhahHtml body,
   color: #6f7984;
 }
 
+/* ── No Data placeholder ─────────────────────────────────── */
+.jhahNoData {
+  padding: 2rem 1rem;
+  min-height: 8rem;
+  gap: 0.5rem;
+}
+
+.jhahNoDataIcon {
+  color: #b5bcc4;
+  font-size: 2.25rem;
+}
+
+.jhahNoDataText {
+  font-size: 0.875rem;
+}
+
+/* Inline "No data" value shown inside a KPI / data tile shell */
+.jhahNoDataValue {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
 /* ── Alert Cards ─────────────────────────────────────────── */
 .jhahAlertCardError {
   background: #fdecec;
