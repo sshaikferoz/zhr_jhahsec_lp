@@ -97,7 +97,9 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Version of the entry (not used)"/>
             </Annotations>
             <Annotations Target="SAP__self.ZHR_VAR_PLATE_NUMType/PlateNum">
+                <Annotation Term="SAP__common.Text" Path="PlateNumDesc"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
                 <Annotation Term="SAP__common.Label" String="Lower Value"/>
                 <Annotation Term="SAP__common.Heading" String="Fixed"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Values for Domains: Single Value/Lower Limit"/>

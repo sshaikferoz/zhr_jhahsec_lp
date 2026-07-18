@@ -112,7 +112,9 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Language-specific values for domains, upper limit"/>
             </Annotations>
             <Annotations Target="SAP__self.ZHR_VAR_MANUFACTURERType/ManufacturerValue">
+                <Annotation Term="SAP__common.Text" Path="ManufacturerDesc"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
                 <Annotation Term="SAP__common.Label" String="Lower Value"/>
                 <Annotation Term="SAP__common.Heading" String="Fixed"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Values for Domains: Single Value/Lower Limit"/>

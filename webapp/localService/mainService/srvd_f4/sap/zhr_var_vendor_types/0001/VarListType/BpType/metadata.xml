@@ -112,6 +112,7 @@
                 <Annotation Term="SAP__common.QuickInfo" String="Language-specific values for domains, upper limit"/>
             </Annotations>
             <Annotations Target="SAP__self.ZHR_VAR_VENDOR_TYPESType/VendorTypeValue">
+                <Annotation Term="SAP__common.Text" Path="VendorTypeDesc"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
                 <Annotation Term="SAP__common.Label" String="Lower Value"/>
                 <Annotation Term="SAP__common.Heading" String="Fixed"/>

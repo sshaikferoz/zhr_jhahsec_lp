@@ -115,6 +115,7 @@
             </Annotations>
             <Annotations Target="SAP__self.ZHR_VAR_VISIT_TYPEType/VisitTypeValue">
                 <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
                 <Annotation Term="SAP__common.Label" String="Lower Value"/>
                 <Annotation Term="SAP__common.Heading" String="Fixed"/>
                 <Annotation Term="SAP__common.QuickInfo" String="Values for Domains: Single Value/Lower Limit"/>

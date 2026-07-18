@@ -53,54 +53,20 @@
             <Annotation Term="SAP__core.SchemaVersion" String="1.0.0"/>
             <EntityType Name="ZHR_VAR_RAC_AREAType">
                 <Key>
-                    <PropertyRef Name="Domname"/>
-                    <PropertyRef Name="Ddlanguage"/>
-                    <PropertyRef Name="As4local"/>
-                    <PropertyRef Name="Valpos"/>
-                    <PropertyRef Name="As4vers"/>
+                    <PropertyRef Name="UUID"/>
                 </Key>
-                <Property Name="Domname" Type="Edm.String" Nullable="false" MaxLength="30"/>
-                <Property Name="Ddlanguage" Type="Edm.String" Nullable="false" MaxLength="2"/>
-                <Property Name="As4local" Type="Edm.String" Nullable="false" MaxLength="1"/>
-                <Property Name="Valpos" Type="Edm.String" Nullable="false" MaxLength="4"/>
-                <Property Name="As4vers" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="UUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="RACValue" Type="Edm.String" Nullable="false" MaxLength="4"/>
                 <Property Name="RACAreaDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="RACValue" Type="Edm.String" Nullable="false" MaxLength="10"/>
             </EntityType>
             <EntityContainer Name="Container">
                 <EntitySet Name="ZHR_VAR_RAC_AREA" EntityType="com.sap.gateway.srvd_f4.zhr_var_rac_area.v0001.ZHR_VAR_RAC_AREAType"/>
             </EntityContainer>
-            <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/Domname">
-                <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Domain name"/>
-                <Annotation Term="SAP__common.Heading" String="Domain"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/As4local">
-                <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Activation State"/>
-                <Annotation Term="SAP__common.Heading" String="Ac"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Activation State of Repository Object"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/Valpos">
-                <Annotation Term="SAP__common.IsDigitSequence"/>
-                <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Value key"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Domain value key"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/As4vers">
-                <Annotation Term="SAP__common.IsDigitSequence"/>
-                <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Version"/>
-                <Annotation Term="SAP__common.Heading" String="Vers"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Version of the entry (not used)"/>
-            </Annotations>
             <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/RACValue">
+                <Annotation Term="SAP__common.Text" Path="RACAreaDesc"/>
                 <Annotation Term="SAP__common.IsUpperCase"/>
-                <Annotation Term="SAP__common.Label" String="Lower Value"/>
-                <Annotation Term="SAP__common.Heading" String="Fixed"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Values for Domains: Single Value/Lower Limit"/>
+                <Annotation Term="SAP__common.Label" String="Location Details"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Location and RAC Area Details"/>
             </Annotations>
             <Annotations Target="SAP__ParentService.VarListType/RacArea">
                 <Annotation Term="SAP__common.ValueListMapping">
@@ -113,7 +79,8 @@
                                     <PropertyValue Property="LocalDataProperty" PropertyPath="RacArea"/>
                                     <PropertyValue Property="ValueListProperty" String="RACValue"/>
                                 </Record>
-                                <Record Type="SAP__common.ValueListParameterDisplayOnly">
+                                <Record Type="SAP__common.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="RACAreaDesc"/>
                                     <PropertyValue Property="ValueListProperty" String="RACAreaDesc"/>
                                 </Record>
                             </Collection>
@@ -212,15 +179,14 @@
                 <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
                 <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
             </Annotations>
-            <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/Ddlanguage">
+            <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/UUID">
                 <Annotation Term="SAP__UI.Hidden"/>
-                <Annotation Term="SAP__common.Label" String="Lang."/>
-                <Annotation Term="SAP__common.Heading" String="Ln"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Language Key"/>
+                <Annotation Term="SAP__common.Label" String="UUID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="16 Byte UUID in 16 Bytes (Raw Format)"/>
             </Annotations>
             <Annotations Target="SAP__self.ZHR_VAR_RAC_AREAType/RACAreaDesc">
-                <Annotation Term="SAP__common.Label" String="Short Description"/>
-                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
+                <Annotation Term="SAP__common.Label" String="Short text"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Explanatory Short Text"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>
