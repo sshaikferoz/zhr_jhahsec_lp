@@ -1,17 +1,17 @@
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/core/Fragment",
-    "sap/ui/core/HTML"
-  ],
+  ["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/ui/core/HTML"],
   function (Controller, Fragment, HTML) {
     "use strict";
 
     var SHELL_FRAGMENTS = {
-      EMPLOYEE: "com.jhah.zhrjhahseclp.fragments.employee.EmployeeDashboardShell",
-      COORDINATOR: "com.jhah.zhrjhahseclp.fragments.coordinator.CoordinatorDashboardShell",
-      SECURITY: "com.jhah.zhrjhahseclp.fragments.security.SecurityDashboardShell",
-      ADMIN: "com.jhah.zhrjhahseclp.fragments.coordinator.CoordinatorDashboardShell"
+      EMPLOYEE:
+        "com.jhah.zhrjhahseclp.fragments.employee.EmployeeDashboardShell",
+      COORDINATOR:
+        "com.jhah.zhrjhahseclp.fragments.coordinator.CoordinatorDashboardShell",
+      SECURITY:
+        "com.jhah.zhrjhahseclp.fragments.security.SecurityDashboardShell",
+      ADMIN:
+        "com.jhah.zhrjhahseclp.fragments.coordinator.CoordinatorDashboardShell",
     };
 
     return Controller.extend("com.jhah.zhrjhahseclp.controller.Main", {
@@ -29,66 +29,114 @@ sap.ui.define(
         }
 
         var oBinding = oODataModel.bindList("/EmployeeHeader");
-        oBinding.requestContexts().then(function (aContexts) {
-          var sRole = "COORDINATOR";
-          var bAdmin = false;
-          if (aContexts.length) {
-            var oUser = aContexts[0].getObject();
-            bAdmin = oUser.Admin === "X";
-            sRole = bAdmin ? "SECURITY" : "COORDINATOR";
+        oBinding
+          .requestContexts()
+          .then(
+            function (aContexts) {
+              var sRole = "COORDINATOR";
+              var bAdmin = false;
+              if (aContexts.length) {
+                var oUser = aContexts[0].getObject();
+                bAdmin = oUser.Admin === "X";
+                sRole = bAdmin ? "SECURITY" : "COORDINATOR";
 
-            var oPersona = this.getOwnerComponent()._getPersonaConfig(sRole);
-            var bVarAuthorized = oUser.VARAuthorized === "X";
+                var oPersona =
+                  this.getOwnerComponent()._getPersonaConfig(sRole);
+                var bVarAuthorized = oUser.VARAuthorized === "X";
+                var bStickerAdmin = oUser.StickerAdmin === "X";
 
-            // Show "Business Visitor Access" (vendor) only when VARAuthorized is "X".
-            // Show TVS (violations), Sticker Management and ID Management only for Admins.
-            var aAdminOnlyKeys = ["violations", "sticker", "id"];
-            var aNavItems = oPersona.navItems.filter(function (oNav) {
-              if (oNav.key === "vendor") {
-                return bVarAuthorized;
+                // Show "Business Visitor Access" (vendor) only when VARAuthorized is "X".
+                // Show Sticker Management for Admins or Sticker Admins.
+                // Show TVS (violations) and ID Management only for Admins.
+                var aAdminOnlyKeys = ["violations", "sticker", "id"];
+                var aNavItems = oPersona.navItems.filter(function (oNav) {
+                  if (oNav.key === "vendor") {
+                    return bVarAuthorized;
+                  }
+                  if (oNav.key === "sticker") {
+                    return bStickerAdmin;
+                  }
+                  if (aAdminOnlyKeys.indexOf(oNav.key) !== -1) {
+                    return bAdmin;
+                  }
+                  return true;
+                });
+
+                oDashboardModel.setProperty("/role", sRole);
+                oDashboardModel.setProperty("/pageTitle", oPersona.pageTitle);
+                oDashboardModel.setProperty("/navItems", aNavItems);
+                oDashboardModel.setProperty(
+                  "/showVendorSection",
+                  bVarAuthorized,
+                );
+                var sName = oUser.UserName || "-";
+                var sInitials =
+                  sName !== "-"
+                    ? sName
+                        .split(" ")
+                        .map(function (w) {
+                          return w[0];
+                        })
+                        .join("")
+                        .substring(0, 2)
+                        .toUpperCase()
+                    : "?";
+                oDashboardModel.setProperty("/user/name", sName);
+                oDashboardModel.setProperty("/user/initials", sInitials);
+                oDashboardModel.setProperty("/user/role", oPersona.roleLabel);
+                oDashboardModel.setProperty(
+                  "/user/position",
+                  oUser.PostionText || "-",
+                );
+                oDashboardModel.setProperty("/user/id", oUser.Pernr || "-");
+                oDashboardModel.setProperty(
+                  "/user/loginId",
+                  oUser.Usrid || "-",
+                );
+                oDashboardModel.setProperty(
+                  "/user/badgeNo",
+                  oUser.UserPosition || "-",
+                );
+                oDashboardModel.setProperty(
+                  "/user/governmentId",
+                  oUser.GovermentID || "-",
+                );
+                oDashboardModel.setProperty(
+                  "/user/department",
+                  oUser.OrganizationText || "-",
+                );
+                oDashboardModel.setProperty(
+                  "/user/gender",
+                  oUser.GenderDesc || "-",
+                );
+
+                // Format DOB from yyyyMMdd → dd/MM/yyyy, else show "-"
+                var sDob = "-";
+                if (oUser.DOB && oUser.DOB.length === 8) {
+                  sDob =
+                    oUser.DOB.substring(6, 8) +
+                    "/" +
+                    oUser.DOB.substring(4, 6) +
+                    "/" +
+                    oUser.DOB.substring(0, 4);
+                }
+                oDashboardModel.setProperty("/user/dob", sDob);
+                oDashboardModel.setProperty(
+                  "/user/bloodGroup",
+                  oUser.BloodGroup || "-",
+                );
+                oDashboardModel.setProperty("/user/email", oUser.EMail || "-");
               }
-              if (aAdminOnlyKeys.indexOf(oNav.key) !== -1) {
-                return bAdmin;
-              }
-              return true;
-            });
-
-            oDashboardModel.setProperty("/role", sRole);
-            oDashboardModel.setProperty("/pageTitle", oPersona.pageTitle);
-            oDashboardModel.setProperty("/navItems", aNavItems);
-            oDashboardModel.setProperty("/showVendorSection", bVarAuthorized);
-            var sName = oUser.UserName || "-";
-            var sInitials = sName !== "-"
-              ? sName.split(" ").map(function (w) { return w[0]; }).join("").substring(0, 2).toUpperCase()
-              : "?";
-            oDashboardModel.setProperty("/user/name", sName);
-            oDashboardModel.setProperty("/user/initials", sInitials);
-            oDashboardModel.setProperty("/user/role", oPersona.roleLabel);
-            oDashboardModel.setProperty("/user/position", oUser.PostionText || "-");
-            oDashboardModel.setProperty("/user/id", oUser.Pernr || "-");
-            oDashboardModel.setProperty("/user/loginId", oUser.Usrid || "-");
-            oDashboardModel.setProperty("/user/badgeNo", oUser.UserPosition || "-");
-            oDashboardModel.setProperty("/user/governmentId", oUser.GovermentID || "-");
-            oDashboardModel.setProperty("/user/department", oUser.OrganizationText || "-");
-            oDashboardModel.setProperty("/user/gender", oUser.GenderDesc || "-");
-
-            // Format DOB from yyyyMMdd → dd/MM/yyyy, else show "-"
-            var sDob = "-";
-            if (oUser.DOB && oUser.DOB.length === 8) {
-              sDob = oUser.DOB.substring(6, 8) + "/" +
-                oUser.DOB.substring(4, 6) + "/" +
-                oUser.DOB.substring(0, 4);
-            }
-            oDashboardModel.setProperty("/user/dob", sDob);
-            oDashboardModel.setProperty("/user/bloodGroup", oUser.BloodGroup || "-");
-            oDashboardModel.setProperty("/user/email", oUser.EMail || "-");
-          }
-          this._loadDashboardForRole(sRole);
-          this._fetchLandingKpis(bAdmin);
-        }.bind(this)).catch(function () {
-          this._loadDashboardForRole("COORDINATOR");
-          this._fetchLandingKpis(false);
-        }.bind(this));
+              this._loadDashboardForRole(sRole);
+              this._fetchLandingKpis(bAdmin);
+            }.bind(this),
+          )
+          .catch(
+            function () {
+              this._loadDashboardForRole("COORDINATOR");
+              this._fetchLandingKpis(false);
+            }.bind(this),
+          );
       },
 
       _loadDashboardForRole: function (sRole) {
@@ -106,8 +154,13 @@ sap.ui.define(
         var sTitle = "";
         aNavItems.forEach(function (oNav, i) {
           var bSelected = oNav.key === sKey;
-          oDashboardModel.setProperty("/navItems/" + i + "/selected", bSelected);
-          if (bSelected) { sTitle = oNav.title; }
+          oDashboardModel.setProperty(
+            "/navItems/" + i + "/selected",
+            bSelected,
+          );
+          if (bSelected) {
+            sTitle = oNav.title;
+          }
         });
         oDashboardModel.setProperty("/selectedNavKey", sKey);
         oDashboardModel.setProperty("/embedTitle", sTitle);
@@ -116,11 +169,9 @@ sap.ui.define(
           this._loadAppInFrame("BusiVisitorAccess", "manage");
         } else if (sKey === "violations") {
           this._loadAppInFrame("TrafficViolationSystem", "manage");
-        }
-        else if (sKey === "sticker") {
+        } else if (sKey === "sticker") {
           this._loadAppInFrame("StickerMaster", "manage");
-        }
-        else if (sKey === "dashboard") {
+        } else if (sKey === "dashboard") {
           var sRole = oDashboardModel.getProperty("/role");
           this._loadDashboardForRole(sRole);
         }
@@ -155,33 +206,50 @@ sap.ui.define(
 
         var sUrl;
         try {
-          sUrl = sap.ushell.Container.getService("CrossApplicationNavigation")
-            .hrefForExternal({
-              target: { semanticObject: sSemanticObject, action: sAction },
-              params: { admin: bAdmin ? "true" : "false" }
-            });
+          sUrl = sap.ushell.Container.getService(
+            "CrossApplicationNavigation",
+          ).hrefForExternal({
+            target: { semanticObject: sSemanticObject, action: sAction },
+            params: { admin: bAdmin ? "true" : "false" },
+          });
         } catch (e) {
           // fallback for local development outside FLP
-          sUrl = window.location.origin + "/sap/bc/ui2/flp#" + sSemanticObject + "-" + sAction +
-            "&admin=" + (bAdmin ? "true" : "false");
+          sUrl =
+            window.location.origin +
+            "/sap/bc/ui2/flp#" +
+            sSemanticObject +
+            "-" +
+            sAction +
+            "&admin=" +
+            (bAdmin ? "true" : "false");
         }
 
         var sFrameId = "jhahEmbedFrame";
 
         var oHtml = new HTML({
-          content: "<iframe id=\"" + sFrameId + "\" src=\"" + sUrl + "\" style=\"width:100%;height:calc(100vh - 6.25rem);min-height:calc(100vh - 6.25rem);border:none;display:block;\"></iframe>",
+          content:
+            '<iframe id="' +
+            sFrameId +
+            '" src="' +
+            sUrl +
+            '" style="width:100%;height:calc(100vh - 6.25rem);min-height:calc(100vh - 6.25rem);border:none;display:block;"></iframe>',
           sanitizeContent: false,
-          preferDOM: true
+          preferDOM: true,
         });
 
         oHtml.attachAfterRendering(function () {
           var oIframe = document.getElementById(sFrameId);
-          if (!oIframe) { return; }
+          if (!oIframe) {
+            return;
+          }
 
           var fnHideShell = function () {
             try {
-              var oDoc = oIframe.contentDocument || oIframe.contentWindow.document;
-              if (!oDoc || !oDoc.body) { return; }
+              var oDoc =
+                oIframe.contentDocument || oIframe.contentWindow.document;
+              if (!oDoc || !oDoc.body) {
+                return;
+              }
 
               // Directly hide the confirmed shell header element
               var oHeader = oDoc.querySelector("header#shell-header");
@@ -198,18 +266,25 @@ sap.ui.define(
                   "body, .sapUiBody, #canvas { padding-top: 0 !important; margin-top: 0 !important; }";
                 (oDoc.head || oDoc.documentElement).appendChild(oStyle);
               }
-            } catch (e) { /* cross-origin — silent fail */ }
+            } catch (e) {
+              /* cross-origin — silent fail */
+            }
           };
 
           oIframe.addEventListener("load", function () {
             fnHideShell();
             // Watch for late re-renders (FLP loads shell asynchronously)
             try {
-              var oDoc = oIframe.contentDocument || oIframe.contentWindow.document;
+              var oDoc =
+                oIframe.contentDocument || oIframe.contentWindow.document;
               var oObserver = new MutationObserver(fnHideShell);
               oObserver.observe(oDoc.body, { childList: true, subtree: true });
-              setTimeout(function () { oObserver.disconnect(); }, 8000);
-            } catch (e) { /* cross-origin */ }
+              setTimeout(function () {
+                oObserver.disconnect();
+              }, 8000);
+            } catch (e) {
+              /* cross-origin */
+            }
           });
 
           fnHideShell(); // try immediately in case iframe was cached
@@ -230,12 +305,12 @@ sap.ui.define(
           id: this.getView().getId(),
           name: sFragmentName,
           controller: this,
-          type: "XML"
+          type: "XML",
         }).then(
           function (oShell) {
             oContainer.addItem(oShell);
             this._configureVisitorChart();
-          }.bind(this)
+          }.bind(this),
         );
       },
 
@@ -258,30 +333,52 @@ sap.ui.define(
         }
         var sPath = "/LandingPageKPI(" + (bAdmin ? "true" : "false") + ")/Set";
         var oBinding = oODataModel.bindList(sPath);
-        oBinding.requestContexts().then(function (aContexts) {
-          if (!aContexts.length) {
-            return;
-          }
-          var oData = aContexts[0].getObject();
+        oBinding
+          .requestContexts()
+          .then(function (aContexts) {
+            if (!aContexts.length) {
+              return;
+            }
+            var oData = aContexts[0].getObject();
 
-          oDashboardModel.setProperty("/vendorKpis/0/value", String(oData.TotalRequests));
-          oDashboardModel.setProperty("/vendorKpis/1/value", String(oData.ApprovedRequests));
-          oDashboardModel.setProperty("/vendorKpis/2/title", "In Progress");
-          oDashboardModel.setProperty("/vendorKpis/2/value", String(oData.InProgressRequests));
+            oDashboardModel.setProperty(
+              "/vendorKpis/0/value",
+              String(oData.TotalRequests),
+            );
+            oDashboardModel.setProperty(
+              "/vendorKpis/1/value",
+              String(oData.ApprovedRequests),
+            );
+            oDashboardModel.setProperty("/vendorKpis/2/title", "In Progress");
+            oDashboardModel.setProperty(
+              "/vendorKpis/2/value",
+              String(oData.InProgressRequests),
+            );
 
-          var iTotalVisitors = (oData.totalBusinessReqs || 0) + (oData.totalTempStaffReqs || 0) +
-            (oData.totalTempJobReqs || 0) + (oData.totalProjectReqs || 0) + (oData.totalSecurityRequests || 0);
-          oDashboardModel.setProperty("/visitorChart/centerLabel", iTotalVisitors + " TODAY");
-          oDashboardModel.setProperty("/visitorChart/data", [
-            { Category: "Business", Count: oData.totalBusinessReqs || 0 },
-            { Category: "Temporary Staff Access", Count: oData.totalTempStaffReqs || 0 },
-            { Category: "Temporary Job", Count: oData.totalTempJobReqs || 0 },
-            { Category: "Project", Count: oData.totalProjectReqs || 0 },
-            { Category: "Security", Count: oData.totalSecurityRequests || 0 }
-          ]);
-        }).catch(function () {
-          // backend unreachable — static mock data remains in place
-        });
+            var iTotalVisitors =
+              (oData.totalBusinessReqs || 0) +
+              (oData.totalTempStaffReqs || 0) +
+              (oData.totalTempJobReqs || 0) +
+              (oData.totalProjectReqs || 0) +
+              (oData.totalSecurityRequests || 0);
+            oDashboardModel.setProperty(
+              "/visitorChart/centerLabel",
+              iTotalVisitors + " TODAY",
+            );
+            oDashboardModel.setProperty("/visitorChart/data", [
+              { Category: "Business", Count: oData.totalBusinessReqs || 0 },
+              {
+                Category: "Temporary Staff Access",
+                Count: oData.totalTempStaffReqs || 0,
+              },
+              { Category: "Temporary Job", Count: oData.totalTempJobReqs || 0 },
+              { Category: "Project", Count: oData.totalProjectReqs || 0 },
+              { Category: "Security", Count: oData.totalSecurityRequests || 0 },
+            ]);
+          })
+          .catch(function () {
+            // backend unreachable — static mock data remains in place
+          });
       },
 
       _configureVisitorChart: function () {
@@ -294,17 +391,23 @@ sap.ui.define(
           legend: {
             visible: true,
             position: "right",
-            layout: { maxWidth: 0.35 }
+            layout: { maxWidth: 0.35 },
           },
           plotArea: {
             dataLabel: {
               visible: true,
-              type: "value"
+              type: "value",
             },
-            colorPalette: ["#1d7db5", "#31a56e", "#d28c22", "#6d8fd7", "#9b59b6"]
-          }
+            colorPalette: [
+              "#1d7db5",
+              "#31a56e",
+              "#d28c22",
+              "#6d8fd7",
+              "#9b59b6",
+            ],
+          },
         });
-      }
+      },
     });
-  }
+  },
 );
