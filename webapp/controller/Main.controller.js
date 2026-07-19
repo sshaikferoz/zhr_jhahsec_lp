@@ -44,11 +44,14 @@ sap.ui.define(
                   this.getOwnerComponent()._getPersonaConfig(sRole);
                 var bVarAuthorized = oUser.VARAuthorized === "X";
                 var bStickerAdmin = oUser.StickerAdmin === "X";
+                var bTvsAuthorized =
+                  oUser.TVSAuthorized === true || oUser.TVSAuthorized === "X";
 
                 // Show "Business Visitor Access" (vendor) only when VARAuthorized is "X".
                 // Show Sticker Management for Admins or Sticker Admins.
-                // Show TVS (violations) and ID Management only for Admins.
-                var aAdminOnlyKeys = ["violations", "sticker", "id"];
+                // Show TVS (violations) only when TVSAuthorized.
+                // Show ID Management only for Admins.
+                var aAdminOnlyKeys = ["id"];
                 var aNavItems = oPersona.navItems.filter(function (oNav) {
                   if (oNav.key === "vendor") {
                     return bVarAuthorized;
@@ -56,6 +59,9 @@ sap.ui.define(
                   if (oNav.key === "sticker") {
                     // return bStickerAdmin;
                     return true;
+                  }
+                  if (oNav.key === "violations") {
+                    return bTvsAuthorized;
                   }
                   if (aAdminOnlyKeys.indexOf(oNav.key) !== -1) {
                     return bAdmin;
