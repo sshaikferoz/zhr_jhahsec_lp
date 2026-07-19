@@ -54,7 +54,8 @@ sap.ui.define(
                     return bVarAuthorized;
                   }
                   if (oNav.key === "sticker") {
-                    return bStickerAdmin;
+                    // return bStickerAdmin;
+                    return true;
                   }
                   if (aAdminOnlyKeys.indexOf(oNav.key) !== -1) {
                     return bAdmin;
