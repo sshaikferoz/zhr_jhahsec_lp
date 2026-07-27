@@ -71,25 +71,40 @@
                                 class="jhahActiveSticker"
                                 visible="{dashboard>/sticker/active/hasData}"
                             >
-                                <Title
-                                    text="{dashboard>/sticker/active/plate}"
-                                    level="H5"
-                                    class="jhahHighlightValue"
-                                />
-                                <Text text="{dashboard>/sticker/active/type}" class="jhahMutedText" />
-                                <Text
+                                <HBox alignItems="Center">
+                                    <Avatar
+                                        src="sap-icon://car-rental"
+                                        displaySize="S"
+                                        displayShape="Square"
+                                        backgroundColor="Accent6"
+                                        class="sapUiSmallMarginEnd"
+                                    />
+                                    <VBox renderType="Bare">
+                                        <Title
+                                            text="{dashboard>/sticker/active/plate}"
+                                            level="H5"
+                                            class="jhahHighlightValue"
+                                        />
+                                        <ObjectAttribute text="{dashboard>/sticker/active/type}" />
+                                    </VBox>
+                                </HBox>
+                                <ObjectAttribute
                                     text="{dashboard>/sticker/active/vehicle}"
-                                    class="jhahMutedText"
+                                    class="sapUiTinyMarginTop"
                                     visible="{= !!${dashboard>/sticker/active/vehicle} }"
                                 />
-                                <HBox class="sapUiTinyMarginTop" alignItems="Center" justifyContent="SpaceBetween">
+                                <HBox
+                                    class="jhahActiveStickerFooter sapUiSmallMarginTop"
+                                    alignItems="Center"
+                                    justifyContent="SpaceBetween"
+                                >
                                     <ObjectStatus
                                         text="{dashboard>/sticker/active/status}"
                                         state="{dashboard>/sticker/active/statusState}"
                                     />
-                                    <Text
-                                        text="Expires: {dashboard>/sticker/active/expiry}"
-                                        class="jhahMutedText"
+                                    <ObjectAttribute
+                                        title="Expires"
+                                        text="{dashboard>/sticker/active/expiry}"
                                     />
                                 </HBox>
                             </VBox>
@@ -115,7 +130,7 @@
                             >
                                 <columns>
                                     <Column><Text text="Request No" /></Column>
-                                    <Column><Text text="Expiry" /></Column>
+                                    <Column><Text text="Type" /></Column>
                                     <Column hAlign="End"><Text text="Status" /></Column>
                                 </columns>
                                 <items>
@@ -125,7 +140,7 @@
                                                 text="{dashboard>reqIdStr}"
                                                 press=".onStickerRequestPress"
                                             />
-                                            <Text text="{dashboard>expiry}" />
+                                            <Text text="{dashboard>stkType}" />
                                             <ObjectStatus
                                                 text="{dashboard>status}"
                                                 state="{dashboard>statusState}"

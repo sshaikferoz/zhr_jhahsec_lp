@@ -497,6 +497,7 @@ sap.ui.define(
                   return {
                     reqId: o.StkReqId,
                     reqIdStr: o.StkReqIdStr || o.StkReqId,
+                    stkType: o.StkType || "-",
                     type: o.StkTypeDesc || "-",
                     status: o.Status || "-",
                     statusState: this._stickerCriticalityState(
@@ -515,7 +516,12 @@ sap.ui.define(
                 }.bind(this),
               );
 
-              oDashboardModel.setProperty("/sticker/requests", aRequests);
+              // KPI counts reflect all of the user's requests; the table shows
+              // only the 5 most recent to keep the card compact.
+              oDashboardModel.setProperty(
+                "/sticker/requests",
+                aRequests.slice(0, 5),
+              );
               oDashboardModel.setProperty(
                 "/sticker/hasUserData",
                 aRequests.length > 0,

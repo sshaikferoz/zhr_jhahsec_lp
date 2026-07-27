@@ -604,8 +604,13 @@ html.jhahHtml body,
 
 /* Active sticker detail block inside the user Sticker Management card */
 .jhahActiveSticker {
-  gap: 0.15rem;
-  margin-top: 0.35rem;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.jhahActiveStickerFooter {
+  border-top: 1px solid #edf0f3;
+  padding-top: 0.5rem;
 }
 
 .jhahHighlightValue {
