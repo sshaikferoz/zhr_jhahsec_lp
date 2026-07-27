@@ -1,0 +1,31 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <!--
+        Sticker Management section.
+        Renders the admin KPI-card view for Sticker Admins, otherwise the
+        personal StickerMaster view. Both sub-fragments are instantiated; only
+        the one matching dashboard>/sticker/isAdmin is visible.
+    -->
+    <VBox
+        renderType="Bare"
+        width="100%"
+        visible="{dashboard>/sticker/isAdmin}"
+    >
+        <core:Fragment
+            fragmentName="com.jhah.zhrjhahseclp.fragments.security.StickerManagementKpis"
+            type="XML"
+        />
+    </VBox>
+    <VBox
+        renderType="Bare"
+        width="100%"
+        visible="{= !${dashboard>/sticker/isAdmin} }"
+    >
+        <core:Fragment
+            fragmentName="com.jhah.zhrjhahseclp.fragments.employee.StickerManagement"
+            type="XML"
+        />
+    </VBox>
+</core:FragmentDefinition>

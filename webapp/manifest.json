@@ -24,6 +24,14 @@
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "4.0"
         }
+      },
+      "stickerService": {
+        "uri": "/sap/opu/odata4/sap/zsrv_hr_stk/srvd/sap/zsrv_hr_stk/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
       }
     }
   },
@@ -75,6 +83,15 @@
           "operationMode": "Server",
           "autoExpandSelect": true,
           "earlyRequests": true
+        }
+      },
+      "sticker": {
+        "dataSource": "stickerService",
+        "preload": false,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false
         }
       }
     },

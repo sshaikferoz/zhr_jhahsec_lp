@@ -1,6 +1,13 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/core/Fragment", "sap/ui/core/HTML"],
-  function (Controller, Fragment, HTML) {
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/core/Fragment",
+    "sap/ui/core/HTML",
+    "sap/ui/model/Sorter",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+  ],
+  function (Controller, Fragment, HTML, Sorter, Filter, FilterOperator) {
     "use strict";
 
     var SHELL_FRAGMENTS = {
@@ -35,6 +42,7 @@ sap.ui.define(
             function (aContexts) {
               var sRole = "COORDINATOR";
               var bAdmin = false;
+              var bStickerAdmin = false;
               if (aContexts.length) {
                 var oUser = aContexts[0].getObject();
                 bAdmin = oUser.Admin === "X";
@@ -43,7 +51,7 @@ sap.ui.define(
                 var oPersona =
                   this.getOwnerComponent()._getPersonaConfig(sRole);
                 var bVarAuthorized = oUser.VARAuthorized === "X";
-                var bStickerAdmin = oUser.StickerAdmin === "X";
+                bStickerAdmin = oUser.StickerAdmin === "X";
                 var bTvsAuthorized =
                   oUser.TVSAuthorized === true || oUser.TVSAuthorized === "X";
 
@@ -72,6 +80,12 @@ sap.ui.define(
                 oDashboardModel.setProperty("/role", sRole);
                 oDashboardModel.setProperty("/pageTitle", oPersona.pageTitle);
                 oDashboardModel.setProperty("/navItems", aNavItems);
+                // Sticker section renders the admin KPI view when the user is a
+                // Sticker Admin, otherwise the personal StickerMaster view.
+                oDashboardModel.setProperty(
+                  "/sticker/isAdmin",
+                  bStickerAdmin,
+                );
                 oDashboardModel.setProperty(
                   "/showVendorSection",
                   bVarAuthorized,
@@ -136,12 +150,14 @@ sap.ui.define(
               }
               this._loadDashboardForRole(sRole);
               this._fetchLandingKpis(bAdmin);
+              this._fetchStickerData(bStickerAdmin);
             }.bind(this),
           )
           .catch(
             function () {
               this._loadDashboardForRole("COORDINATOR");
               this._fetchLandingKpis(false);
+              this._fetchStickerData(false);
             }.bind(this),
           );
       },
@@ -201,7 +217,7 @@ sap.ui.define(
         }
       },
 
-      _loadAppInFrame: function (sSemanticObject, sAction) {
+      _loadAppInFrame: function (sSemanticObject, sAction, sInnerRoute) {
         var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
         oDashboardModel.setProperty("/isEmbedFrame", true);
         this._setEmbedMode(true);
@@ -229,6 +245,13 @@ sap.ui.define(
             sAction +
             "&admin=" +
             (bAdmin ? "true" : "false");
+        }
+
+        // Deep-link into a specific object page of the target app by appending
+        // the inner-app route (e.g. "/StickerMaster(StkReqId='266',...)").
+        if (sInnerRoute) {
+          sUrl +=
+            (sInnerRoute.charAt(0) === "&" ? "" : "&") + sInnerRoute;
         }
 
         var sFrameId = "jhahEmbedFrame";
@@ -386,6 +409,213 @@ sap.ui.define(
           .catch(function () {
             // backend unreachable — static mock data remains in place
           });
+      },
+
+      /**
+       * Loads the Sticker Management section data.
+       *  - Sticker Admins see high-level KPIs (StickerKPI(true)/Set), mirroring
+       *    the Business Visitor Access cards.
+       *  - Non-admins see their own StickerMaster records (Active Sticker,
+       *    Request Status list, and a personal KPI strip).
+       */
+      _fetchStickerData: function (bStickerAdmin) {
+        var oStickerModel = this.getOwnerComponent().getModel("sticker");
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        if (!oStickerModel || !oDashboardModel) {
+          return;
+        }
+        oDashboardModel.setProperty("/sticker/isAdmin", bStickerAdmin);
+
+        var sKpiPath =
+          "/StickerKPI(" + (bStickerAdmin ? "true" : "false") + ")/Set";
+        oStickerModel
+          .bindList(sKpiPath, undefined, undefined, undefined, {
+            $select:
+              "Dashboard,TotalRequests,ApprovedRequests," +
+              "InProgressRequests,RejectedRequests",
+          })
+          .requestContexts()
+          .then(function (aContexts) {
+            if (!aContexts.length) {
+              return;
+            }
+            var oData = aContexts[0].getObject();
+            oDashboardModel.setProperty(
+              "/sticker/kpis/0/value",
+              String(oData.TotalRequests),
+            );
+            oDashboardModel.setProperty(
+              "/sticker/kpis/1/value",
+              String(oData.ApprovedRequests),
+            );
+            oDashboardModel.setProperty(
+              "/sticker/kpis/2/value",
+              String(oData.InProgressRequests),
+            );
+            oDashboardModel.setProperty(
+              "/sticker/kpis/3/value",
+              String(oData.RejectedRequests),
+            );
+            oDashboardModel.setProperty("/sticker/hasKpiData", true);
+          })
+          .catch(function () {
+            // backend unreachable — "No data available" placeholder remains
+          });
+
+        if (!bStickerAdmin) {
+          this._fetchStickerMasterForUser();
+        }
+      },
+
+      _fetchStickerMasterForUser: function () {
+        var oStickerModel = this.getOwnerComponent().getModel("sticker");
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        if (!oStickerModel) {
+          return;
+        }
+
+        var oBinding = oStickerModel.bindList(
+          "/StickerMaster",
+          undefined,
+          [new Sorter("RequestDate", true)],
+          [new Filter("IsActiveEntity", FilterOperator.EQ, true)],
+          {
+            $select:
+              "StkReqId,StkReqIdStr,StkType,StkTypeDesc,Status,StatsCriticality," +
+              "ExpireDate,RequestDate,PlateNumEng,ArabicPlateNum," +
+              "ManufacturerDesc,ColorDesc,DraftUUID,IsActiveEntity",
+          },
+        );
+
+        oBinding
+          .requestContexts(0, 50)
+          .then(
+            function (aContexts) {
+              var aRequests = aContexts.map(
+                function (oCtx) {
+                  var o = oCtx.getObject();
+                  return {
+                    reqId: o.StkReqId,
+                    reqIdStr: o.StkReqIdStr || o.StkReqId,
+                    type: o.StkTypeDesc || "-",
+                    status: o.Status || "-",
+                    statusState: this._stickerCriticalityState(
+                      o.StatsCriticality,
+                    ),
+                    crit: o.StatsCriticality,
+                    expiry: this._formatOdataDate(o.ExpireDate),
+                    plate: o.PlateNumEng || o.ArabicPlateNum || "-",
+                    vehicle: [o.ManufacturerDesc, o.ColorDesc]
+                      .filter(Boolean)
+                      .join(" · "),
+                    draftUUID:
+                      o.DraftUUID || "00000000-0000-0000-0000-000000000000",
+                    isActive: o.IsActiveEntity !== false,
+                  };
+                }.bind(this),
+              );
+
+              oDashboardModel.setProperty("/sticker/requests", aRequests);
+              oDashboardModel.setProperty(
+                "/sticker/hasUserData",
+                aRequests.length > 0,
+              );
+
+              var iInProgress = aRequests.filter(function (r) {
+                return r.crit === 2;
+              }).length;
+              var aActive = aRequests.filter(function (r) {
+                return r.crit === 3;
+              });
+              oDashboardModel.setProperty(
+                "/sticker/userKpis/0/value",
+                String(aRequests.length),
+              );
+              oDashboardModel.setProperty(
+                "/sticker/userKpis/1/value",
+                String(iInProgress),
+              );
+              oDashboardModel.setProperty(
+                "/sticker/userKpis/2/value",
+                String(aActive.length),
+              );
+
+              // Active Sticker = most recent active/approved request
+              if (aActive.length) {
+                var oA = aActive[0];
+                oDashboardModel.setProperty("/sticker/active", {
+                  hasData: true,
+                  plate: oA.plate,
+                  type: oA.type,
+                  vehicle: oA.vehicle,
+                  expiry: oA.expiry,
+                  status: oA.status,
+                  statusState: oA.statusState,
+                });
+              } else {
+                oDashboardModel.setProperty("/sticker/active/hasData", false);
+              }
+            }.bind(this),
+          )
+          .catch(function () {
+            // backend unreachable — "No data available" placeholder remains
+          });
+      },
+
+      _stickerCriticalityState: function (iCrit) {
+        switch (iCrit) {
+          case 3:
+            return "Success";
+          case 2:
+            return "Warning";
+          case 1:
+            return "Error";
+          default:
+            return "None";
+        }
+      },
+
+      _formatOdataDate: function (sDate) {
+        if (!sDate || typeof sDate !== "string" || sDate.length < 10) {
+          return "-";
+        }
+        var aParts = sDate.substring(0, 10).split("-");
+        return aParts.length === 3
+          ? aParts[2] + "/" + aParts[1] + "/" + aParts[0]
+          : "-";
+      },
+
+      /**
+       * Opens the Sticker Master app in the embedded frame, deep-linked to the
+       * clicked request's object page.
+       */
+      onStickerRequestPress: function (oEvent) {
+        var oCtx = oEvent.getSource().getBindingContext("dashboard");
+        if (!oCtx) {
+          return;
+        }
+        var oReq = oCtx.getObject();
+        var sInnerRoute =
+          "/StickerMaster(StkReqId='" +
+          oReq.reqId +
+          "',DraftUUID=" +
+          oReq.draftUUID +
+          ",IsActiveEntity=" +
+          (oReq.isActive ? "true" : "false") +
+          ")";
+
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        var aNavItems = oDashboardModel.getProperty("/navItems") || [];
+        aNavItems.forEach(function (oNav, i) {
+          oDashboardModel.setProperty(
+            "/navItems/" + i + "/selected",
+            oNav.key === "sticker",
+          );
+        });
+        oDashboardModel.setProperty("/selectedNavKey", "sticker");
+        oDashboardModel.setProperty("/embedTitle", "Sticker Management");
+
+        this._loadAppInFrame("StickerMaster", "manage", sInnerRoute);
       },
 
       _configureVisitorChart: function () {

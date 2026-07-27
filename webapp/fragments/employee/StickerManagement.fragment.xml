@@ -5,6 +5,50 @@
 >
     <VBox class="jhahSection" renderType="Bare">
         <Title text="Sticker Management" level="H5" class="jhahSectionTitle" />
+
+        <!-- Personal KPI strip derived from the user's own StickerMaster records -->
+        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/sticker/userKpis/0/title}" level="H6" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/sticker/userKpis/0/value}"
+                            emphasized="true"
+                            state="{dashboard>/sticker/userKpis/0/valueState}"
+                            class="jhahKpiValue"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard">
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/sticker/userKpis/1/title}" level="H6" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/sticker/userKpis/1/value}"
+                            emphasized="true"
+                            state="{dashboard>/sticker/userKpis/1/valueState}"
+                            class="jhahKpiValue"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard">
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/sticker/userKpis/2/title}" level="H6" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/sticker/userKpis/2/value}"
+                            emphasized="true"
+                            state="{dashboard>/sticker/userKpis/2/valueState}"
+                            class="jhahKpiValue"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+        </HBox>
+
         <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
             <!-- Active Sticker card -->
             <VBox class="jhahHalfCardWrap" renderType="Bare">
@@ -15,7 +59,40 @@
                     <f:content>
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
                             <Label text="ACTIVE STICKER" class="jhahMutedText" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                            <!-- No active sticker -->
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/sticker/active/hasData} }"
+                            />
+                            <!-- Active sticker details -->
+                            <VBox
+                                renderType="Bare"
+                                class="jhahActiveSticker"
+                                visible="{dashboard>/sticker/active/hasData}"
+                            >
+                                <Title
+                                    text="{dashboard>/sticker/active/plate}"
+                                    level="H5"
+                                    class="jhahHighlightValue"
+                                />
+                                <Text text="{dashboard>/sticker/active/type}" class="jhahMutedText" />
+                                <Text
+                                    text="{dashboard>/sticker/active/vehicle}"
+                                    class="jhahMutedText"
+                                    visible="{= !!${dashboard>/sticker/active/vehicle} }"
+                                />
+                                <HBox class="sapUiTinyMarginTop" alignItems="Center" justifyContent="SpaceBetween">
+                                    <ObjectStatus
+                                        text="{dashboard>/sticker/active/status}"
+                                        state="{dashboard>/sticker/active/statusState}"
+                                    />
+                                    <Text
+                                        text="Expires: {dashboard>/sticker/active/expiry}"
+                                        class="jhahMutedText"
+                                    />
+                                </HBox>
+                            </VBox>
                         </VBox>
                     </f:content>
                 </f:Card>
@@ -30,6 +107,7 @@
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
                             <Title text="Request Status" level="H6" class="sapUiSmallMarginBottom" />
                             <Table
+                                items="{dashboard>/sticker/requests}"
                                 showSeparators="Inner"
                                 class="jhahInnerTable"
                                 fixedLayout="false"
@@ -40,6 +118,21 @@
                                     <Column><Text text="Expiry" /></Column>
                                     <Column hAlign="End"><Text text="Status" /></Column>
                                 </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Link
+                                                text="{dashboard>reqIdStr}"
+                                                press=".onStickerRequestPress"
+                                            />
+                                            <Text text="{dashboard>expiry}" />
+                                            <ObjectStatus
+                                                text="{dashboard>status}"
+                                                state="{dashboard>statusState}"
+                                            />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
                             </Table>
                         </VBox>
                     </f:content>

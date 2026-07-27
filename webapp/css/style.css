@@ -598,6 +598,16 @@ html.jhahHtml body,
   border-bottom: 3px solid #d28c22;
 }
 
+.jhahAccentRed {
+  border-bottom: 3px solid #c74b4b;
+}
+
+/* Active sticker detail block inside the user Sticker Management card */
+.jhahActiveSticker {
+  gap: 0.15rem;
+  margin-top: 0.35rem;
+}
+
 .jhahHighlightValue {
   color: #1a4f7e;
 }

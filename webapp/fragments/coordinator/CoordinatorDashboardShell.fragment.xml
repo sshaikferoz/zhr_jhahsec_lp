@@ -11,7 +11,7 @@
     >
         <VBox class="jhahDashboardColMain" renderType="Bare" width="100%">
             <core:Fragment
-                fragmentName="com.jhah.zhrjhahseclp.fragments.employee.StickerManagement"
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.StickerSection"
                 type="XML"
             />
             <core:Fragment

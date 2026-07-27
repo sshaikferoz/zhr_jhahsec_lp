@@ -176,6 +176,72 @@ sap.ui.define(
             initials: "-",
           },
           navItems: oPersona.navItems,
+          // Sticker Management section state.
+          //  - isAdmin drives whether the KPI-card view (Sticker Admin) or the
+          //    user-specific view (Active Sticker + Request Status) is shown.
+          //  - kpis feed the admin card row (StickerKPI(true)/Set).
+          //  - userKpis / active / requests feed the user view (StickerMaster).
+          sticker: {
+            isAdmin: false,
+            hasKpiData: false,
+            kpis: [
+              {
+                title: "Total Requests",
+                value: "0",
+                accent: "jhahAccentBlue",
+                valueState: "None",
+              },
+              {
+                title: "Approved",
+                value: "0",
+                accent: "jhahAccentGreen",
+                valueState: "Success",
+              },
+              {
+                title: "In Progress",
+                value: "0",
+                accent: "jhahAccentOrange",
+                valueState: "Warning",
+              },
+              {
+                title: "Rejected",
+                value: "0",
+                accent: "jhahAccentRed",
+                valueState: "Error",
+              },
+            ],
+            hasUserData: false,
+            userKpis: [
+              {
+                title: "My Requests",
+                value: "0",
+                accent: "jhahAccentBlue",
+                valueState: "None",
+              },
+              {
+                title: "In Progress",
+                value: "0",
+                accent: "jhahAccentOrange",
+                valueState: "Warning",
+              },
+              {
+                title: "Active",
+                value: "0",
+                accent: "jhahAccentGreen",
+                valueState: "Success",
+              },
+            ],
+            active: {
+              hasData: false,
+              plate: "",
+              type: "",
+              vehicle: "",
+              expiry: "",
+              status: "",
+              statusState: "None",
+            },
+            requests: [],
+          },
           showVendorSection:
             sRole === "COORDINATOR" ||
             sRole === "SECURITY" ||
