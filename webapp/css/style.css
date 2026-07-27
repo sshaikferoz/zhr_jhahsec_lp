@@ -481,7 +481,7 @@ html.jhahHtml body,
 
 .jhahThirdCard {
   flex: 1 1 0;
-  min-width: min(100%, 10rem);
+  min-width: min(100%, 8rem);
   width: 100% !important;
 }
 
@@ -497,14 +497,25 @@ html.jhahHtml body,
   min-height: 10.5rem;
 }
 
+/* Inside a section panel the cards render as flat tiles (no drop shadow /
+   white-on-white); grouping is conveyed by the panel, not per-card shadows. */
 .jhahDataCard,
 .jhahKpiCard,
 .jhahAlertCard {
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 0.625rem;
+  box-shadow: none;
   width: 100%;
   box-sizing: border-box;
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+.jhahKpiCard.sapFCard {
+  background: #f5f7fa !important;
+}
+
+.jhahDataCard.sapFCard {
+  background: #fafbfc !important;
+  border: 1px solid #eceff3;
 }
 
 .jhahKpiCard.sapFCard,
@@ -527,14 +538,15 @@ html.jhahHtml body,
   min-height: 0;
 }
 
+/* Uniform KPI tile size across every section of the app. */
 .jhahKpiCardInner {
-  padding: 0.875rem 1.25rem 1rem;
+  padding: 0.75rem 1rem 0.85rem;
   box-sizing: border-box;
-  /* content needs ~70px (label 16 + gap 6 + value 48) + 28px padding = 98px min */
-  min-height: 5rem;
+  min-height: 4.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  justify-content: center;
+  gap: 0.25rem;
   overflow: visible;
 }
 
@@ -693,17 +705,29 @@ html.jhahHtml body,
 }
 
 /* ── Sections ────────────────────────────────────────────── */
+/* Each dashboard section is a self-contained titled panel so it is always
+   clear which KPIs/cards belong to which section. */
 .jhahSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: #ffffff;
+  border: 1px solid #e6eaef;
+  border-radius: 0.875rem;
+  padding: 1.15rem 1.25rem 1.3rem;
+  box-shadow: 0 1px 3px rgba(22, 42, 66, 0.06);
   margin-bottom: 1.25rem;
+  box-sizing: border-box;
 }
 
 .jhahSectionTitle {
   color: #2f3b4c;
-  margin-bottom: 0.65rem !important;
+  margin-bottom: 0 !important;
+  font-weight: 600 !important;
 }
 
 .jhahSectionHeader {
-  margin-bottom: 0.65rem;
+  margin-bottom: 0;
 }
 
 .jhahViolationsSection {
