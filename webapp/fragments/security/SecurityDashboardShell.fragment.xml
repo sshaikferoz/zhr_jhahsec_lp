@@ -32,10 +32,6 @@
                 fragmentName="com.jhah.zhrjhahseclp.fragments.coordinator.VendorManagement"
                 type="XML"
             />
-            <core:Fragment
-                fragmentName="com.jhah.zhrjhahseclp.fragments.coordinator.VisitorCategoryChart"
-                type="XML"
-            />
         </VBox>
     </HBox>
 </core:FragmentDefinition>

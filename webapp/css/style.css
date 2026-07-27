@@ -726,6 +726,15 @@ html.jhahHtml body,
   font-weight: 600 !important;
 }
 
+/* Sub-heading for a grouped block within a section (e.g. the chart under
+   Business Visitor Access). */
+.jhahSubSectionTitle {
+  color: #6f7984;
+  font-weight: 600 !important;
+  margin-top: 0.35rem !important;
+  margin-bottom: 0 !important;
+}
+
 .jhahSectionHeader {
   margin-bottom: 0;
 }
