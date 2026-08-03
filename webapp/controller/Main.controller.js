@@ -227,19 +227,20 @@ sap.ui.define(
 
         var bAdmin = oDashboardModel.getProperty("/isAdmin");
 
-        var sUrl;
+        // Resolve the target app to a shell-relative intent hash
+        // (e.g. "#BusiVisitorAccess-manage?admin=false").
+        var sHash;
         try {
-          sUrl = sap.ushell.Container.getService(
+          sHash = sap.ushell.Container.getService(
             "CrossApplicationNavigation",
           ).hrefForExternal({
             target: { semanticObject: sSemanticObject, action: sAction },
             params: { admin: bAdmin ? "true" : "false" },
           });
         } catch (e) {
-          // fallback for local development outside FLP
-          sUrl =
-            window.location.origin +
-            "/sap/bc/ui2/flp#" +
+          // fallback for local development outside a launchpad
+          sHash =
+            "#" +
             sSemanticObject +
             "-" +
             sAction +
@@ -250,8 +251,32 @@ sap.ui.define(
         // Deep-link into a specific object page of the target app by appending
         // the inner-app route (e.g. "/StickerMaster(StkReqId='266',...)").
         if (sInnerRoute) {
-          sUrl +=
-            (sInnerRoute.charAt(0) === "&" ? "" : "&") + sInnerRoute;
+          sHash += (sInnerRoute.charAt(0) === "&" ? "" : "&") + sInnerRoute;
+        }
+
+        // hrefForExternal returns a hash that is relative to the launchpad
+        // shell. In a standalone FLP this app shares the shell document, so a
+        // bare "#..." src already resolves against the shell. In SAP Build Work
+        // Zone this app runs inside the app-host iframe, so a bare "#..." src
+        // resolves against THIS app's own index.html and just reloads the
+        // dashboard. Resolve the hash against the shell (top window) URL so the
+        // iframe src is absolute and loads the target app in both environments.
+        var sUrl;
+        if (sHash && sHash.charAt(0) === "#") {
+          var sShellBase;
+          try {
+            // Work Zone: top window is the launchpad shell (same origin).
+            sShellBase =
+              (window.top && window.top.location.href) ||
+              window.location.href;
+          } catch (eTop) {
+            // Cross-origin top window — fall back to this document's URL.
+            sShellBase = window.location.href;
+          }
+          sUrl = sShellBase.split("#")[0] + sHash;
+        } else {
+          // Already an absolute URL — use as-is.
+          sUrl = sHash;
         }
 
         var sFrameId = "jhahEmbedFrame";
