@@ -242,10 +242,18 @@ sap.ui.define(
             },
             requests: [],
           },
-          showVendorSection:
-            sRole === "COORDINATOR" ||
-            sRole === "SECURITY" ||
-            sRole === "ADMIN",
+          // Per-application access, keyed by nav item key. Replaced with the
+          // user's real authorizations once EmployeeHeader is read (see
+          // Main.controller#_buildAccessMap); each dashboard KPI section binds
+          // its visibility to the flag of the app it belongs to. Defaults to
+          // full access so that a failed/unavailable header read leaves the
+          // dashboard as complete as the unfiltered nav items.
+          access: {
+            vendor: true,
+            violations: true,
+            sticker: true,
+            id: true,
+          },
           /* NOTE: Mock data below is temporarily unused — the Sticker, ID
              Management, Traffic Violation and Appointments sections now render
              a "No data available" placeholder until the real endpoints are

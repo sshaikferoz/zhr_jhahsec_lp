@@ -23,7 +23,14 @@
                 type="XML"
             />
         </VBox>
-        <VBox class="jhahDashboardColSide" renderType="Bare" width="100%">
+        <!-- Side column holds only app-specific sections — collapse it when the
+             user has access to neither, so it does not reserve empty width. -->
+        <VBox
+            class="jhahDashboardColSide"
+            renderType="Bare"
+            width="100%"
+            visible="{= ${dashboard>/access/violations} || ${dashboard>/access/vendor} }"
+        >
             <core:Fragment
                 fragmentName="com.jhah.zhrjhahseclp.fragments.employee.Violations"
                 type="XML"

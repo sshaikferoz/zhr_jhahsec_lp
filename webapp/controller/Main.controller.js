@@ -50,45 +50,23 @@ sap.ui.define(
 
                 var oPersona =
                   this.getOwnerComponent()._getPersonaConfig(sRole);
-                var bVarAuthorized = oUser.VARAuthorized === "X";
                 bStickerAdmin = oUser.StickerAdmin === "X";
-                var bTvsAuthorized =
-                  oUser.TVSAuthorized === true || oUser.TVSAuthorized === "X";
 
-                // Show "Business Visitor Access" (vendor) only when VARAuthorized is "X".
-                // Show Sticker Management for Admins or Sticker Admins.
-                // Show TVS (violations) only when TVSAuthorized.
-                // Show ID Management only for Admins.
-                var aAdminOnlyKeys = ["id"];
+                var oAccess = this._buildAccessMap(oUser);
                 var aNavItems = oPersona.navItems.filter(function (oNav) {
-                  if (oNav.key === "vendor") {
-                    return bVarAuthorized;
-                  }
-                  if (oNav.key === "sticker") {
-                    // return bStickerAdmin;
-                    return true;
-                  }
-                  if (oNav.key === "violations") {
-                    return bTvsAuthorized;
-                  }
-                  if (aAdminOnlyKeys.indexOf(oNav.key) !== -1) {
-                    return bAdmin;
-                  }
-                  return true;
+                  // Keys missing from the map (e.g. "dashboard") stay visible.
+                  return oAccess[oNav.key] !== false;
                 });
 
                 oDashboardModel.setProperty("/role", sRole);
                 oDashboardModel.setProperty("/pageTitle", oPersona.pageTitle);
                 oDashboardModel.setProperty("/navItems", aNavItems);
+                oDashboardModel.setProperty("/access", oAccess);
                 // Sticker section renders the admin KPI view when the user is a
                 // Sticker Admin, otherwise the personal StickerMaster view.
                 oDashboardModel.setProperty(
                   "/sticker/isAdmin",
                   bStickerAdmin,
-                );
-                oDashboardModel.setProperty(
-                  "/showVendorSection",
-                  bVarAuthorized,
                 );
                 var sName = oUser.UserName || "-";
                 var sInitials =
@@ -160,6 +138,28 @@ sap.ui.define(
               this._fetchStickerData(false);
             }.bind(this),
           );
+      },
+
+      /**
+       * Per-application access flags derived from the EmployeeHeader
+       * authorization fields. Keys match the nav item keys, so the same map
+       * drives both the side-navigation entries and the visibility of the
+       * matching dashboard KPI sections — a user never sees KPIs for an app
+       * they cannot open.
+       */
+      _buildAccessMap: function (oUser) {
+        return {
+          // Business Visitor Access
+          vendor: oUser.VARAuthorized === "X",
+          // Traffic Violation System
+          violations:
+            oUser.TVSAuthorized === true || oUser.TVSAuthorized === "X",
+          // Sticker Management — open to every user. Swap in
+          // `oUser.StickerAdmin === "X"` to restrict it to Sticker Admins.
+          sticker: true,
+          // ID Management System — Admins only
+          id: oUser.Admin === "X",
+        };
       },
 
       _loadDashboardForRole: function (sRole) {
@@ -389,6 +389,11 @@ sap.ui.define(
         var oODataModel = this.getOwnerComponent().getModel();
         var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
         if (!oODataModel) {
+          return;
+        }
+        // These KPIs feed the Business Visitor Access section only — skip the
+        // request entirely when that section is hidden for this user.
+        if (oDashboardModel.getProperty("/access/vendor") === false) {
           return;
         }
         var sPath = "/LandingPageKPI(" + (bAdmin ? "true" : "false") + ")/Set";

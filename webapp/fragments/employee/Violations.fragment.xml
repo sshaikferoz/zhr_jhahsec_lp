@@ -3,7 +3,12 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
 >
-    <VBox class="jhahSection jhahViolationsSection" renderType="Bare" height="100%">
+    <VBox
+        class="jhahSection jhahViolationsSection"
+        renderType="Bare"
+        height="100%"
+        visible="{dashboard>/access/violations}"
+    >
         <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
             <!-- Active Violations -->

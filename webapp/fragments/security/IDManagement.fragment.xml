@@ -3,7 +3,11 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
 >
-    <VBox class="jhahSection" renderType="Bare">
+    <VBox
+        class="jhahSection"
+        renderType="Bare"
+        visible="{dashboard>/access/id}"
+    >
         <Title text="ID Management System" level="H5" class="jhahSectionTitle" />
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
             <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
