@@ -242,6 +242,123 @@ sap.ui.define(
             },
             requests: [],
           },
+          // Traffic Violation System section state, structured like `sticker`.
+          //  - isAdmin drives whether the global KPI view (adminKPI) or the
+          //    personal view (employeeKPI) is shown. It follows the header's
+          //    "All Employees / My View" toggle for Admins.
+          //  - adminKpis / adminAlerts / adminBreakdown feed the global view.
+          //  - userKpis / points feed the personal view.
+          // `tooltip` on each entry explains what the metric counts; it is
+          // bound to the card so the description shows on hover.
+          violations: {
+            isAdmin: false,
+            hasAdminData: false,
+            adminKpis: [
+              {
+                title: "Raised Today",
+                value: "0",
+                accent: "jhahAccentBlue",
+                valueState: "None",
+                tooltip:
+                  "Violations raised today across all employees.",
+              },
+              {
+                title: "Last 30 Days",
+                value: "0",
+                accent: "jhahAccentBlue",
+                valueState: "None",
+                tooltip:
+                  "Violations raised in the last 30 days across all employees.",
+              },
+              {
+                title: "Pending Review",
+                value: "0",
+                accent: "jhahAccentOrange",
+                valueState: "Warning",
+                tooltip:
+                  "Violations submitted but not yet reviewed. These are waiting on an action from the security team.",
+              },
+              {
+                title: "Total Violations",
+                value: "0",
+                accent: "jhahAccentBlue",
+                valueState: "None",
+                tooltip:
+                  "All violations recorded in the system to date, in any status.",
+              },
+            ],
+            adminAlerts: [
+              {
+                title: "Stagnant Tickets",
+                value: "0",
+                tooltip:
+                  "Tickets that have seen no progress and need attention.",
+              },
+              {
+                title: "Critical Incidents",
+                value: "0",
+                tooltip:
+                  "Violations flagged as critical, requiring priority handling.",
+              },
+            ],
+            adminBreakdown: [
+              {
+                title: "Processed",
+                value: "0",
+                valueState: "Success",
+                tooltip:
+                  "Violations that completed review and were actioned.",
+              },
+              {
+                title: "Rejected",
+                value: "0",
+                valueState: "Error",
+                tooltip:
+                  "Violations dismissed during review.",
+              },
+              {
+                title: "Active Points (System)",
+                value: "0",
+                valueState: "None",
+                tooltip:
+                  "Total penalty points currently active across all employees.",
+              },
+            ],
+            hasUserData: false,
+            userKpis: [
+              {
+                title: "In Progress",
+                value: "0",
+                accent: "jhahAccentOrange",
+                valueState: "Warning",
+                tooltip:
+                  "Your violations currently under review.",
+              },
+              {
+                // Kept short so the three cards fit across the dashboard
+                // column without truncating; the tooltip carries the detail.
+                title: "12 Months",
+                value: "0",
+                accent: "jhahAccentBlue",
+                valueState: "None",
+                tooltip:
+                  "Violations recorded against you in the last 12 months.",
+              },
+              {
+                title: "Lifetime",
+                value: "0",
+                accent: "jhahAccentBlue",
+                valueState: "None",
+                tooltip:
+                  "All violations recorded against you since joining.",
+              },
+            ],
+            points: {
+              hasData: false,
+              total: "0",
+              lastViolationDate: "-",
+            },
+          },
           // Per-application access, keyed by nav item key. Replaced with the
           // user's real authorizations once EmployeeHeader is read (see
           // Main.controller#_buildAccessMap); each dashboard KPI section binds

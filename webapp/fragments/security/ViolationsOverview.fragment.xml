@@ -3,47 +3,202 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
 >
-    <VBox
-        class="jhahSection"
-        renderType="Bare"
-        visible="{dashboard>/access/violations}"
-    >
-        <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
-        <!-- Side-by-side alert KPI cards -->
+    <!--
+        Traffic Violation System — global view, fed by /adminKPI.
+        Headline counts first, then the two metrics that need attention, then
+        the processing breakdown. Every card carries a tooltip describing what
+        the metric counts.
+    -->
+    <VBox class="jhahSection" renderType="Bare">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
+            <HBox alignItems="Center">
+                <core:Icon src="sap-icon://warning" class="jhahMutedText sapUiTinyMarginEnd" />
+                <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
+            </HBox>
+            <Link
+                text="View all >"
+                press=".onViolationsNavPress"
+                tooltip="Open the Traffic Violation System app"
+            />
+        </HBox>
+
+        <!-- Headline counts -->
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-            <f:Card class="jhahAlertCard jhahAlertCardError jhahHalfCard">
+            <f:Card
+                class="jhahKpiCard jhahAccentBlue jhahHalfCard"
+                tooltip="{dashboard>/violations/adminKpis/0/tooltip}"
+            >
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/violations/adminKpis/0/title}" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/violations/adminKpis/0/value}"
+                            emphasized="true"
+                            state="{dashboard>/violations/adminKpis/0/valueState}"
+                            class="jhahKpiValue"
+                            visible="{dashboard>/violations/hasAdminData}"
+                        />
+                        <Text
+                            text="No data available"
+                            class="jhahMutedText jhahNoDataValue"
+                            visible="{= !${dashboard>/violations/hasAdminData} }"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card
+                class="jhahKpiCard jhahAccentBlue jhahHalfCard"
+                tooltip="{dashboard>/violations/adminKpis/1/tooltip}"
+            >
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/violations/adminKpis/1/title}" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/violations/adminKpis/1/value}"
+                            emphasized="true"
+                            state="{dashboard>/violations/adminKpis/1/valueState}"
+                            class="jhahKpiValue"
+                            visible="{dashboard>/violations/hasAdminData}"
+                        />
+                        <Text
+                            text="No data available"
+                            class="jhahMutedText jhahNoDataValue"
+                            visible="{= !${dashboard>/violations/hasAdminData} }"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card
+                class="jhahKpiCard jhahAccentOrange jhahHalfCard"
+                tooltip="{dashboard>/violations/adminKpis/2/tooltip}"
+            >
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/violations/adminKpis/2/title}" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/violations/adminKpis/2/value}"
+                            emphasized="true"
+                            state="{dashboard>/violations/adminKpis/2/valueState}"
+                            class="jhahKpiValue"
+                            visible="{dashboard>/violations/hasAdminData}"
+                        />
+                        <Text
+                            text="No data available"
+                            class="jhahMutedText jhahNoDataValue"
+                            visible="{= !${dashboard>/violations/hasAdminData} }"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card
+                class="jhahKpiCard jhahAccentBlue jhahHalfCard"
+                tooltip="{dashboard>/violations/adminKpis/3/tooltip}"
+            >
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/violations/adminKpis/3/title}" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/violations/adminKpis/3/value}"
+                            emphasized="true"
+                            state="{dashboard>/violations/adminKpis/3/valueState}"
+                            class="jhahKpiValue"
+                            visible="{dashboard>/violations/hasAdminData}"
+                        />
+                        <Text
+                            text="No data available"
+                            class="jhahMutedText jhahNoDataValue"
+                            visible="{= !${dashboard>/violations/hasAdminData} }"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+        </HBox>
+
+        <!-- Needs attention. Stacked full width: side by side the icon leaves
+             too little room for the label in the narrow dashboard column. -->
+        <VBox class="jhahViolationsStack" renderType="Bare" width="100%">
+            <f:Card
+                class="jhahAlertCard jhahAlertCardError jhahStackedCard"
+                tooltip="{dashboard>/violations/adminAlerts/0/tooltip}"
+            >
                 <f:content>
                     <HBox alignItems="Start" class="jhahAlertCardInner">
                         <VBox renderType="Bare" class="jhahAlertCardText">
-                            <Label text="Active Violations" class="jhahKpiTitle" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                            <Label text="{dashboard>/violations/adminAlerts/0/title}" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/violations/adminAlerts/0/value}"
+                                emphasized="true"
+                                state="Error"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/violations/hasAdminData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/violations/hasAdminData} }"
+                            />
                         </VBox>
-                        <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconError" />
+                        <core:Icon src="sap-icon://alert" class="jhahAlertIcon jhahIconError" />
                     </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahAlertCard jhahAlertCardInfo jhahHalfCard">
+            <f:Card
+                class="jhahAlertCard jhahAlertCardInfo jhahStackedCard"
+                tooltip="{dashboard>/violations/adminAlerts/1/tooltip}"
+            >
                 <f:content>
                     <HBox alignItems="Start" class="jhahAlertCardInner">
                         <VBox renderType="Bare" class="jhahAlertCardText">
-                            <Label text="Year to date Violations" class="jhahKpiTitle" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                            <Label text="{dashboard>/violations/adminAlerts/1/title}" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/violations/adminAlerts/1/value}"
+                                emphasized="true"
+                                state="Warning"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/violations/hasAdminData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/violations/hasAdminData} }"
+                            />
                         </VBox>
                         <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconInfo" />
                     </HBox>
                 </f:content>
             </f:Card>
-        </HBox>
-        <!-- Top 3 Violations by Category -->
+        </VBox>
+
+        <!-- Processing breakdown -->
         <f:Card class="jhahDataCard">
             <f:content>
-                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
-                    <Title
-                        text="Top 3 Violations by Category"
-                        level="H6"
-                        class="sapUiSmallMarginBottom"
+                <VBox class="jhahPairCardInner" renderType="Bare" width="100%">
+                    <Title text="Processing Breakdown" level="H6" class="sapUiSmallMarginBottom" />
+                    <Text
+                        text="No data available"
+                        class="jhahMutedText jhahNoDataValue"
+                        visible="{= !${dashboard>/violations/hasAdminData} }"
                     />
-                    <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                    <VBox
+                        renderType="Bare"
+                        width="100%"
+                        visible="{dashboard>/violations/hasAdminData}"
+                        items="{dashboard>/violations/adminBreakdown}"
+                    >
+                        <HBox
+                            justifyContent="SpaceBetween"
+                            alignItems="Center"
+                            class="jhahBreakdownRow"
+                            tooltip="{dashboard>tooltip}"
+                        >
+                            <Text text="{dashboard>title}" class="jhahMutedText" />
+                            <ObjectNumber
+                                number="{dashboard>value}"
+                                state="{dashboard>valueState}"
+                                emphasized="false"
+                            />
+                        </HBox>
+                    </VBox>
                 </VBox>
             </f:content>
         </f:Card>

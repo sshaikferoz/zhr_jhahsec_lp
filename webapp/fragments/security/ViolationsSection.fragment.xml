@@ -1,0 +1,33 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <!--
+        Traffic Violation System section.
+        Hidden entirely for users without access to the TVS app. Otherwise
+        renders the global KPI view (adminKPI) for Admins and the personal view
+        (employeeKPI) for everyone else. Both sub-fragments are instantiated;
+        only the one matching dashboard>/violations/isAdmin shows, so the
+        header's "All Employees / My View" toggle swaps between them.
+    -->
+    <VBox
+        renderType="Bare"
+        width="100%"
+        visible="{= ${dashboard>/access/violations} &amp;&amp; ${dashboard>/violations/isAdmin} }"
+    >
+        <core:Fragment
+            fragmentName="com.jhah.zhrjhahseclp.fragments.security.ViolationsOverview"
+            type="XML"
+        />
+    </VBox>
+    <VBox
+        renderType="Bare"
+        width="100%"
+        visible="{= ${dashboard>/access/violations} &amp;&amp; !${dashboard>/violations/isAdmin} }"
+    >
+        <core:Fragment
+            fragmentName="com.jhah.zhrjhahseclp.fragments.employee.Violations"
+            type="XML"
+        />
+    </VBox>
+</core:FragmentDefinition>

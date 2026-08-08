@@ -32,7 +32,7 @@
             visible="{= ${dashboard>/access/violations} || ${dashboard>/access/vendor} }"
         >
             <core:Fragment
-                fragmentName="com.jhah.zhrjhahseclp.fragments.employee.Violations"
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.ViolationsSection"
                 type="XML"
             />
             <core:Fragment
