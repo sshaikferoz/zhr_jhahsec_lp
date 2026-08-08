@@ -129,6 +129,7 @@ sap.ui.define(
               this._loadDashboardForRole(sRole);
               this._fetchLandingKpis(bAdmin);
               this._fetchStickerData(bStickerAdmin);
+              this._fetchViolationData(bAdmin);
             }.bind(this),
           )
           .catch(
@@ -136,6 +137,7 @@ sap.ui.define(
               this._loadDashboardForRole("COORDINATOR");
               this._fetchLandingKpis(false);
               this._fetchStickerData(false);
+              this._fetchViolationData(false);
             }.bind(this),
           );
       },
@@ -213,8 +215,11 @@ sap.ui.define(
         oDashboardModel.setProperty("/viewMode", sKey);
         oDashboardModel.setProperty("/isAdmin", bAdmin);
 
-        // Re-fetch KPIs with the new admin flag
+        // Re-fetch KPIs with the new admin flag. The toggle also swaps the
+        // Traffic Violation System section between the global and personal
+        // views, so it reads from the matching endpoint.
         this._fetchLandingKpis(bAdmin);
+        this._fetchViolationData(bAdmin);
 
         // If vendor frame is currently open, reload it with the updated flag
         if (oDashboardModel.getProperty("/isEmbedFrame")) {
@@ -657,6 +662,177 @@ sap.ui.define(
         oDashboardModel.setProperty("/embedTitle", "Sticker Management");
 
         this._loadAppInFrame("StickerMaster", "manage", sInnerRoute);
+      },
+
+      /**
+       * Loads the Traffic Violation System section data.
+       *  - Admins see the global view (adminKPI): headline counts, the two
+       *    attention-needed alerts, and a processing breakdown.
+       *  - Everyone else sees their own record (employeeKPI): personal counts
+       *    plus their active points and last violation date.
+       * Mirrors _fetchStickerData, and is re-run when the header's
+       * "All Employees / My View" toggle changes.
+       */
+      _fetchViolationData: function (bAdmin) {
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        if (!oDashboardModel) {
+          return;
+        }
+        oDashboardModel.setProperty("/violations/isAdmin", bAdmin);
+
+        // Skip the call entirely when the section is hidden for this user.
+        if (oDashboardModel.getProperty("/access/violations") === false) {
+          return;
+        }
+
+        if (bAdmin) {
+          this._fetchViolationAdminKpis();
+        } else {
+          this._fetchViolationUserKpis();
+        }
+      },
+
+      _fetchViolationAdminKpis: function () {
+        var oTvsModel = this.getOwnerComponent().getModel("tvs");
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        if (!oTvsModel) {
+          return;
+        }
+
+        oTvsModel
+          .bindList("/adminKPI")
+          .requestContexts(0, 1)
+          .then(function (aContexts) {
+            if (!aContexts.length) {
+              return;
+            }
+            var o = aContexts[0].getObject();
+            var fnSet = function (sPath, vValue) {
+              oDashboardModel.setProperty(sPath, String(vValue || 0));
+            };
+
+            fnSet("/violations/adminKpis/0/value", o.ViolationsRaisedToday);
+            fnSet("/violations/adminKpis/1/value", o.ViolationsLast30Days);
+            fnSet("/violations/adminKpis/2/value", o.TotalPendingReview);
+            fnSet("/violations/adminKpis/3/value", o.TotalAppViolations);
+
+            fnSet("/violations/adminAlerts/0/value", o.TotalStagnantTickets);
+            fnSet("/violations/adminAlerts/1/value", o.TotalCriticalIncidents);
+
+            fnSet("/violations/adminBreakdown/0/value", o.TotalProcessed);
+            fnSet("/violations/adminBreakdown/1/value", o.TotalRejected);
+            fnSet(
+              "/violations/adminBreakdown/2/value",
+              o.TotalSystemActivePoints,
+            );
+
+            oDashboardModel.setProperty("/violations/hasAdminData", true);
+          })
+          .catch(function () {
+            // backend unreachable — "No data available" placeholder remains
+          });
+      },
+
+      _fetchViolationUserKpis: function () {
+        var oTvsModel = this.getOwnerComponent().getModel("tvs");
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        if (!oTvsModel) {
+          return;
+        }
+
+        oTvsModel
+          .bindList("/employeeKPI")
+          .requestContexts(0, 50)
+          .then(
+            function (aContexts) {
+              if (!aContexts.length) {
+                return;
+              }
+              var o = this._pickOwnViolationRow(
+                aContexts.map(function (oCtx) {
+                  return oCtx.getObject();
+                }),
+              );
+              if (!o) {
+                return;
+              }
+
+              oDashboardModel.setProperty(
+                "/violations/userKpis/0/value",
+                String(o.InProgressViolationCount || 0),
+              );
+              oDashboardModel.setProperty(
+                "/violations/userKpis/1/value",
+                String(o.ViolationCountLast12Months || 0),
+              );
+              oDashboardModel.setProperty(
+                "/violations/userKpis/2/value",
+                String(o.LifetimeViolationsCount || 0),
+              );
+
+              oDashboardModel.setProperty("/violations/points", {
+                hasData: true,
+                total: String(o.TotalPointsLast12Months || 0),
+                lastViolationDate: this._formatOdataDate(o.LastViolationDate),
+              });
+              oDashboardModel.setProperty("/violations/hasUserData", true);
+            }.bind(this),
+          )
+          .catch(function () {
+            // backend unreachable — "No data available" placeholder remains
+          });
+      },
+
+      /**
+       * employeeKPI is expected to be scoped to the logged-in user, but guard
+       * against an unscoped list: matching on Pernr/userid keeps another
+       * employee's violation record from being shown. Only fall back to the
+       * first row when the service returned exactly one.
+       */
+      _pickOwnViolationRow: function (aRows) {
+        if (aRows.length === 1) {
+          return aRows[0];
+        }
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        var sPernr = String(oDashboardModel.getProperty("/user/id") || "");
+        var sLoginId = String(
+          oDashboardModel.getProperty("/user/loginId") || "",
+        ).toUpperCase();
+
+        var fnTrimZeros = function (sValue) {
+          return String(sValue || "").replace(/^0+/, "");
+        };
+
+        var oMatch = aRows.filter(function (oRow) {
+          return (
+            (sPernr && fnTrimZeros(oRow.Pernr) === fnTrimZeros(sPernr)) ||
+            (sLoginId && String(oRow.userid || "").toUpperCase() === sLoginId)
+          );
+        })[0];
+
+        return oMatch || null;
+      },
+
+      /**
+       * Opens the Traffic Violation System app in the embedded frame and marks
+       * its nav item as selected, matching onStickerRequestPress.
+       */
+      onViolationsNavPress: function () {
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        var aNavItems = oDashboardModel.getProperty("/navItems") || [];
+        aNavItems.forEach(function (oNav, i) {
+          oDashboardModel.setProperty(
+            "/navItems/" + i + "/selected",
+            oNav.key === "violations",
+          );
+        });
+        oDashboardModel.setProperty("/selectedNavKey", "violations");
+        oDashboardModel.setProperty(
+          "/embedTitle",
+          "Traffic Violation System",
+        );
+
+        this._loadAppInFrame("TrafficViolationSystem", "manage");
       },
 
       _configureVisitorChart: function () {

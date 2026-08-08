@@ -3,47 +3,147 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
 >
-    <VBox
-        class="jhahSection jhahViolationsSection"
-        renderType="Bare"
-        height="100%"
-        visible="{dashboard>/access/violations}"
-    >
-        <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
-        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-            <!-- Active Violations -->
-            <f:Card class="jhahAlertCard jhahAlertCardError jhahHalfCard">
-                <f:content>
-                    <HBox alignItems="Start" class="jhahAlertCardInner">
-                        <VBox renderType="Bare" class="jhahAlertCardText">
-                            <Label text="Active Violations" class="jhahKpiTitle" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
-                        </VBox>
-                        <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconError" />
-                    </HBox>
-                </f:content>
-            </f:Card>
-            <!-- Year to Date Violations -->
-            <f:Card class="jhahAlertCard jhahAlertCardInfo jhahHalfCard">
-                <f:content>
-                    <HBox alignItems="Start" class="jhahAlertCardInner">
-                        <VBox renderType="Bare" class="jhahAlertCardText">
-                            <Label text="Year to date Violations" class="jhahKpiTitle" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
-                        </VBox>
-                        <core:Icon src="sap-icon://warning2" class="jhahAlertIcon jhahIconInfo" />
-                    </HBox>
-                </f:content>
-            </f:Card>
+    <!--
+        Traffic Violation System — personal view, fed by /employeeKPI.
+        Counts first, then the points card, mirroring the personal Sticker
+        Management layout. Every card carries a tooltip describing the metric.
+    -->
+    <VBox class="jhahSection jhahViolationsSection" renderType="Bare" height="100%">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
+            <HBox alignItems="Center">
+                <core:Icon src="sap-icon://warning" class="jhahMutedText sapUiTinyMarginEnd" />
+                <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
+            </HBox>
+            <Link
+                text="View all >"
+                press=".onViolationsNavPress"
+                tooltip="Open the Traffic Violation System app"
+            />
         </HBox>
-            <!-- Violations Points -->
-            <f:Card class="jhahDataCard jhahStackedCard jhahViolationsPointsCard">
+
+        <!-- Personal counts -->
+        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+            <f:Card
+                class="jhahKpiCard jhahAccentOrange jhahThirdCard"
+                tooltip="{dashboard>/violations/userKpis/0/tooltip}"
+            >
                 <f:content>
-                    <VBox class="jhahPairCardInner" renderType="Bare" width="100%">
-                        <Title text="Current Violations Points" level="H6" class="sapUiSmallMarginBottom" />
-                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/violations/userKpis/0/title}" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/violations/userKpis/0/value}"
+                            emphasized="true"
+                            state="{dashboard>/violations/userKpis/0/valueState}"
+                            class="jhahKpiValue"
+                            visible="{dashboard>/violations/hasUserData}"
+                        />
+                        <Text
+                            text="No data available"
+                            class="jhahMutedText jhahNoDataValue"
+                            visible="{= !${dashboard>/violations/hasUserData} }"
+                        />
                     </VBox>
                 </f:content>
             </f:Card>
+            <f:Card
+                class="jhahKpiCard jhahAccentBlue jhahThirdCard"
+                tooltip="{dashboard>/violations/userKpis/1/tooltip}"
+            >
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/violations/userKpis/1/title}" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/violations/userKpis/1/value}"
+                            emphasized="true"
+                            state="{dashboard>/violations/userKpis/1/valueState}"
+                            class="jhahKpiValue"
+                            visible="{dashboard>/violations/hasUserData}"
+                        />
+                        <Text
+                            text="No data available"
+                            class="jhahMutedText jhahNoDataValue"
+                            visible="{= !${dashboard>/violations/hasUserData} }"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+            <f:Card
+                class="jhahKpiCard jhahAccentBlue jhahThirdCard"
+                tooltip="{dashboard>/violations/userKpis/2/tooltip}"
+            >
+                <f:content>
+                    <VBox class="jhahKpiCardInner" renderType="Bare">
+                        <Label text="{dashboard>/violations/userKpis/2/title}" class="jhahKpiTitle" />
+                        <ObjectNumber
+                            number="{dashboard>/violations/userKpis/2/value}"
+                            emphasized="true"
+                            state="{dashboard>/violations/userKpis/2/valueState}"
+                            class="jhahKpiValue"
+                            visible="{dashboard>/violations/hasUserData}"
+                        />
+                        <Text
+                            text="No data available"
+                            class="jhahMutedText jhahNoDataValue"
+                            visible="{= !${dashboard>/violations/hasUserData} }"
+                        />
+                    </VBox>
+                </f:content>
+            </f:Card>
+        </HBox>
+
+        <!-- Violation points -->
+        <f:Card
+            class="jhahDataCard jhahStackedCard jhahViolationsPointsCard"
+            tooltip="Penalty points accumulated against you in the last 12 months, and the date of your most recent violation."
+        >
+            <f:content>
+                <VBox class="jhahPairCardInner" renderType="Bare" width="100%">
+                    <Title text="Violation Points" level="H6" class="sapUiSmallMarginBottom" />
+                    <Text
+                        text="No data available"
+                        class="jhahMutedText jhahNoDataValue"
+                        visible="{= !${dashboard>/violations/points/hasData} }"
+                    />
+                    <VBox
+                        renderType="Bare"
+                        width="100%"
+                        visible="{dashboard>/violations/points/hasData}"
+                    >
+                        <HBox alignItems="Center">
+                            <Avatar
+                                src="sap-icon://status-critical"
+                                displaySize="S"
+                                displayShape="Square"
+                                backgroundColor="Accent1"
+                                class="sapUiSmallMarginEnd"
+                            />
+                            <VBox renderType="Bare">
+                                <Title
+                                    text="{dashboard>/violations/points/total}"
+                                    level="H5"
+                                    class="jhahHighlightValue"
+                                />
+                                <ObjectAttribute text="Points in the last 12 months" />
+                            </VBox>
+                        </HBox>
+                        <HBox
+                            class="jhahActiveStickerFooter sapUiSmallMarginTop"
+                            alignItems="Center"
+                            justifyContent="SpaceBetween"
+                        >
+                            <ObjectAttribute
+                                title="Last violation"
+                                text="{dashboard>/violations/points/lastViolationDate}"
+                            />
+                            <Link
+                                text="View history >"
+                                press=".onViolationsNavPress"
+                                tooltip="Open the Traffic Violation System app"
+                            />
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </f:content>
+        </f:Card>
     </VBox>
 </core:FragmentDefinition>

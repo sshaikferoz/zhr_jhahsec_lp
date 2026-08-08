@@ -32,6 +32,14 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "tvsService": {
+        "uri": "/sap/opu/odata4/sap/zsrv_hr_tvs_o4/srvd/sap/zsrv_hr_tvs/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
       }
     }
   },
@@ -87,6 +95,15 @@
       },
       "sticker": {
         "dataSource": "stickerService",
+        "preload": false,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false
+        }
+      },
+      "tvs": {
+        "dataSource": "tvsService",
         "preload": false,
         "settings": {
           "operationMode": "Server",

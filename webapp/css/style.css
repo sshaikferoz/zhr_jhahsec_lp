@@ -485,6 +485,16 @@ html.jhahHtml body,
   width: 100% !important;
 }
 
+/* `.jhahKpiRow > .sapFCard` forces a zero flex-basis, which outranks
+   .jhahHalfCard and packs every card onto one row. Restore the 50% basis so
+   half cards wrap two-per-row inside a KPI row. */
+.jhahKpiRow > .sapFCard.jhahHalfCard {
+  flex: 1 1 calc(50% - 0.5rem);
+  /* Must stay under the 50% basis, or the cards fall back to one per row in
+     the ~23rem dashboard side column. 10rem still fits the longest label. */
+  min-width: min(100%, 10rem);
+}
+
 /* ── Card Internals ──────────────────────────────────────── */
 .jhahPairCardInner {
   padding: 1rem;
@@ -754,6 +764,17 @@ html.jhahHtml body,
 
 .jhahViolationsPointsCard {
   flex: 1 1 auto;
+}
+
+/* Label/value rows in the violations processing breakdown card. */
+.jhahBreakdownRow {
+  width: 100%;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.jhahBreakdownRow:last-child {
+  border-bottom: none;
 }
 
 /* ── Appointments ────────────────────────────────────────── */
