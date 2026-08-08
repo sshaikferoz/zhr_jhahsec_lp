@@ -23,7 +23,14 @@
                 type="XML"
             />
         </VBox>
-        <VBox class="jhahDashboardColSide" renderType="Bare" width="100%">
+        <!-- Side column holds only the Violations section — collapse it when
+             the user has no access, so it does not reserve empty width. -->
+        <VBox
+            class="jhahDashboardColSide"
+            renderType="Bare"
+            width="100%"
+            visible="{dashboard>/access/violations}"
+        >
             <core:Fragment
                 fragmentName="com.jhah.zhrjhahseclp.fragments.employee.Violations"
                 type="XML"

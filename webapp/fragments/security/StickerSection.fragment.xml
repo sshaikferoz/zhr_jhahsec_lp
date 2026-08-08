@@ -4,14 +4,15 @@
 >
     <!--
         Sticker Management section.
-        Renders the admin KPI-card view for Sticker Admins, otherwise the
-        personal StickerMaster view. Both sub-fragments are instantiated; only
-        the one matching dashboard>/sticker/isAdmin is visible.
+        Hidden entirely for users without access to the Sticker app. Otherwise
+        renders the admin KPI-card view for Sticker Admins and the personal
+        StickerMaster view for everyone else. Both sub-fragments are
+        instantiated; only the one matching dashboard>/sticker/isAdmin shows.
     -->
     <VBox
         renderType="Bare"
         width="100%"
-        visible="{dashboard>/sticker/isAdmin}"
+        visible="{= ${dashboard>/access/sticker} &amp;&amp; ${dashboard>/sticker/isAdmin} }"
     >
         <core:Fragment
             fragmentName="com.jhah.zhrjhahseclp.fragments.security.StickerManagementKpis"
@@ -21,7 +22,7 @@
     <VBox
         renderType="Bare"
         width="100%"
-        visible="{= !${dashboard>/sticker/isAdmin} }"
+        visible="{= ${dashboard>/access/sticker} &amp;&amp; !${dashboard>/sticker/isAdmin} }"
     >
         <core:Fragment
             fragmentName="com.jhah.zhrjhahseclp.fragments.employee.StickerManagement"

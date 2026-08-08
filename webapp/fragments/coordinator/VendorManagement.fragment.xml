@@ -6,7 +6,11 @@
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 >
-    <VBox class="jhahSection" renderType="Bare">
+    <VBox
+        class="jhahSection"
+        renderType="Bare"
+        visible="{dashboard>/access/vendor}"
+    >
         <Title text="Business Visitor Access" level="H5" class="jhahSectionTitle" />
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
             <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
