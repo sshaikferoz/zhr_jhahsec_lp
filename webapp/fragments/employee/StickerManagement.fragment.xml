@@ -140,7 +140,7 @@
                                                 text="{dashboard>reqIdStr}"
                                                 press=".onStickerRequestPress"
                                             />
-                                            <Text text="{dashboard>stkType}" />
+                                            <Text text="{dashboard>type}" />
                                             <ObjectStatus
                                                 text="{dashboard>status}"
                                                 state="{dashboard>statusState}"

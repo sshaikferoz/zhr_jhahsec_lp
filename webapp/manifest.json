@@ -26,7 +26,7 @@
         }
       },
       "stickerService": {
-        "uri": "/sap/opu/odata4/sap/zsrv_hr_stk/srvd/sap/zsrv_hr_stk/0001/",
+        "uri": "/sap/opu/odata4/sap/zui_hr_stk/srvd/sap/zsrv_hr_stk/0001/",
         "type": "OData",
         "settings": {
           "annotations": [],

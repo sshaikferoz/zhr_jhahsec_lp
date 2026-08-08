@@ -94,13 +94,13 @@ sap.ui.define(
                 var sInitials =
                   sName !== "-"
                     ? sName
-                        .split(" ")
-                        .map(function (w) {
-                          return w[0];
-                        })
-                        .join("")
-                        .substring(0, 2)
-                        .toUpperCase()
+                      .split(" ")
+                      .map(function (w) {
+                        return w[0];
+                      })
+                      .join("")
+                      .substring(0, 2)
+                      .toUpperCase()
                     : "?";
                 oDashboardModel.setProperty("/user/name", sName);
                 oDashboardModel.setProperty("/user/initials", sInitials);
@@ -194,10 +194,15 @@ sap.ui.define(
           this._loadAppInFrame("TrafficViolationSystem", "manage");
         } else if (sKey === "sticker") {
           this._loadAppInFrame("StickerMaster", "manage");
-        } else if (sKey === "dashboard") {
+        }
+        else if (sKey === "id") {
+          this._loadAppInFrame("idmanagementsystem", "manage");
+        }
+        else if (sKey === "dashboard") {
           var sRole = oDashboardModel.getProperty("/role");
           this._loadDashboardForRole(sRole);
         }
+
       },
 
       onViewModeChange: function (oEvent) {
