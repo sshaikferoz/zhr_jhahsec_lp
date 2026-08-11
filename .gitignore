@@ -8,3 +8,9 @@ mta-*
 resources
 archive.zip
 .*_mta_build_tmp
+
+# Local APIM testing environment — routes OData calls through APIM with a JWT
+# pasted at /_apim. Local only; not part of any build or deployment.
+dev/
+ui5-apim.yaml
+.claude/launch.json

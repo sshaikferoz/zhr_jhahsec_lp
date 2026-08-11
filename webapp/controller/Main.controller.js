@@ -43,6 +43,7 @@ sap.ui.define(
               var sRole = "COORDINATOR";
               var bAdmin = false;
               var bStickerAdmin = false;
+              var bViolationAdmin = false;
               if (aContexts.length) {
                 var oUser = aContexts[0].getObject();
                 bAdmin = oUser.Admin === "X";
@@ -51,6 +52,7 @@ sap.ui.define(
                 var oPersona =
                   this.getOwnerComponent()._getPersonaConfig(sRole);
                 bStickerAdmin = oUser.StickerAdmin === "X";
+                bViolationAdmin = oUser.TVSAdmin === "X";
 
                 var oAccess = this._buildAccessMap(oUser);
                 var aNavItems = oPersona.navItems.filter(function (oNav) {
@@ -64,21 +66,18 @@ sap.ui.define(
                 oDashboardModel.setProperty("/access", oAccess);
                 // Sticker section renders the admin KPI view when the user is a
                 // Sticker Admin, otherwise the personal StickerMaster view.
-                oDashboardModel.setProperty(
-                  "/sticker/isAdmin",
-                  bStickerAdmin,
-                );
+                oDashboardModel.setProperty("/sticker/isAdmin", bStickerAdmin);
                 var sName = oUser.UserName || "-";
                 var sInitials =
                   sName !== "-"
                     ? sName
-                      .split(" ")
-                      .map(function (w) {
-                        return w[0];
-                      })
-                      .join("")
-                      .substring(0, 2)
-                      .toUpperCase()
+                        .split(" ")
+                        .map(function (w) {
+                          return w[0];
+                        })
+                        .join("")
+                        .substring(0, 2)
+                        .toUpperCase()
                     : "?";
                 oDashboardModel.setProperty("/user/name", sName);
                 oDashboardModel.setProperty("/user/initials", sInitials);
@@ -129,7 +128,7 @@ sap.ui.define(
               this._loadDashboardForRole(sRole);
               this._fetchLandingKpis(bAdmin);
               this._fetchStickerData(bStickerAdmin);
-              this._fetchViolationData(bAdmin);
+              this._fetchViolationData(bViolationAdmin);
             }.bind(this),
           )
           .catch(
@@ -196,15 +195,12 @@ sap.ui.define(
           this._loadAppInFrame("TrafficViolationSystem", "manage");
         } else if (sKey === "sticker") {
           this._loadAppInFrame("StickerMaster", "manage");
-        }
-        else if (sKey === "id") {
+        } else if (sKey === "id") {
           this._loadAppInFrame("idmanagementsystem", "manage");
-        }
-        else if (sKey === "dashboard") {
+        } else if (sKey === "dashboard") {
           var sRole = oDashboardModel.getProperty("/role");
           this._loadDashboardForRole(sRole);
         }
-
       },
 
       onViewModeChange: function (oEvent) {
@@ -277,8 +273,7 @@ sap.ui.define(
           try {
             // Work Zone: top window is the launchpad shell (same origin).
             sShellBase =
-              (window.top && window.top.location.href) ||
-              window.location.href;
+              (window.top && window.top.location.href) || window.location.href;
           } catch (eTop) {
             // Cross-origin top window — fall back to this document's URL.
             sShellBase = window.location.href;
@@ -685,6 +680,8 @@ sap.ui.define(
           return;
         }
 
+        console.log("Fetching violation data for admin:", bAdmin);
+
         if (bAdmin) {
           this._fetchViolationAdminKpis();
         } else {
@@ -827,10 +824,7 @@ sap.ui.define(
           );
         });
         oDashboardModel.setProperty("/selectedNavKey", "violations");
-        oDashboardModel.setProperty(
-          "/embedTitle",
-          "Traffic Violation System",
-        );
+        oDashboardModel.setProperty("/embedTitle", "Traffic Violation System");
 
         this._loadAppInFrame("TrafficViolationSystem", "manage");
       },
