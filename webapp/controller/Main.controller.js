@@ -2,9 +2,9 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/Fragment",
-    "sap/ui/core/Component",
-    "sap/ui/core/ComponentContainer",
+    "sap/ui/core/HTML",
     "sap/m/MessageStrip",
+    "sap/base/Log",
     "sap/ui/model/Sorter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
@@ -12,9 +12,9 @@ sap.ui.define(
   function (
     Controller,
     Fragment,
-    Component,
-    ComponentContainer,
+    HTML,
     MessageStrip,
+    Log,
     Sorter,
     Filter,
     FilterOperator,
@@ -201,13 +201,13 @@ sap.ui.define(
         oDashboardModel.setProperty("/embedTitle", sTitle);
 
         if (sKey === "vendor") {
-          this._loadAppEmbedded("BusiVisitorAccess", "manage");
+          this._loadAppInFrame("BusiVisitorAccess", "manage");
         } else if (sKey === "violations") {
-          this._loadAppEmbedded("TrafficViolationSystem", "manage");
+          this._loadAppInFrame("TrafficViolationSystem", "manage");
         } else if (sKey === "sticker") {
-          this._loadAppEmbedded("StickerMaster", "manage");
+          this._loadAppInFrame("StickerMaster", "manage");
         } else if (sKey === "id") {
-          this._loadAppEmbedded("idmanagementsystem", "manage");
+          this._loadAppInFrame("idmanagementsystem", "manage");
         } else if (sKey === "dashboard") {
           var sRole = oDashboardModel.getProperty("/role");
           this._loadDashboardForRole(sRole);
@@ -230,27 +230,24 @@ sap.ui.define(
 
         // If vendor frame is currently open, reload it with the updated flag
         if (oDashboardModel.getProperty("/isEmbedFrame")) {
-          this._loadAppEmbedded("BusiVisitorAccess", "manage");
+          this._loadAppInFrame("BusiVisitorAccess", "manage");
         }
       },
 
       /**
-       * Embeds another Fiori app in the dashboard content area.
+       * Opens another Fiori app in an iframe filling the dashboard content
+       * area.
        *
-       * The app is loaded as a UI5 component into this view, not into an
-       * iframe. Work Zone resolves these ABAP-hosted apps to
-       * /sap/bc/ui2/flp/ui5appruntime.html, which is an FLP app container: it
+       * The iframe points at the launchpad shell with the target intent in the
+       * hash — the same URL the shell itself would navigate to. Do not point it
+       * at the resolved app URL: Work Zone resolves these ABAP-hosted apps to
+       * /sap/bc/ui2/flp/ui5appruntime.html, which is an FLP app container that
        * proxies ushell services to its parent over postMessage and waits for
-       * that handshake before rendering. Nested inside this app nothing answers
-       * it, so the target app boots, fires its OData calls, and then sits on
-       * the busy indicator forever. Its frame-protocol messages also reach the
-       * Work Zone shell search plugin, which JSON.parses every message it gets
-       * and throws on them.
-       *
-       * Loading the component directly avoids the second container entirely —
-       * the embedded app shares the ushell container this app already has.
+       * that handshake before rendering. Nested here nothing answers it, so the
+       * app boots, fires its OData calls, and then sits on the busy indicator
+       * forever. The shell URL has no such dependency — it is the container.
        */
-      _loadAppEmbedded: function (sSemanticObject, sAction, sInnerRoute) {
+      _loadAppInFrame: function (sSemanticObject, sAction, sInnerRoute) {
         var that = this;
         var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
         oDashboardModel.setProperty("/isEmbedFrame", true);
@@ -262,42 +259,54 @@ sap.ui.define(
 
         var bAdmin = oDashboardModel.getProperty("/isAdmin");
 
-        // Guards against a slow resolve landing after the user has already
-        // navigated somewhere else.
+        // Guards against a slow shell-base lookup landing after the user has
+        // already navigated somewhere else.
         var iToken = (this._iEmbedToken = (this._iEmbedToken || 0) + 1);
 
-        return this._resolveEmbeddedApp(sSemanticObject, sAction)
-          .then(function (oApp) {
-            return Component.create({
-              name: oApp.componentId,
-              url: oApp.url,
-              componentData: {
-                startupParameters: { admin: [bAdmin ? "true" : "false"] },
-              },
-            });
-          })
-          .then(function (oComponent) {
+        return this._resolveShellBase()
+          .then(function (sShellBase) {
             if (iToken !== that._iEmbedToken) {
-              oComponent.destroy();
               return;
             }
 
+            // Intent hash format is #SemanticObject-action?params&/innerRoute.
+            // The first parameter separator is "?" — "&" here would fold the
+            // parameters into the action name and the intent would not resolve.
+            var sHash =
+              "#" +
+              sSemanticObject +
+              "-" +
+              sAction +
+              "?admin=" +
+              (bAdmin ? "true" : "false");
+
+            if (sInnerRoute) {
+              sHash += "&/" + sInnerRoute.replace(/^[&/]+/, "");
+            }
+
+            // headerless suppresses the nested shell's own header, so the
+            // embedded app sits directly under this dashboard's chrome.
+            var sUrl =
+              sShellBase +
+              (sShellBase.indexOf("?") === -1 ? "?" : "&") +
+              "sap-ushell-config=headerless" +
+              sHash;
+
+            Log.info("embedding " + sUrl, null, "jhah.embed");
+
             oContainer.setBusy(false);
             oContainer.addItem(
-              new ComponentContainer({
-                component: oComponent,
-                width: "100%",
-                height: "100%",
-                propagateModel: false,
-              }).addStyleClass("jhahEmbeddedApp"),
+              new HTML({
+                content:
+                  '<iframe src="' +
+                  encodeURI(sUrl).replace(/"/g, "&quot;") +
+                  '" style="width:100%;height:calc(100vh - 6.25rem);' +
+                  'min-height:calc(100vh - 6.25rem);border:none;display:block;"' +
+                  "></iframe>",
+                sanitizeContent: false,
+                preferDOM: true,
+              }),
             );
-
-            // Deep-link into a specific object page. Drive the embedded
-            // router directly — the browser hash belongs to the host app.
-            var oRouter = oComponent.getRouter && oComponent.getRouter();
-            if (sInnerRoute && oRouter) {
-              oRouter.parse(sInnerRoute);
-            }
           })
           .catch(function (oError) {
             if (iToken !== that._iEmbedToken) {
@@ -320,66 +329,43 @@ sap.ui.define(
       },
 
       /**
-       * Resolves an intent to the component id and base URL of the target app.
+       * Resolves the launchpad shell URL, without its hash.
        *
-       * Work Zone hands back the app-runtime URL rather than the app itself, so
-       * the component id comes out of its sap-ui-app-id parameter and the base
-       * URL from the ABAP app index. Both live on this app's own origin.
+       * window.top is not readable here. Work Zone serves destination-proxied
+       * apps from "<subdomain>-sapdelim-<destination>.<host>" while the shell
+       * runs on "<subdomain>.<host>", so this app is cross-origin to its own
+       * launchpad and touching window.top.location throws.
        */
-      _resolveEmbeddedApp: function (sSemanticObject, sAction) {
-        var sIntent = "#" + sSemanticObject + "-" + sAction;
-
-        return sap.ushell.Container.getServiceAsync("NavTargetResolution")
-          .then(function (oNavTarget) {
-            return oNavTarget.resolveHashFragment(sIntent);
+      _resolveShellBase: function () {
+        return Promise.resolve()
+          .then(function () {
+            // The container knows its own launchpad URL, and in the app
+            // runtime it answers over postMessage.
+            return sap.ushell.Container.getFLPUrl(false);
           })
-          .then(function (oResolved) {
-            if (!oResolved || !oResolved.url) {
-              throw new Error(sIntent + " did not resolve to a URL");
+          .then(function (sFlpUrl) {
+            if (!sFlpUrl) {
+              throw new Error("container returned no FLP URL");
+            }
+            return sFlpUrl.split("#")[0];
+          })
+          .catch(function (oError) {
+            Log.warning(
+              "getFLPUrl unavailable, deriving shell base",
+              (oError && oError.message) || String(oError),
+              "jhah.embed",
+            );
+
+            // The parent document is the shell.
+            if (document.referrer) {
+              return document.referrer.split("#")[0];
             }
 
-            var oResolvedUrl = new URL(oResolved.url, window.location.href);
-            var sAppId = oResolvedUrl.searchParams.get("sap-ui-app-id");
-            if (!sAppId) {
-              throw new Error(
-                "no sap-ui-app-id in resolved URL " + oResolved.url,
-              );
-            }
-
-            var sClient =
-              oResolvedUrl.searchParams.get("sap-client") ||
-              new URL(window.location.href).searchParams.get("sap-client");
-
-            var sIndexUrl =
-              "/sap/bc/ui2/app_index/ui5_app_info?id=" +
-              encodeURIComponent(sAppId) +
-              (sClient ? "&sap-client=" + encodeURIComponent(sClient) : "");
-
-            return fetch(sIndexUrl, {
-              credentials: "same-origin",
-              headers: { Accept: "application/json" },
-            })
-              .then(function (oResponse) {
-                if (!oResponse.ok) {
-                  throw new Error(
-                    "app index returned " + oResponse.status + " for " + sAppId,
-                  );
-                }
-                return oResponse.json();
-              })
-              .then(function (oIndex) {
-                var oEntry = oIndex && oIndex[sAppId];
-                var sBaseUrl =
-                  (oEntry && oEntry.url) ||
-                  ((oEntry && oEntry.manifestUrl) || "").replace(
-                    /\/?manifest\.json.*$/,
-                    "",
-                  );
-                if (!sBaseUrl) {
-                  throw new Error("app index has no URL for " + sAppId);
-                }
-                return { componentId: sAppId, url: sBaseUrl };
-              });
+            // Last resort: strip the destination suffix off our own host.
+            var oUrl = new URL(window.location.href);
+            var aHost = oUrl.hostname.split(".");
+            aHost[0] = aHost[0].replace(/-sapdelim-.*$/, "");
+            return oUrl.protocol + "//" + aHost.join(".") + "/site";
           });
       },
 
@@ -686,7 +672,7 @@ sap.ui.define(
         oDashboardModel.setProperty("/selectedNavKey", "sticker");
         oDashboardModel.setProperty("/embedTitle", "Sticker Management");
 
-        this._loadAppEmbedded("StickerMaster", "manage", sInnerRoute);
+        this._loadAppInFrame("StickerMaster", "manage", sInnerRoute);
       },
 
       /**
@@ -856,7 +842,7 @@ sap.ui.define(
         oDashboardModel.setProperty("/selectedNavKey", "violations");
         oDashboardModel.setProperty("/embedTitle", "Traffic Violation System");
 
-        this._loadAppEmbedded("TrafficViolationSystem", "manage");
+        this._loadAppInFrame("TrafficViolationSystem", "manage");
       },
 
       _configureVisitorChart: function () {

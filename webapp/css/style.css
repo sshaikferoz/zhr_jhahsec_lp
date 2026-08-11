@@ -900,14 +900,6 @@ html.jhahHtml body,
   gap: 0 !important;
 }
 
-/* The embedded app fills the viewport below the shell header. The iframe this
-   replaced carried the same height inline. */
-.jhahEmbeddedApp {
-  display: block;
-  height: calc(100vh - 6.25rem);
-  min-height: calc(100vh - 6.25rem);
-}
-
 .jhahMainScrollEmbed,
 .jhahMainScrollEmbed.sapMScrollCont {
   padding: 0 !important;
