@@ -90,7 +90,8 @@
         "settings": {
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "earlyRequests": true
+          "earlyRequests": true,
+          "groupId": "$direct"
         }
       },
       "sticker": {
@@ -99,7 +100,8 @@
         "settings": {
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "earlyRequests": false
+          "earlyRequests": false,
+          "groupId": "$direct"
         }
       },
       "tvs": {
@@ -108,7 +110,8 @@
         "settings": {
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "earlyRequests": false
+          "earlyRequests": false,
+          "groupId": "$direct"
         }
       }
     },
@@ -135,9 +138,7 @@
         {
           "name": "RouteMain",
           "pattern": ":?query:",
-          "target": [
-            "TargetMain"
-          ]
+          "target": ["TargetMain"]
         }
       ],
       "targets": {
