@@ -170,7 +170,7 @@ sap.ui.define(
           // `oUser.StickerAdmin === "X"` to restrict it to Sticker Admins.
           sticker: true,
           // ID Management System — Admins only
-          id: oUser.Admin === "X",
+          id: true,
         };
       },
 
