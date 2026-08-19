@@ -8,43 +8,52 @@
 
         <!-- Personal KPI strip derived from the user's own StickerMaster records -->
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/sticker/userKpis/0/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/sticker/userKpis/0/value}"
-                            emphasized="true"
-                            state="{dashboard>/sticker/userKpis/0/valueState}"
-                            class="jhahKpiValue"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://document" class="jhahKpiIcon jhahKpiIconBlue" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/sticker/userKpis/0/title}" level="H6" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/sticker/userKpis/0/value}"
+                                emphasized="true"
+                                state="{dashboard>/sticker/userKpis/0/valueState}"
+                                class="jhahKpiValue"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/sticker/userKpis/1/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/sticker/userKpis/1/value}"
-                            emphasized="true"
-                            state="{dashboard>/sticker/userKpis/1/valueState}"
-                            class="jhahKpiValue"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://in-progress" class="jhahKpiIcon jhahKpiIconOrange" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/sticker/userKpis/1/title}" level="H6" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/sticker/userKpis/1/value}"
+                                emphasized="true"
+                                state="{dashboard>/sticker/userKpis/1/valueState}"
+                                class="jhahKpiValue"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/sticker/userKpis/2/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/sticker/userKpis/2/value}"
-                            emphasized="true"
-                            state="{dashboard>/sticker/userKpis/2/valueState}"
-                            class="jhahKpiValue"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://car-rental" class="jhahKpiIcon jhahKpiIconGreen" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/sticker/userKpis/2/title}" level="H6" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/sticker/userKpis/2/value}"
+                                emphasized="true"
+                                state="{dashboard>/sticker/userKpis/2/valueState}"
+                                class="jhahKpiValue"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
         </HBox>

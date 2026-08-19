@@ -24,69 +24,78 @@
         <!-- Personal counts -->
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
             <f:Card
-                class="jhahKpiCard jhahAccentOrange jhahThirdCard"
+                class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon"
                 tooltip="{dashboard>/violations/userKpis/0/tooltip}"
             >
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/violations/userKpis/0/title}" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/violations/userKpis/0/value}"
-                            emphasized="true"
-                            state="{dashboard>/violations/userKpis/0/valueState}"
-                            class="jhahKpiValue"
-                            visible="{dashboard>/violations/hasUserData}"
-                        />
-                        <Text
-                            text="No data available"
-                            class="jhahMutedText jhahNoDataValue"
-                            visible="{= !${dashboard>/violations/hasUserData} }"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://in-progress" class="jhahKpiIcon jhahKpiIconOrange" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/violations/userKpis/0/title}" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/violations/userKpis/0/value}"
+                                emphasized="true"
+                                state="{dashboard>/violations/userKpis/0/valueState}"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/violations/hasUserData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/violations/hasUserData} }"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
             <f:Card
-                class="jhahKpiCard jhahAccentBlue jhahThirdCard"
+                class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
                 tooltip="{dashboard>/violations/userKpis/1/tooltip}"
             >
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/violations/userKpis/1/title}" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/violations/userKpis/1/value}"
-                            emphasized="true"
-                            state="{dashboard>/violations/userKpis/1/valueState}"
-                            class="jhahKpiValue"
-                            visible="{dashboard>/violations/hasUserData}"
-                        />
-                        <Text
-                            text="No data available"
-                            class="jhahMutedText jhahNoDataValue"
-                            visible="{= !${dashboard>/violations/hasUserData} }"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://history" class="jhahKpiIcon jhahKpiIconBlue" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/violations/userKpis/1/title}" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/violations/userKpis/1/value}"
+                                emphasized="true"
+                                state="{dashboard>/violations/userKpis/1/valueState}"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/violations/hasUserData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/violations/hasUserData} }"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
             <f:Card
-                class="jhahKpiCard jhahAccentBlue jhahThirdCard"
+                class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
                 tooltip="{dashboard>/violations/userKpis/2/tooltip}"
             >
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/violations/userKpis/2/title}" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/violations/userKpis/2/value}"
-                            emphasized="true"
-                            state="{dashboard>/violations/userKpis/2/valueState}"
-                            class="jhahKpiValue"
-                            visible="{dashboard>/violations/hasUserData}"
-                        />
-                        <Text
-                            text="No data available"
-                            class="jhahMutedText jhahNoDataValue"
-                            visible="{= !${dashboard>/violations/hasUserData} }"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://sum" class="jhahKpiIcon jhahKpiIconBlue" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/violations/userKpis/2/title}" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/violations/userKpis/2/value}"
+                                emphasized="true"
+                                state="{dashboard>/violations/userKpis/2/valueState}"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/violations/hasUserData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/violations/hasUserData} }"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
         </HBox>

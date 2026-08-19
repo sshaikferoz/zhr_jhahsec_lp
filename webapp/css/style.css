@@ -560,6 +560,90 @@ html.jhahHtml body,
   overflow: visible;
 }
 
+/* KPI tile with a leading tinted icon badge (Business Visitor Access).
+   Overrides the column layout of .jhahKpiCardInner to place the icon beside
+   the title/value stack, matching the analytics-card inspiration. */
+.jhahKpiCardIconInner.sapMHBox {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.85rem;
+}
+
+.jhahKpiTextCol {
+  min-width: 0;
+  gap: 0.15rem;
+  justify-content: center;
+}
+
+.jhahKpiTextCol .jhahKpiTitle {
+  margin-bottom: 0.2rem;
+}
+
+.jhahKpiIcon.sapUiIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  border-radius: 0.75rem;
+  font-size: 1.15rem;
+}
+
+.jhahKpiIconBlue.sapUiIcon {
+  background: rgba(29, 125, 181, 0.12);
+  color: #1d7db5;
+}
+
+.jhahKpiIconGreen.sapUiIcon {
+  background: rgba(49, 165, 110, 0.12);
+  color: #31a56e;
+}
+
+.jhahKpiIconOrange.sapUiIcon {
+  background: rgba(210, 140, 34, 0.14);
+  color: #d28c22;
+}
+
+.jhahKpiIconRed.sapUiIcon {
+  background: rgba(199, 75, 75, 0.12);
+  color: #c74b4b;
+}
+
+/* Icon KPI tiles need more horizontal room than a plain tile so the badge and
+   the title/value stack sit side by side without the label crowding the icon.
+   This min-width makes them wrap two-per-row in the ~20rem dashboard side
+   column and spread three-to-four across in the wide main column. */
+.jhahKpiCardIcon.sapFCard {
+  min-width: min(100%, 9rem);
+}
+
+/* A section built for the wide main column (Sticker Management: an Active
+   Sticker + Request Status pair; two-per-row KPI/half cards) can land in the
+   ~20rem side column after a layout swap. In that context stack its inner
+   two-column card rows so each card gets the full column width instead of
+   being squeezed into an unreadable half. */
+.jhahDashboardColSide .jhahTwoColRow {
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.jhahDashboardColSide .jhahTwoColRow > .jhahHalfCardWrap,
+.jhahDashboardColSide .jhahTwoColRow > .sapFCard {
+  flex: 1 1 100% !important;
+  min-width: 100%;
+  /* Cancel the equal-height stretch used when these cards sit side by side in
+     the wide column. Once stacked, height:100% makes each card claim the full
+     row height, so the second one overflows below the section ("floats
+     outside"). Let them size to their own content instead. */
+  height: auto;
+}
+
+.jhahDashboardColSide .jhahTwoColRow > .jhahHalfCardWrap > .sapFCard {
+  height: auto;
+}
+
 .jhahAlertCardInner {
   padding: 1rem 1.25rem;
   box-sizing: border-box;
@@ -659,10 +743,13 @@ html.jhahHtml body,
   font-size: 0.875rem;
 }
 
-/* Inline "No data" value shown inside a KPI / data tile shell */
+/* Inline "No data" value shown inside a KPI / data tile shell. Kept subtle —
+   it is a placeholder, not a real value, so it should read lighter than the
+   numbers it stands in for. */
 .jhahNoDataValue {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #9aa2ab;
   margin-top: 0.25rem;
 }
 

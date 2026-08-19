@@ -10,28 +10,37 @@
     >
         <Title text="ID Management System" level="H5" class="jhahSectionTitle" />
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="Total ID Request" class="jhahKpiTitle" />
-                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://id-card" class="jhahKpiIcon jhahKpiIconBlue" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="Total ID Request" class="jhahKpiTitle" />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="Approved Cards" class="jhahKpiTitle" />
-                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="Approved Cards" class="jhahKpiTitle" />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="Pending Review" class="jhahKpiTitle" />
-                        <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://pending" class="jhahKpiIcon jhahKpiIconOrange" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="Pending Review" class="jhahKpiTitle" />
+                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
         </HBox>

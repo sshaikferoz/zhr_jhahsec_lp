@@ -6,80 +6,92 @@
     <VBox class="jhahSection" renderType="Bare">
         <Title text="Sticker Management" level="H5" class="jhahSectionTitle" />
         <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/sticker/kpis/0/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/sticker/kpis/0/value}"
-                            emphasized="true"
-                            state="{dashboard>/sticker/kpis/0/valueState}"
-                            class="jhahKpiValue"
-                            visible="{dashboard>/sticker/hasKpiData}"
-                        />
-                        <Text
-                            text="No data available"
-                            class="jhahMutedText jhahNoDataValue"
-                            visible="{= !${dashboard>/sticker/hasKpiData} }"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://document" class="jhahKpiIcon jhahKpiIconBlue" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/sticker/kpis/0/title}" level="H6" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/sticker/kpis/0/value}"
+                                emphasized="true"
+                                state="{dashboard>/sticker/kpis/0/valueState}"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/sticker/hasKpiData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/sticker/hasKpiData} }"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/sticker/kpis/1/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/sticker/kpis/1/value}"
-                            emphasized="true"
-                            state="{dashboard>/sticker/kpis/1/valueState}"
-                            class="jhahKpiValue"
-                            visible="{dashboard>/sticker/hasKpiData}"
-                        />
-                        <Text
-                            text="No data available"
-                            class="jhahMutedText jhahNoDataValue"
-                            visible="{= !${dashboard>/sticker/hasKpiData} }"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/sticker/kpis/1/title}" level="H6" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/sticker/kpis/1/value}"
+                                emphasized="true"
+                                state="{dashboard>/sticker/kpis/1/valueState}"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/sticker/hasKpiData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/sticker/hasKpiData} }"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/sticker/kpis/2/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/sticker/kpis/2/value}"
-                            emphasized="true"
-                            state="{dashboard>/sticker/kpis/2/valueState}"
-                            class="jhahKpiValue"
-                            visible="{dashboard>/sticker/hasKpiData}"
-                        />
-                        <Text
-                            text="No data available"
-                            class="jhahMutedText jhahNoDataValue"
-                            visible="{= !${dashboard>/sticker/hasKpiData} }"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://in-progress" class="jhahKpiIcon jhahKpiIconOrange" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/sticker/kpis/2/title}" level="H6" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/sticker/kpis/2/value}"
+                                emphasized="true"
+                                state="{dashboard>/sticker/kpis/2/valueState}"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/sticker/hasKpiData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/sticker/hasKpiData} }"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentRed jhahThirdCard">
+            <f:Card class="jhahKpiCard jhahAccentRed jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <VBox class="jhahKpiCardInner" renderType="Bare">
-                        <Label text="{dashboard>/sticker/kpis/3/title}" level="H6" class="jhahKpiTitle" />
-                        <ObjectNumber
-                            number="{dashboard>/sticker/kpis/3/value}"
-                            emphasized="true"
-                            state="{dashboard>/sticker/kpis/3/valueState}"
-                            class="jhahKpiValue"
-                            visible="{dashboard>/sticker/hasKpiData}"
-                        />
-                        <Text
-                            text="No data available"
-                            class="jhahMutedText jhahNoDataValue"
-                            visible="{= !${dashboard>/sticker/hasKpiData} }"
-                        />
-                    </VBox>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://decline" class="jhahKpiIcon jhahKpiIconRed" />
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{dashboard>/sticker/kpis/3/title}" level="H6" class="jhahKpiTitle" />
+                            <ObjectNumber
+                                number="{dashboard>/sticker/kpis/3/value}"
+                                emphasized="true"
+                                state="{dashboard>/sticker/kpis/3/valueState}"
+                                class="jhahKpiValue"
+                                visible="{dashboard>/sticker/hasKpiData}"
+                            />
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/sticker/hasKpiData} }"
+                            />
+                        </VBox>
+                    </HBox>
                 </f:content>
             </f:Card>
         </HBox>

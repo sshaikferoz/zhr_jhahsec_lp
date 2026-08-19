@@ -11,15 +11,11 @@
     >
         <VBox class="jhahDashboardColMain" renderType="Bare" width="100%">
             <core:Fragment
-                fragmentName="com.jhah.zhrjhahseclp.fragments.security.StickerSection"
+                fragmentName="com.jhah.zhrjhahseclp.fragments.coordinator.VendorManagement"
                 type="XML"
             />
             <core:Fragment
                 fragmentName="com.jhah.zhrjhahseclp.fragments.employee.IDManagement"
-                type="XML"
-            />
-            <core:Fragment
-                fragmentName="com.jhah.zhrjhahseclp.fragments.employee.Appointments"
                 type="XML"
             />
         </VBox>
@@ -36,7 +32,7 @@
                 type="XML"
             />
             <core:Fragment
-                fragmentName="com.jhah.zhrjhahseclp.fragments.coordinator.VendorManagement"
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.StickerSection"
                 type="XML"
             />
         </VBox>
