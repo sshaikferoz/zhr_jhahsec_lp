@@ -35,6 +35,82 @@ sap.ui.define(
     return Controller.extend("com.jhah.zhrjhahseclp.controller.Main", {
       onInit: function () {
         this._fetchEmployeeHeaderAndLoad();
+        this._fetchActiveIdCard();
+      },
+
+      /**
+       * Loads the user's active ID card from the ID service (/activeID),
+       * reconstructing the reference project's ActiveIdCard fragment contract:
+       *  - IdNumber          → the active card's number
+       *  - DaystoExpire      → days remaining before expiry
+       *  - IsExpiringSoon    → DaystoExpire <= 30, which gates the Renew action
+       * The result feeds the dashboard model's /idCard block, which the ID
+       * Management section's Active ID Card renders. The card stays in its
+       * "No data available" state until a card is returned.
+       */
+      _fetchActiveIdCard: function () {
+        var oIdModel = this.getOwnerComponent().getModel("idmgmt");
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        if (!oIdModel || !oDashboardModel) {
+          return;
+        }
+
+        oIdModel
+          .bindList("/activeID", undefined, undefined, undefined, {
+            $$groupId: "$direct",
+          })
+          .requestContexts(0, 1)
+          .then(function (aContexts) {
+            if (!aContexts.length) {
+              return;
+            }
+            var oData = aContexts[0].getObject();
+            var iDays = parseInt(oData.DaystoExpire, 10);
+            var bExpiring = !isNaN(iDays) && iDays <= 30;
+
+            // Progress reflects remaining validity of a standard 12-month card;
+            // it is a visual gauge, not a precise figure from the backend.
+            var iPercent = isNaN(iDays)
+              ? 0
+              : Math.max(0, Math.min(100, Math.round((iDays / 365) * 100)));
+
+            oDashboardModel.setProperty("/idCard", {
+              hasData: !!oData.IdNumber,
+              idNumber: oData.IdNumber || "-",
+              daysToExpire: isNaN(iDays) ? "-" : String(iDays),
+              isExpiringSoon: bExpiring,
+              expiryPercent: iPercent,
+              statusText: bExpiring
+                ? "Expiring Soon"
+                : oData.IdNumber
+                  ? "Active"
+                  : "",
+              statusState: bExpiring ? "Warning" : "Success",
+            });
+          })
+          .catch(function () {
+            // backend unreachable — "No data available" placeholder remains
+          });
+      },
+
+      /**
+       * Renew ID Card — opens the ID Management System app in the embedded
+       * frame, matching the side-nav "ID Management System" entry. Enabled only
+       * when the active card is expiring soon (see the Active ID Card fragment).
+       */
+      onRenewIdCard: function () {
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        var aNavItems = oDashboardModel.getProperty("/navItems") || [];
+        aNavItems.forEach(function (oNav, i) {
+          oDashboardModel.setProperty(
+            "/navItems/" + i + "/selected",
+            oNav.key === "id",
+          );
+        });
+        oDashboardModel.setProperty("/selectedNavKey", "id");
+        oDashboardModel.setProperty("/embedTitle", "ID Management System");
+
+        this._loadAppInFrame("idmanagementsystem", "manage");
       },
 
       _fetchEmployeeHeaderAndLoad: function () {
