@@ -68,11 +68,14 @@ sap.ui.define(
             var iDays = parseInt(oData.DaystoExpire, 10);
             var bExpiring = !isNaN(iDays) && iDays <= 30;
 
-            // Progress reflects remaining validity of a standard 12-month card;
-            // it is a visual gauge, not a precise figure from the backend.
+            // Progress bar shows how far the card has moved *toward* expiry, so
+            // it fills up as the card ages and is nearly full when expiring
+            // soon. Elapsed = validity consumed against a standard 12-month
+            // card; a visual gauge, not a precise figure from the backend.
+            // (DaystoExpire itself carries the exact remaining count.)
             var iPercent = isNaN(iDays)
               ? 0
-              : Math.max(0, Math.min(100, Math.round((iDays / 365) * 100)));
+              : Math.max(0, Math.min(100, 100 - Math.round((iDays / 365) * 100)));
 
             oDashboardModel.setProperty("/idCard", {
               hasData: !!oData.IdNumber,
