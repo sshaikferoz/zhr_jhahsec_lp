@@ -175,6 +175,21 @@ sap.ui.define(
             email: "-",
             initials: "-",
           },
+          // Active ID card, populated from the ID service's /activeID entity
+          // (see Main.controller#_fetchActiveIdCard). Mirrors the reference
+          // project's ActiveIdCard fragment contract: an ID number, a days-to-
+          // expiry countdown, an "expiring soon" flag (<= 30 days) that gates
+          // the Renew action, and a validity progress indicator. Defaults keep
+          // the card in its "No data available" state until the fetch returns.
+          idCard: {
+            hasData: false,
+            idNumber: "-",
+            daysToExpire: "-",
+            isExpiringSoon: false,
+            expiryPercent: 0,
+            statusText: "",
+            statusState: "None",
+          },
           navItems: oPersona.navItems,
           // Sticker Management section state.
           //  - isAdmin drives whether the KPI-card view (Sticker Admin) or the

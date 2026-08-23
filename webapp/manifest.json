@@ -40,6 +40,14 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "idService": {
+        "uri": "/sap/opu/odata4/sap/zsrv_hr_id_o4/srvd/sap/zsrv_hr_id_app/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
       }
     }
   },
@@ -106,6 +114,16 @@
       },
       "tvs": {
         "dataSource": "tvsService",
+        "preload": false,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false,
+          "groupId": "$direct"
+        }
+      },
+      "idmgmt": {
+        "dataSource": "idService",
         "preload": false,
         "settings": {
           "operationMode": "Server",

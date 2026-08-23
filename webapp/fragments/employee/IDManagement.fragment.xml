@@ -10,7 +10,9 @@
     >
         <Title text="ID Management System" level="H5" class="jhahSectionTitle" />
         <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
-            <!-- Badge ID card -->
+            <!-- Active ID Card — reconstructed from the reference project's
+                 ActiveIdCard fragment contract (ID number, days-to-expiry,
+                 expiring-soon flag gating Renew), fed by /activeID. -->
             <VBox class="jhahHalfCardWrap" renderType="Bare" width="100%">
                 <layoutData>
                     <FlexItemData growFactor="1" baseSize="0%" />
@@ -18,8 +20,72 @@
                 <f:Card class="jhahDataCard" width="100%">
                     <f:content>
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
-                            <Label text="BADGE ID" class="jhahMutedText" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                            <!-- Populated state -->
+                            <VBox
+                                visible="{dashboard>/idCard/hasData}"
+                                renderType="Bare"
+                                width="100%"
+                                class="jhahIdCardBody"
+                            >
+                                <HBox
+                                    class="jhahIdCardHeader"
+                                    renderType="Bare"
+                                    width="100%"
+                                    justifyContent="SpaceBetween"
+                                    alignItems="Center"
+                                >
+                                    <HBox renderType="Bare" alignItems="Center">
+                                        <core:Icon src="sap-icon://badge" class="jhahIdCardHeaderIcon" />
+                                        <VBox class="jhahIdCardHeaderText" renderType="Bare">
+                                            <Label text="ACTIVE ID CARD" class="jhahMutedText" />
+                                            <Text
+                                                text="{dashboard>/idCard/idNumber}"
+                                                tooltip="{dashboard>/idCard/idNumber}"
+                                                class="jhahIdCardName"
+                                            />
+                                        </VBox>
+                                    </HBox>
+                                    <ObjectStatus
+                                        text="{dashboard>/idCard/statusText}"
+                                        state="{dashboard>/idCard/statusState}"
+                                        class="jhahBadgeStatus"
+                                    />
+                                </HBox>
+
+                                <VBox class="jhahIdCardExpiry" renderType="Bare" width="100%">
+                                    <HBox justifyContent="SpaceBetween" class="jhahIdCardRow" renderType="Bare">
+                                        <Label text="Days to Expiry" class="jhahIdCardLabel" />
+                                        <Text text="{dashboard>/idCard/daysToExpire}" class="jhahIdCardValue" />
+                                    </HBox>
+                                    <ProgressIndicator
+                                        percentValue="{dashboard>/idCard/expiryPercent}"
+                                        showValue="false"
+                                        state="{dashboard>/idCard/statusState}"
+                                        class="jhahExpiryProgress"
+                                    />
+                                </VBox>
+
+                                <Button
+                                    text="Renew ID Card"
+                                    type="Emphasized"
+                                    icon="sap-icon://request"
+                                    enabled="{dashboard>/idCard/isExpiringSoon}"
+                                    tooltip="{= ${dashboard>/idCard/isExpiringSoon} ? 'Your ID is eligible for renewal.' : 'Renewal is available within 30 days of your ID expiration.' }"
+                                    press=".onRenewIdCard"
+                                    class="jhahRenewBtn"
+                                />
+                            </VBox>
+
+                            <!-- Empty state -->
+                            <VBox
+                                visible="{= !${dashboard>/idCard/hasData} }"
+                                renderType="Bare"
+                                justifyContent="Start"
+                                width="100%"
+                            >
+                                <Label text="ACTIVE ID CARD" class="jhahMutedText" />
+                                <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                            </VBox>
                         </VBox>
                     </f:content>
                 </f:Card>
