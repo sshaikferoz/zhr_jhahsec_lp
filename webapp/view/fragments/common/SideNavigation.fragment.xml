@@ -1,0 +1,108 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <VBox class="jhahSideNavWrap" renderType="Bare" height="100%" justifyContent="Start">
+        <VBox renderType="Bare">
+            <VBox class="jhahBrandArea" renderType="Bare" justifyContent="Start">
+                <Image
+                    src="{dashboard>/logoUrl}"
+                    alt="Security Management System"
+                    densityAware="false"
+                    class="jhahBrandLogo"
+                    width="100%"
+                />
+            </VBox>
+            <List
+                items="{dashboard>/navItems}"
+                mode="SingleSelectMaster"
+                showSeparators="None"
+                backgroundDesign="Transparent"
+                class="jhahNavList"
+                selectionChange=".onNavItemSelect"
+            >
+                <CustomListItem
+                    selected="{dashboard>selected}"
+                    class="jhahNavItem"
+                >
+                    <customData>
+                        <core:CustomData key="navKey" value="{dashboard>key}" />
+                    </customData>
+                    <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
+                        <core:Icon src="{dashboard>icon}" class="jhahNavItemIcon" />
+                        <Text text="{dashboard>title}" class="jhahNavItemText" />
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </VBox>
+
+        <!-- Pattern fills the gap from the end of the menu down to the user card -->
+        <Image src="{dashboard>/patternUrl}" alt="" densityAware="false" class="jhahMenuPattern" />
+
+        <VBox class="jhahSideNavFooter" renderType="Bare">
+
+            <VBox class="jhahSidebarUserCard" renderType="Bare">
+
+                <!-- Avatar + Name + Role -->
+                <HBox alignItems="Center" class="jhahUserCardHeader" renderType="Bare">
+                    <Avatar
+                        displayShape="Circle"
+                        initials="{dashboard>/user/initials}"
+                        displaySize="S"
+                        backgroundColor="Accent6"
+                        class="jhahUserAvatar"
+                    />
+                    <VBox renderType="Bare" class="jhahUserCardNameWrap">
+                        <Text text="{dashboard>/user/name}" class="jhahSidebarName" />
+                        <Text text="{dashboard>/user/role}" class="jhahSidebarRole jhahSidebarSub" />
+                    </VBox>
+                </HBox>
+
+                <VBox class="jhahUserCardDivider" renderType="Bare" />
+
+                <!-- Field rows in same sequence as ObjectHeader -->
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="JHAH ID" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/id}" tooltip="{dashboard>/user/id}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Login ID" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/loginId}" tooltip="{dashboard>/user/loginId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <!-- <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Badge No." class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/badgeNo}" tooltip="{dashboard>/user/badgeNo}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox> -->
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Gov. ID" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/governmentId}" tooltip="{dashboard>/user/governmentId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Organization" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/department}" tooltip="{dashboard>/user/department}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Position" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/position}" tooltip="{dashboard>/user/position}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Date of Birth" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/dob}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Gender" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/gender}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="Blood Group" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/bloodGroup}" wrapping="false" class="jhahSidebarValue jhahUserCardVal" />
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow jhahUserCardRowLast" renderType="Bare">
+                    <Label text="E-Mail" class="jhahSidebarLabel jhahUserCardLabel" />
+                    <Text text="{dashboard>/user/email}" tooltip="{dashboard>/user/email}" wrapping="false" class="jhahSidebarValue jhahUserCardVal jhahUserCardEmail" />
+                </HBox>
+
+            </VBox>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

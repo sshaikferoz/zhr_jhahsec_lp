@@ -1,9 +1,4 @@
-/* Enter your custom styles here */
-
-/* ============================================================
-   ROOT / BODY
-   ============================================================ */
-
+/* ── Root / Body ─────────────────────────────────────────── */
 html.jhahHtml,
 html.jhahHtml body,
 .jhahBody,
@@ -30,89 +25,44 @@ html.jhahHtml body,
   display: block;
 }
 
-
-/* ============================================================
-   APP SHELL
-   Sidebar + Main Content
-   ============================================================ */
-
+/* ── App Shell ───────────────────────────────────────────── */
 .jhahAppShell {
-  display: flex !important;
-  flex-direction: row !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  max-height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
   box-sizing: border-box;
 }
-
-
-/* ============================================================
-   MAIN COLUMN
-   ============================================================ */
 
 .jhahMainColumn {
-  flex: 1 1 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
   background: #f2f4f7;
-  box-sizing: border-box;
-  overflow: hidden;
 }
 
-
-/* ============================================================
-   SIDEBAR
-   ============================================================ */
-
-.jhahAppLayout {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.jhahSideNavContainer {
-  width: 250px;
-  min-width: 250px;
-  max-width: 250px;
-  height: 100%;
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
-
+/* ── Sidebar ─────────────────────────────────────────────── */
 .jhahSideNavWrap {
-  width: 250px;
-  min-width: 250px;
-  max-width: 250px;
-  height: 100%;
+  width: 17.5rem;
   flex-shrink: 0;
+  height: 100%;
+  min-height: 100%;
   background: #183a53;
   box-sizing: border-box;
 }
 
-.jhahMainArea {
-  flex: 1 1 auto;
-  width: auto;
-  height: 100%;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  overflow: hidden;
+.jhahSideNav {
+  background: transparent;
+  flex: 1;
 }
 
-/* ============================================================
-   BRAND LOGO / BANNER
-   ============================================================ */
+.jhahBrandArea {
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
 
+/* Full-bleed brand banner — logo asset carries title + arc pattern + navy bg */
 .jhahBrandLogo,
 .jhahBrandLogo .sapMImg,
 .jhahBrandLogo img {
@@ -122,21 +72,16 @@ html.jhahHtml body,
   object-fit: cover !important;
 }
 
-
-/* ============================================================
-   CUSTOM NAVIGATION LIST
-   ============================================================ */
-
+/* ── Custom Nav List (replaces tnt:SideNavigation) ──────── */
 .jhahNavList.sapMList {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-
   width: 100% !important;
-
   padding: 0 0 0.25rem !important;
 }
 
+/* No gap between the logo banner and the first nav item */
 .jhahNavList .sapMListItems .jhahNavItem.sapMLIB:first-child {
   margin-top: 0 !important;
 }
@@ -148,87 +93,41 @@ html.jhahHtml body,
   margin: 0 !important;
 }
 
-
-/* ============================================================
-   NAV ITEM
-   ============================================================ */
-
+/* Each nav item row */
 .jhahNavItem.sapMLIB {
   background: transparent !important;
-
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-
   border-radius: 0.65rem !important;
-
   margin: 0.2rem 0.75rem !important;
   padding: 0 !important;
-
   min-height: 0 !important;
 }
 
-
-/* Remove pseudo elements */
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIB::before,
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIB::after,
-
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB::before,
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB::after,
 .jhahSideNavWrap
   .jhahNavList
   .sapMListItems
   .jhahNavItem.sapMLIBSelected::before,
-
 .jhahSideNavWrap
   .jhahNavList
   .sapMListItems
   .jhahNavItem.sapMLIBSelected::after {
   display: none !important;
-
   content: none !important;
-
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
 }
 
-
-/* ============================================================
-   NAV FOCUS / ACTIVE STATES
-   ============================================================ */
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIB:focus,
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIB:focus-within,
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIB:focus-visible,
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIBFocused,
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIBActive,
-
+/* Kill ALL sap.m focus rings / outlines on nav items — deep specificity needed in FLP */
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB:focus,
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB:focus-within,
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIB:focus-visible,
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBFocused,
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBActive,
 .jhahSideNavWrap
   .jhahNavList
   .sapMListItems
@@ -238,117 +137,62 @@ html.jhahHtml body,
   border: none !important;
 }
 
-
-/* ============================================================
-   NAV INNER ROW
-   ============================================================ */
-
+/* Inner content row */
 .jhahNavItemInner {
   padding: 0.55rem 0.85rem;
-
   gap: 0.65rem;
-
   width: 100%;
-
   box-sizing: border-box;
 }
 
-
-/* ============================================================
-   NAV ICON
-   ============================================================ */
-
+/* Icon */
 .jhahNavItemIcon.sapUiIcon {
   color: #ffffff !important;
-
   font-size: 1rem !important;
-
   width: 1.25rem !important;
-
   flex-shrink: 0;
 }
 
-
-/* ============================================================
-   NAV LABEL
-   ============================================================ */
-
+/* Label */
 .jhahNavItemText.sapMText {
   color: #ffffff !important;
-
   font-size: 0.9375rem !important;
-
   font-weight: 500 !important;
-
   line-height: 1.4 !important;
-
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
 }
 
-
-/* ============================================================
-   NAV HOVER
-   ============================================================ */
-
+/* Hover — subtle white tint */
 .jhahNavItem.sapMLIB:not(.jhahNavItemSelected):hover {
   background: rgba(255, 255, 255, 0.1) !important;
-
   border-radius: 0.65rem !important;
 }
 
-
-/* ============================================================
-   NAV SELECTED
-   ============================================================ */
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIBSelected,
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIBSelected:hover,
-
-.jhahSideNavWrap
-  .jhahNavList
-  .sapMListItems
-  .jhahNavItem.sapMLIBSelected:focus,
-
+/* ── Selected — solid white pill (uses SAP's native sapMLIBSelected) ── */
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected,
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected:hover,
+.jhahSideNavWrap .jhahNavList .sapMListItems .jhahNavItem.sapMLIBSelected:focus,
 .jhahSideNavWrap
   .jhahNavList
   .sapMListItems
   .jhahNavItem.sapMLIBSelected:focus-visible,
-
 .jhahSideNavWrap
   .jhahNavList
   .sapMListItems
   .jhahNavItem.sapMLIBSelected.sapMLIBFocused,
-
 .jhahSideNavWrap
   .jhahNavList
   .sapMListItems
   .jhahNavItem.sapMLIBSelected.sapMLIBActive {
   background: #ffffff !important;
-
   background-color: #ffffff !important;
-
   border: none !important;
-
   outline: none !important;
-
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-
   border-radius: 0.65rem !important;
 }
-
-
-/* Selected icon */
 
 .jhahSideNavWrap
   .jhahNavList
@@ -358,123 +202,73 @@ html.jhahHtml body,
   color: #153a54 !important;
 }
 
-
-/* Selected label */
-
 .jhahSideNavWrap
   .jhahNavList
   .sapMListItems
   .jhahNavItem.sapMLIBSelected
   .jhahNavItemText.sapMText {
   color: #153a54 !important;
-
   font-weight: 700 !important;
 }
 
-
-/* ============================================================
-   SIDEBAR FOOTER
-   ============================================================ */
-
+/* Sidebar footer — pattern banner visible between nav and profile card */
 .jhahSideNavFooter {
   padding: 0 0 0.75rem 0;
-
   width: 100%;
-
   box-sizing: border-box;
-
   flex-shrink: 0;
-
   gap: 0;
 }
 
-
-/* ============================================================
-   MENU PATTERN
-   ============================================================ */
-
+/* Pattern watermark — fills the flexible gap from the menu down to the user card */
 .jhahMenuPattern {
   flex: 1 1 auto !important;
-
   min-height: 0 !important;
-
   width: 100% !important;
-
   display: block !important;
-
   align-self: stretch !important;
-
   object-fit: contain !important;
-
   object-position: center center !important;
 }
 
 .jhahMenuPattern .sapMImg,
 .jhahMenuPattern img {
   width: 100% !important;
-
   height: 100% !important;
-
   object-fit: contain !important;
-
   object-position: center center !important;
-
   display: block !important;
 }
 
-
-/* ============================================================
-   USER CARD
-   ============================================================ */
-
+/* ── Unified User Card ───────────────────────────────────── */
 .jhahSidebarUserCard {
   margin: 0 0.75rem 0.75rem;
-
   background: rgba(255, 255, 255, 0.1);
-
   border: 1px solid rgba(255, 255, 255, 0.2);
-
   border-radius: 0.65rem;
-
   padding: 0.65rem 0.75rem;
-
   box-sizing: border-box;
-
   overflow: hidden;
-
   backdrop-filter: blur(4px);
-
   -webkit-backdrop-filter: blur(4px);
 }
 
-
-/* ============================================================
-   USER CARD HEADER
-   ============================================================ */
-
+/* Avatar + name row */
 .jhahUserCardHeader {
   gap: 0.55rem;
-
   margin-bottom: 0.55rem;
 }
 
 .jhahUserAvatar.sapFAvatar {
   flex-shrink: 0;
-
   min-width: 2rem;
-
   min-height: 2rem;
 }
 
-
-/* ============================================================
-   USER AVATAR
-   ============================================================ */
-
+/* Solid teal avatar with white initials, matching the design */
 .jhahUserAvatar.sapFAvatar,
 .jhahUserAvatar.sapFAvatar .sapFAvatarInitialsHolder {
   background-color: #0fb6c0 !important;
-
   background-image: none !important;
 }
 
@@ -483,46 +277,25 @@ html.jhahHtml body,
   color: #ffffff !important;
 }
 
-
-/* ============================================================
-   USER NAME
-   ============================================================ */
-
 .jhahUserCardNameWrap {
   min-width: 0;
-
   flex: 1;
 }
 
-
-/* ============================================================
-   USER CARD DIVIDER
-   ============================================================ */
-
+/* Thin separator line */
 .jhahUserCardDivider {
   height: 1px;
-
   background: rgba(255, 255, 255, 0.18);
-
   margin-bottom: 0.45rem;
-
   width: 100%;
 }
 
-
-/* ============================================================
-   USER CARD ROW
-   ============================================================ */
-
+/* Field rows */
 .jhahUserCardRow {
   margin-bottom: 0.3rem;
-
   align-items: flex-start;
-
   gap: 0.35rem;
-
   width: 100%;
-
   overflow: hidden;
 }
 
@@ -530,79 +303,45 @@ html.jhahHtml body,
   margin-bottom: 0;
 }
 
-
-/* ============================================================
-   USER CARD LABEL
-   ============================================================ */
-
 .jhahUserCardLabel.sapMLbl {
   color: #0fb6c0 !important;
-
   font-size: 0.7rem !important;
-
   white-space: nowrap;
-
   flex-shrink: 0;
-
   line-height: 1.5;
 }
-
-
-/* ============================================================
-   USER CARD VALUE
-   ============================================================ */
 
 .jhahUserCardVal.sapMText {
   color: #ffffff !important;
-
   font-size: 0.72rem !important;
-
   font-weight: 500 !important;
-
   text-align: right;
-
   line-height: 1.5;
-
   max-width: 55%;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
+/* Also truncate the inner span SAP renders inside the Text control */
 .jhahUserCardVal.sapMText .sapMTextMaxLine,
 .jhahUserCardVal.sapMText span {
   overflow: hidden !important;
-
   text-overflow: ellipsis !important;
-
   white-space: nowrap !important;
-
   display: block !important;
 }
 
 .jhahUserCardEmail.sapMText {
   font-size: 0.67rem !important;
-
   max-width: 55%;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
-
-/* ============================================================
-   SIDEBAR TEXT
-   ============================================================ */
-
 .jhahSidebarSub.sapMText {
   font-size: 0.72rem !important;
-
   opacity: 0.8;
 }
 
@@ -620,78 +359,42 @@ html.jhahHtml body,
   font-weight: 600;
 }
 
-
-/* ============================================================
-   EMBED TITLE BAR
-   ============================================================ */
-
+/* ── Embed Title Bar ─────────────────────────────────────── */
 .jhahEmbedTitleBar {
-  padding: 1rem;
-
-  background: linear-gradient(
-    135deg,
-    #21b4e8 0%,
-    #10bbbe 60%
-  );
-
+  padding: 1rem 1rem;
+  background: linear-gradient(135deg, #21b4e8 0%, #10bbbe 60%);
   border-bottom: none;
-
   gap: 0.5rem;
-
   flex-shrink: 0;
-
   width: 100%;
-
   box-sizing: border-box;
-
   position: relative;
-
   z-index: 10;
-
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .jhahEmbedTitleIcon.sapUiIcon {
   color: #173a54;
-
   font-size: 0.875rem;
 }
 
 .jhahEmbedTitle.sapMTitle {
   color: #173a54 !important;
-
   font-size: 0.9375rem !important;
-
   font-weight: 600 !important;
-
   margin: 0 !important;
 }
 
-
-/* ============================================================
-   HEADER TOOLBAR
-   ============================================================ */
-
+/* ── Header Toolbar ──────────────────────────────────────── */
+/* JHAH "Harmony Gradient" — Cool Blue (#21B4E8) -> Teal (#10BBBE), linear -45deg */
 .jhahToolHeader,
 .jhahToolHeader.sapMTB {
-  background: linear-gradient(
-    135deg,
-    #21b4e8 0%,
-    #10bbbe 60%
-  ) !important;
-
+  background: linear-gradient(135deg, #21b4e8 0%, #10bbbe 60%) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-
-  width: 100% !important;
-
-  margin: 0 !important;
-
-  box-sizing: border-box;
 }
 
 .jhahPageTitle {
   color: #173a54;
-
   font-weight: 600;
 }
 
@@ -699,122 +402,65 @@ html.jhahHtml body,
   color: #173a54;
 }
 
-
-/* ============================================================
-   MAIN SCROLL AREA
-   ============================================================ */
-
+/* ── Scroll / Content Area ───────────────────────────────── */
 .jhahMainScroll {
   flex: 1 1 auto;
-
   min-height: 0;
-
   height: 100%;
-
-  width: 100%;
-
   background: #f2f4f7;
-
   box-sizing: border-box;
-
-  margin: 0;
-
-  padding: 0;
 }
 
 .jhahMainScroll.sapMScrollCont {
   height: 100% !important;
-
-  width: 100% !important;
-
-  margin: 0 !important;
-
-  padding: 0 !important;
 }
 
 .jhahMainScroll > .sapMScrollContScroll {
   width: 100% !important;
-
   min-height: 100%;
-
   box-sizing: border-box;
-
-  margin: 0;
-
-  padding: 0;
 }
-
-
-/* ============================================================
-   DASHBOARD CONTENT
-   ============================================================ */
 
 .jhahDashboardContent {
   padding: 1rem 1.25rem 1.5rem;
-
   gap: 1.25rem;
-
   width: 100%;
-
   max-width: 100%;
-
   box-sizing: border-box;
-
-  margin: 0;
 }
 
-
-/* ============================================================
-   DASHBOARD GRID
-   ============================================================ */
-
+/* ── Dashboard Grid ──────────────────────────────────────── */
 .jhahDashboardGrid {
   width: 100%;
-
   max-width: 100%;
-
   gap: 1.25rem;
-
   box-sizing: border-box;
 }
 
 .jhahDashboardColMain {
   flex: 1 1 62%;
-
   min-width: min(100%, 36rem);
-
   max-width: 100%;
-
   box-sizing: border-box;
 }
 
 .jhahDashboardColSide {
   flex: 1 1 34%;
-
   min-width: min(100%, 20rem);
-
   max-width: 100%;
-
   box-sizing: border-box;
 }
 
-
-/* ============================================================
-   CARD ROWS
-   ============================================================ */
-
+/* ── Card Row Layouts ────────────────────────────────────── */
 .jhahTwoColRow,
 .jhahKpiRow {
   gap: 1rem;
-
   width: 100%;
-
   box-sizing: border-box;
 }
 
 .jhahHalfCardWrap {
   min-width: 0;
-
   height: 100%;
 }
 
@@ -824,82 +470,36 @@ html.jhahHtml body,
 
 .jhahKpiRow > .sapFCard {
   flex: 1 1 0;
-
   min-width: 0;
 }
 
-
-/* ============================================================
-   HALF / THIRD CARDS
-   ============================================================ */
-
+/* Half-width card (Security violations side-by-side) */
 .jhahHalfCard {
   flex: 1 1 calc(50% - 0.5rem);
-
   min-width: min(100%, 12rem);
 }
 
 .jhahThirdCard {
   flex: 1 1 0;
-
   min-width: min(100%, 8rem);
-
   width: 100% !important;
 }
 
-
-/* Restore 50% layout */
-
+/* `.jhahKpiRow > .sapFCard` forces a zero flex-basis, which outranks
+   .jhahHalfCard and packs every card onto one row. Restore the 50% basis so
+   half cards wrap two-per-row inside a KPI row. */
 .jhahKpiRow > .sapFCard.jhahHalfCard {
   flex: 1 1 calc(50% - 0.5rem);
-
+  /* Must stay under the 50% basis, or the cards fall back to one per row in
+     the ~23rem dashboard side column. 10rem still fits the longest label. */
   min-width: min(100%, 10rem);
 }
 
-
-/* ============================================================
-   SIDE COLUMN STACKING
-   ============================================================ */
-
-.jhahDashboardColSide .jhahTwoColRow {
-  flex-wrap: wrap;
-
-  align-content: flex-start;
-}
-
-.jhahDashboardColSide
-  .jhahTwoColRow
-  > .jhahHalfCardWrap,
-
-.jhahDashboardColSide
-  .jhahTwoColRow
-  > .sapFCard {
-  flex: 1 1 100% !important;
-
-  min-width: 100%;
-
-  height: auto;
-}
-
-.jhahDashboardColSide
-  .jhahTwoColRow
-  > .jhahHalfCardWrap
-  > .sapFCard {
-  height: auto;
-}
-
-
-/* ============================================================
-   CARD INTERNALS
-   ============================================================ */
-
+/* ── Card Internals ──────────────────────────────────────── */
 .jhahPairCardInner {
   padding: 1rem;
-
   box-sizing: border-box;
-
   min-height: 9.5rem;
-
   height: 100%;
 }
 
@@ -907,22 +507,15 @@ html.jhahHtml body,
   min-height: 10.5rem;
 }
 
-
-/* ============================================================
-   DATA / KPI / ALERT CARDS
-   ============================================================ */
-
+/* Inside a section panel the cards render as flat tiles (no drop shadow /
+   white-on-white); grouping is conveyed by the panel, not per-card shadows. */
 .jhahDataCard,
 .jhahKpiCard,
 .jhahAlertCard {
   border-radius: 0.625rem;
-
   box-shadow: none;
-
   width: 100%;
-
   box-sizing: border-box;
-
   margin-top: 0;
 }
 
@@ -932,7 +525,6 @@ html.jhahHtml body,
 
 .jhahDataCard.sapFCard {
   background: #fafbfc !important;
-
   border: 1px solid #eceff3;
 }
 
@@ -941,65 +533,46 @@ html.jhahHtml body,
   overflow: visible !important;
 }
 
+/* Only data cards (not KPI cards) need height:100% on their content */
 .jhahDataCard .sapFCardContent {
   height: 100%;
 }
 
 .jhahAlertCard .sapFCardContent {
   height: auto;
-
   overflow: visible;
 }
 
 .jhahAlertCard.sapFCard {
   height: auto !important;
-
   min-height: 0;
 }
 
-
-/* ============================================================
-   KPI INNER
-   ============================================================ */
-
+/* Uniform KPI tile size across every section of the app. */
 .jhahKpiCardInner {
   padding: 0.75rem 1rem 0.85rem;
-
   box-sizing: border-box;
-
   min-height: 4.75rem;
-
   display: flex;
-
   flex-direction: column;
-
   justify-content: center;
-
   gap: 0.25rem;
-
   overflow: visible;
 }
 
-
-/* ============================================================
-   KPI ICON INNER
-   ============================================================ */
-
+/* KPI tile with a leading tinted icon badge (Business Visitor Access).
+   Overrides the column layout of .jhahKpiCardInner to place the icon beside
+   the title/value stack, matching the analytics-card inspiration. */
 .jhahKpiCardIconInner.sapMHBox {
   flex-direction: row;
-
   align-items: center;
-
   justify-content: flex-start;
-
   gap: 0.85rem;
 }
 
 .jhahKpiTextCol {
   min-width: 0;
-
   gap: 0.15rem;
-
   justify-content: center;
 }
 
@@ -1007,85 +580,89 @@ html.jhahHtml body,
   margin-bottom: 0.2rem;
 }
 
-
-/* ============================================================
-   KPI ICON
-   ============================================================ */
-
 .jhahKpiIcon.sapUiIcon {
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
   width: 2.5rem;
-
   height: 2.5rem;
-
   min-width: 2.5rem;
-
   border-radius: 0.75rem;
-
   font-size: 1.15rem;
 }
 
 .jhahKpiIconBlue.sapUiIcon {
   background: rgba(29, 125, 181, 0.12);
-
   color: #1d7db5;
 }
 
 .jhahKpiIconGreen.sapUiIcon {
   background: rgba(49, 165, 110, 0.12);
-
   color: #31a56e;
 }
 
 .jhahKpiIconOrange.sapUiIcon {
   background: rgba(210, 140, 34, 0.14);
-
   color: #d28c22;
 }
 
 .jhahKpiIconRed.sapUiIcon {
   background: rgba(199, 75, 75, 0.12);
-
   color: #c74b4b;
 }
 
+/* Icon KPI tiles need more horizontal room than a plain tile so the badge and
+   the title/value stack sit side by side without the label crowding the icon.
+   This min-width makes them wrap two-per-row in the ~20rem dashboard side
+   column and spread three-to-four across in the wide main column. */
 .jhahKpiCardIcon.sapFCard {
   min-width: min(100%, 9rem);
 }
 
+/* A section built for the wide main column (Sticker Management: an Active
+   Sticker + Request Status pair; two-per-row KPI/half cards) can land in the
+   ~20rem side column after a layout swap. In that context stack its inner
+   two-column card rows so each card gets the full column width instead of
+   being squeezed into an unreadable half. */
+.jhahDashboardColSide .jhahTwoColRow {
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
 
-/* ============================================================
-   ALERT CARD
-   ============================================================ */
+.jhahDashboardColSide .jhahTwoColRow > .jhahHalfCardWrap,
+.jhahDashboardColSide .jhahTwoColRow > .sapFCard {
+  flex: 1 1 100% !important;
+  min-width: 100%;
+  /* Cancel the equal-height stretch used when these cards sit side by side in
+     the wide column. Once stacked, height:100% makes each card claim the full
+     row height, so the second one overflows below the section ("floats
+     outside"). Let them size to their own content instead. */
+  height: auto;
+}
+
+.jhahDashboardColSide .jhahTwoColRow > .jhahHalfCardWrap > .sapFCard {
+  height: auto;
+}
 
 .jhahAlertCardInner {
   padding: 1rem 1.25rem;
-
   box-sizing: border-box;
+}
 
+.jhahAlertCardInner {
   min-height: 6.75rem;
-
   width: 100%;
 }
 
 .jhahAlertCardText {
   flex: 1;
-
   min-width: 0;
-
   padding-right: 0.75rem;
 }
 
 .jhahAlertCardText.sapMVBox {
   display: flex;
-
   flex-direction: column;
-
   gap: 0.35rem;
 }
 
@@ -1095,41 +672,26 @@ html.jhahHtml body,
 
 .jhahAlertCardText .jhahMutedText {
   line-height: 1.4;
-
   margin-top: 0.25rem;
-
   white-space: normal;
 }
 
-
-/* ============================================================
-   KPI TYPOGRAPHY
-   ============================================================ */
-
+/* ── KPI Typography ──────────────────────────────────────── */
 .jhahKpiTitle,
 .jhahKpiTitle.sapMLabel {
   color: #7e8793 !important;
-
   font-size: 0.8125rem !important;
-
   font-weight: 400 !important;
-
   margin-bottom: 0.35rem;
 }
 
 .jhahKpiValue .sapMObjectNumberText {
   font-size: 1.25rem;
-
   font-weight: 700;
-
   color: #1f2f41;
 }
 
-
-/* ============================================================
-   ACCENT BORDERS
-   ============================================================ */
-
+/* Accent bottom-borders */
 .jhahAccentBlue {
   border-bottom: 3px solid #1d7db5;
 }
@@ -1146,20 +708,14 @@ html.jhahHtml body,
   border-bottom: 3px solid #c74b4b;
 }
 
-
-/* ============================================================
-   ACTIVE STICKER
-   ============================================================ */
-
+/* Active sticker detail block inside the user Sticker Management card */
 .jhahActiveSticker {
   gap: 0.35rem;
-
   margin-top: 0.5rem;
 }
 
 .jhahActiveStickerFooter {
   border-top: 1px solid #edf0f3;
-
   padding-top: 0.5rem;
 }
 
@@ -1171,22 +727,15 @@ html.jhahHtml body,
   color: #6f7984;
 }
 
-
-/* ============================================================
-   NO DATA
-   ============================================================ */
-
+/* ── No Data placeholder ─────────────────────────────────── */
 .jhahNoData {
   padding: 2rem 1rem;
-
   min-height: 8rem;
-
   gap: 0.5rem;
 }
 
 .jhahNoDataIcon {
   color: #b5bcc4;
-
   font-size: 2.25rem;
 }
 
@@ -1194,21 +743,17 @@ html.jhahHtml body,
   font-size: 0.875rem;
 }
 
+/* Inline "No data" value shown inside a KPI / data tile shell. Kept subtle —
+   it is a placeholder, not a real value, so it should read lighter than the
+   numbers it stands in for. */
 .jhahNoDataValue {
   font-size: 0.9375rem;
-
   font-weight: 400;
-
   color: #9aa2ab;
-
   margin-top: 0.25rem;
 }
 
-
-/* ============================================================
-   ALERT COLORS
-   ============================================================ */
-
+/* ── Alert Cards ─────────────────────────────────────────── */
 .jhahAlertCardError {
   background: #fdecec;
 }
@@ -1217,32 +762,21 @@ html.jhahHtml body,
   background: #e8f4fc;
 }
 
-
-/* ============================================================
-   ALERT NUMBER
-   ============================================================ */
-
 .jhahAlertNumber {
   margin: 0.1rem 0 0.2rem;
-
   display: block;
 }
 
 .jhahAlertNumber .sapMObjectNumber {
   height: auto;
-
   line-height: 1.15;
 }
 
 .jhahAlertNumber .sapMObjectNumberText {
   font-size: 2.25rem;
-
   font-weight: 700;
-
   color: #c74b4b;
-
   line-height: 1.15;
-
   height: auto;
 }
 
@@ -1250,22 +784,12 @@ html.jhahHtml body,
   color: #1d7db5;
 }
 
-
-/* ============================================================
-   ALERT ICON
-   ============================================================ */
-
 .jhahAlertCardInner .jhahAlertIcon {
   flex-shrink: 0;
-
   margin-top: 0.15rem;
-
   font-size: 2.25rem;
-
   width: 2.25rem;
-
   height: 2.25rem;
-
   line-height: 2.25rem;
 }
 
@@ -1277,48 +801,34 @@ html.jhahHtml body,
   color: #1d7db5;
 }
 
-
-/* ============================================================
-   SECTIONS
-   ============================================================ */
-
+/* ── Sections ────────────────────────────────────────────── */
+/* Each dashboard section is a self-contained titled panel so it is always
+   clear which KPIs/cards belong to which section. */
 .jhahSection {
   display: flex;
-
   flex-direction: column;
-
   gap: 0.85rem;
-
   background: #ffffff;
-
   border: 1px solid #e6eaef;
-
   border-radius: 0.875rem;
-
   padding: 1.15rem 1.25rem 1.3rem;
-
   box-shadow: 0 1px 3px rgba(22, 42, 66, 0.06);
-
   margin-bottom: 1.25rem;
-
   box-sizing: border-box;
 }
 
 .jhahSectionTitle {
   color: #2f3b4c;
-
   margin-bottom: 0 !important;
-
   font-weight: 600 !important;
 }
 
+/* Sub-heading for a grouped block within a section (e.g. the chart under
+   Business Visitor Access). */
 .jhahSubSectionTitle {
   color: #6f7984;
-
   font-weight: 600 !important;
-
   margin-top: 0.35rem !important;
-
   margin-bottom: 0 !important;
 }
 
@@ -1326,18 +836,12 @@ html.jhahHtml body,
   margin-bottom: 0;
 }
 
-
-/* ============================================================
-   VIOLATIONS
-   ============================================================ */
-
 .jhahViolationsSection {
   height: 100%;
 }
 
 .jhahViolationsStack {
   gap: 1rem;
-
   width: 100%;
 }
 
@@ -1349,16 +853,10 @@ html.jhahHtml body,
   flex: 1 1 auto;
 }
 
-
-/* ============================================================
-   VIOLATION BREAKDOWN
-   ============================================================ */
-
+/* Label/value rows in the violations processing breakdown card. */
 .jhahBreakdownRow {
   width: 100%;
-
   padding: 0.4rem 0;
-
   border-bottom: 1px solid #f0f2f5;
 }
 
@@ -1366,32 +864,18 @@ html.jhahHtml body,
   border-bottom: none;
 }
 
-
-/* ============================================================
-   APPOINTMENTS
-   ============================================================ */
-
+/* ── Appointments ────────────────────────────────────────── */
 .jhahDateBadge {
-  background: linear-gradient(
-    135deg,
-    #1a8a8a,
-    #2cb5b5
-  );
-
+  background: linear-gradient(135deg, #1a8a8a, #2cb5b5);
   color: #ffffff;
-
   border-radius: 0.5rem;
-
   min-width: 3.5rem;
-
   min-height: 3.5rem;
-
   padding: 0.35rem;
 }
 
 .jhahDateBadge .sapMTitle {
   color: #ffffff;
-
   margin: 0;
 }
 
@@ -1405,30 +889,20 @@ html.jhahHtml body,
 
 .jhahAppointmentMeta {
   align-items: flex-end;
-
   min-width: 6rem;
 }
 
 .jhahAlignEnd {
   align-items: flex-end;
-
   text-align: right;
 }
 
-
-/* ============================================================
-   CHART
-   ============================================================ */
-
+/* ── Chart ───────────────────────────────────────────────── */
 .jhahChartWrap {
   min-height: 280px;
 }
 
-
-/* ============================================================
-   TABLES
-   ============================================================ */
-
+/* ── Tables ──────────────────────────────────────────────── */
 .jhahInnerTable .sapMListTblHeader {
   background: #f7f9fb;
 }
@@ -1437,37 +911,21 @@ html.jhahHtml body,
   width: 100%;
 }
 
-
-/* ============================================================
-   EXPIRY PROGRESS
-   ============================================================ */
-
+/* ── Progress (ID expiry) ────────────────────────────────── */
 .jhahExpiryProgress {
   margin-top: 0.5rem;
-
   margin-bottom: 0.25rem;
 }
 
-
-/* ============================================================
-   STATUS BADGES
-   ============================================================ */
-
+/* ── Pill Badge Status ───────────────────────────────────── */
 .jhahBadgeStatus .sapMObjStatusText {
   display: inline-block;
-
   padding: 0.2rem 0.75rem;
-
   border-radius: 1rem;
-
   font-size: 0.72rem;
-
   font-weight: 700;
-
   letter-spacing: 0.02em;
-
   background-color: transparent;
-
   text-shadow: none;
 }
 
@@ -1491,11 +949,7 @@ html.jhahHtml body,
   color: #1d7db5;
 }
 
-
-/* ============================================================
-   TEAL PROGRESS BAR
-   ============================================================ */
-
+/* ── Teal progress bars (violations by category) ─────────── */
 .jhahTealProgress .sapMPIBar-Full,
 .jhahTealProgress .sapMPIBarGood,
 .jhahTealProgress .sapMPIBarNeutral,
@@ -1505,188 +959,128 @@ html.jhahHtml body,
   background-color: #1d7db5 !important;
 }
 
-
-/* ============================================================
-   BACK BUTTON
-   ============================================================ */
-
+/* Back arrow button */
 .jhahBackBtn.sapMBtn {
   width: 2rem;
-
   height: 2rem;
-
   min-width: 2rem;
-
   border-radius: 50%;
-
   background: rgba(255, 255, 255, 0.15);
-
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .jhahBackBtn .sapMBtnIcon {
   color: #ffffff;
-
   font-size: 0.875rem;
 }
 
-
-/* ============================================================
-   EMBEDDED APP FRAME
-   ============================================================ */
-
+/* ── Embedded App Frame ──────────────────────────────────── */
 .jhahDashboardContent > .sapUiHtmlContent,
 .jhahDashboardContent > .sapUiHtmlContent iframe {
   width: 100% !important;
-
   flex: 1 1 auto;
-
   padding: 0 !important;
 }
 
 .jhahDashboardContentEmbed {
   padding: 0 !important;
-
   gap: 0 !important;
 }
 
 .jhahMainScrollEmbed,
 .jhahMainScrollEmbed.sapMScrollCont {
   padding: 0 !important;
-
   margin: 0 !important;
 }
 
 .jhahMainScrollEmbed > .sapMScrollContScroll {
   padding: 0 !important;
-
   margin: 0 !important;
 }
 
-
-/* ============================================================
-   ACTIVE ID CARD
-   ============================================================ */
-
+/* ── Active ID Card (inside the ID Management card) ──────────── */
+/* Reconstruction of the reference project's ActiveIdCard: an ID number with
+   status pill, a days-to-expiry countdown with a validity progress bar, and a
+   Renew action enabled only when the card is expiring soon. */
 .jhahIdCardBody {
   gap: 0.85rem;
 }
 
 .jhahIdCardHeader {
   gap: 0.6rem;
-
   align-items: center;
 }
 
 .jhahIdCardHeaderIcon.sapUiIcon {
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
   width: 2.25rem;
-
   height: 2.25rem;
-
   min-width: 2.25rem;
-
   border-radius: 0.6rem;
-
   font-size: 1.1rem;
-
   background: rgba(15, 182, 192, 0.12);
-
   color: #0fb6c0;
-
-  margin-right: 1em;
+  margin-right:1em;
 }
 
 .jhahIdCardHeaderText {
   min-width: 0;
-
   gap: 0.05rem;
 }
 
 .jhahIdCardName.sapMText {
   color: #1d2d3e !important;
-
   font-size: 0.95rem !important;
-
   font-weight: 700 !important;
-
   line-height: 1.3 !important;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
 .jhahIdCardExpiry {
   gap: 0.4rem;
-
   width: 100%;
 }
 
 .jhahIdCardRow {
   width: 100%;
-
   align-items: baseline;
-
   gap: 0.5rem;
 }
 
 .jhahRenewBtn.sapMBtn {
   margin-top: 0.25rem;
-
   align-self: flex-start;
 }
 
 .jhahIdCardLabel.sapMLabel {
   color: #6a6d70 !important;
-
   font-size: 0.78rem !important;
-
   font-weight: 500 !important;
-
   white-space: nowrap;
-
   flex-shrink: 0;
 }
 
 .jhahIdCardValue.sapMText {
   color: #1d2d3e !important;
-
   font-size: 0.8125rem !important;
-
   font-weight: 700 !important;
-
   text-align: right;
-
   line-height: 1.4;
-
   min-width: 0;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
+/* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-
   .jhahDashboardColMain,
   .jhahDashboardColSide {
     flex: 1 1 100%;
-
     min-width: 100%;
   }
 
@@ -1700,116 +1094,6 @@ html.jhahHtml body,
 
   .jhahHalfCard {
     flex: 1 1 100%;
-
     min-width: 100%;
   }
 }
-
-
-/* ============================================================
-   IMPORTANT UI5 FLEX FIXES
-   ============================================================ */
-
-/*
-   Prevent UI5 controls from introducing an unexpected gap
-   between sidebar and main content.
-*/
-
-.jhahAppShell > .sapMFlexItem {
-  margin: 0 !important;
-
-  padding: 0 !important;
-}
-
-
-/*
-   Main column must occupy all remaining space.
-*/
-
-.jhahAppShell > .sapMFlexItem:last-child {
-  flex: 1 1 auto !important;
-
-  min-width: 0 !important;
-
-  margin: 0 !important;
-
-  padding: 0 !important;
-}
-
-
-/*
-   Sidebar must remain fixed.
-*/
-
-.jhahAppShell > .sapMFlexItem:first-child {
-  flex: 0 0 350px !important;
-
-  width: 350px !important;
-
-  min-width: 350px !important;
-
-  max-width: 350px !important;
-
-  margin: 0 !important;
-
-  padding: 0 !important;
-}
-
-
-/*
-   Prevent accidental positioning from moving the header.
-*/
-
-.jhahMainColumn,
-.jhahMainColumn > .sapMFlexItem {
-  position: relative;
-
-  left: 0 !important;
-
-  margin-left: 0 !important;
-}
-
-
-/*
-   Header should start exactly at the beginning
-   of the main column.
-*/
-
-.jhahMainColumn .jhahToolHeader {
-  margin-left: 0 !important;
-
-  left: 0 !important;
-
-  width: 100% !important;
-}
-
-
-/*
-   No horizontal offset on dashboard.
-*/
-
-.jhahMainColumn .jhahMainScroll {
-  margin-left: 0 !important;
-
-  padding-left: 0 !important;
-
-  width: 100% !important;
-}
-
-.jhahDashboardCardSpacing {
-    margin-bottom: 15px;
-}
-
-.jhahDashboardColumn {
-    display: flex;
-    flex-direction: column;
-}
-
-.jhahDashboardRow {
-    margin-bottom: 15px;
-}
-
-
-/* ============================================================
-   END
-   ============================================================ */

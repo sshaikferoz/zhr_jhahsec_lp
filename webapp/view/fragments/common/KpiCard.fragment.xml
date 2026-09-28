@@ -6,7 +6,7 @@
     <f:Card class="jhahKpiCard {dashboard>accent}">
         <f:content>
             <VBox class="jhahKpiCardInner" renderType="Bare">
-                <Title text="{dashboard>title}"  class="jhahKpiTitle" />
+                <Title text="{dashboard>title}" class="jhahKpiTitle" />
                 <ObjectNumber
                     number="{dashboard>value}"
                     emphasized="true"

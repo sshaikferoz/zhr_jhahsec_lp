@@ -559,31 +559,31 @@ sap.ui.define(
           vendorKpis: [
             {
               title: "Total Requests",
-              value: "1,124",
+              value: "0",
               accent: "jhahAccentBlue",
               valueState: "None",
             },
             {
               title: "Approved",
-              value: "982",
+              value: "0",
               accent: "jhahAccentGreen",
               valueState: "Success",
             },
             {
               title: "Pending",
-              value: "142",
+              value: "0",
               accent: "jhahAccentOrange",
               valueState: "Warning",
             },
           ],
           visitorChart: {
-            centerLabel: "78 TODAY",
+            centerLabel: "TODAY",
             data: [
-              { Category: "Business", Count: 35 },
-              { Category: "Temporary Staff Access", Count: 12 },
-              { Category: "Temporary Job", Count: 15 },
-              { Category: "Project", Count: 7 },
-              { Category: "Other", Count: 9 },
+              { Category: "Total Requests",Count: 0 },
+              { Category: "Approved", Count: 0 },
+              { Category: "Temporary Job", Count: 0 },
+              { Category: "Project", Count: 0 },
+              { Category: "Other", Count: 0 },
             ],
           },
         });

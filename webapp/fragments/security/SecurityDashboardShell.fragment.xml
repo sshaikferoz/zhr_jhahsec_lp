@@ -14,10 +14,10 @@
                 fragmentName="com.jhah.zhrjhahseclp.fragments.coordinator.VendorManagement"
                 type="XML"
             />
-            <core:Fragment
+            <!-- <core:Fragment
                 fragmentName="com.jhah.zhrjhahseclp.fragments.security.ScheduledAppointments"
                 type="XML"
-            />
+            /> -->
             <core:Fragment
                 fragmentName="com.jhah.zhrjhahseclp.fragments.security.IDManagement"
                 type="XML"

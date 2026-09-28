@@ -1,49 +1,205 @@
 <mvc:View
-    controllerName="com.jhah.zhrjhahseclp.controller.Main"
-    xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:core="sap.ui.core"
-    displayBlock="true"
-    height="100%"
->
-    <HBox class="jhahAppShell" renderType="Bare" fitContainer="true" height="100%">
-        <core:Fragment
-            fragmentName="com.jhah.zhrjhahseclp.fragments.common.SideNavigation"
-            type="XML"
-        />
-        <VBox class="jhahMainColumn" renderType="Bare" height="100%" fitContainer="true">
-            <core:Fragment
-                fragmentName="com.jhah.zhrjhahseclp.fragments.common.Header"
-                type="XML"
-            />
-            <!-- Embed title bar — shows selected menu title above the iframe -->
-            <HBox
-                visible="{dashboard>/isEmbedFrame}"
-                alignItems="Center"
-                class="jhahEmbedTitleBar"
-                renderType="Bare"
-            >
-                <core:Icon src="sap-icon://slim-arrow-right" class="jhahEmbedTitleIcon" />
-                <Title text="{dashboard>/embedTitle}" level="H5" class="jhahEmbedTitle" />
-            </HBox>
+controllerName="com.jhah.zhrjhahseclp.controller.Main"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m"
+xmlns:core="sap.ui.core">
+<Page
+    showHeader="false"
+    enableScrolling="false">
 
-            <ScrollContainer
-                id="mainScroll"
-                width="100%"
-                vertical="true"
-                horizontal="false"
-                class="jhahMainScroll"
-            >
-                <layoutData>
-                    <FlexItemData growFactor="1" baseSize="0%" />
-                </layoutData>
+    <content>
+
+        <!-- ===================================================== -->
+        <!-- APPLICATION SHELL -->
+        <!-- ===================================================== -->
+
+        <HBox
+            width="100%"
+            height="100%"
+            renderType="Bare"
+            class="jhahAppLayout">
+
+            <!-- ================================================= -->
+            <!-- SIDE NAVIGATION -->
+            <!-- ================================================= -->
+
+            <VBox
+                width="350px"
+                height="100%"
+                renderType="Bare"
+                class="jhahSideNavContainer">
+
+                <core:Fragment
+                    fragmentName="com.jhah.zhrjhahseclp.view.fragments.common.SideNavigation"
+                    type="XML"/>
+
+            </VBox>
+
+
+            <!-- ================================================= -->
+            <!-- MAIN AREA -->
+            <!-- ================================================= -->
+
+            <VBox
+                width="calc(100% - 350px)"
+                height="100%"
+                renderType="Bare"
+                class="jhahMainArea">
+
+                <!-- ================================================= -->
+                <!-- HEADER -->
+                <!-- ================================================= -->
+
                 <VBox
-                    id="dashboardContent"
-                    class="jhahDashboardContent"
-                    renderType="Bare"
                     width="100%"
-                />
-            </ScrollContainer>
-        </VBox>
-    </HBox>
+                    renderType="Bare"
+                    class="jhahHeaderContainer">
+
+                    <layoutData>
+                        <FlexItemData
+                            growFactor="0"
+                            shrinkFactor="0"/>
+                    </layoutData>
+
+                    <core:Fragment
+                        fragmentName="com.jhah.zhrjhahseclp.view.fragments.common.Header"
+                        type="XML"/>
+
+                </VBox>
+
+
+                <!-- ================================================= -->
+                <!-- DASHBOARD SCROLL AREA -->
+                <!-- ================================================= -->
+
+                <ScrollContainer
+                    width="100%"
+                    vertical="true"
+                    horizontal="false"
+                    class="jhahDashboardScroll">
+
+                    <layoutData>
+                        <FlexItemData
+                            growFactor="1"
+                            shrinkFactor="1"
+                            baseSize="0%"/>
+                    </layoutData>
+
+
+                    <!-- ================================================= -->
+                    <!-- DASHBOARD CONTENT -->
+                    <!-- ================================================= -->
+
+                    <VBox
+                        id="dashboardContent"
+                        width="100%"
+                        renderType="Bare"
+                        class="jhahDashboardContent">
+
+                        <VBox
+                            width="100%"
+                            renderType="Bare"
+                            class="jhahDashboardContainer">
+
+                            <!-- ================================================= -->
+                            <!-- TWO COLUMN LAYOUT -->
+                            <!-- ================================================= -->
+
+                            <HBox
+                                width="100%"
+                                renderType="Bare"
+                                alignItems="Start"
+                                justifyContent="SpaceBetween"
+                                class="jhahDashboardRow">
+
+
+                                <!-- ============================================= -->
+                                <!-- LEFT COLUMN -->
+                                <!-- VAR + ID MANAGEMENT -->
+                                <!-- ============================================= -->
+
+                                <VBox
+                                    width="49%"
+                                    renderType="Bare"
+                                    class="jhahDashboardColumn">
+
+
+                                    <!-- ========================================= -->
+                                    <!-- VAR / BUSINESS VISITOR -->
+                                    <!-- ========================================= -->
+
+                                    <VBox
+                                        id="varVBox"
+                                        width="100%"
+                                        renderType="Bare"
+                                        class="jhahDashboardCard jhahDashboardCardSpacing">
+                                    </VBox>
+
+
+                                    <!-- ========================================= -->
+                                    <!-- ID MANAGEMENT -->
+                                    <!-- ========================================= -->
+
+                                    <VBox
+                                        id="idVBox"
+                                        width="100%"
+                                        renderType="Bare"
+                                        class="jhahDashboardCard">
+                                    </VBox>
+
+                                </VBox>
+
+
+                                <!-- ============================================= -->
+                                <!-- RIGHT COLUMN -->
+                                <!-- TVS + STICKER -->
+                                <!-- ============================================= -->
+
+                                <VBox
+                                    width="49%"
+                                    renderType="Bare"
+                                    class="jhahDashboardColumn">
+
+
+                                    <!-- ========================================= -->
+                                    <!-- TVS -->
+                                    <!-- ========================================= -->
+
+                                    <VBox
+                                        id="tvsVBox"
+                                        width="100%"
+                                        renderType="Bare"
+                                        class="jhahDashboardCard jhahDashboardCardSpacing">
+                                    </VBox>
+
+
+                                    <!-- ========================================= -->
+                                    <!-- STICKER -->
+                                    <!-- ========================================= -->
+
+                                    <VBox
+                                        id="stickerVBox"
+                                        width="100%"
+                                        renderType="Bare"
+                                        class="jhahDashboardCard">
+                                    </VBox>
+
+                                </VBox>
+
+                            </HBox>
+
+                        </VBox>
+
+                    </VBox>
+
+                </ScrollContainer>
+
+            </VBox>
+
+        </HBox>
+
+    </content>
+
+</Page>
+
 </mvc:View>
