@@ -13,9 +13,8 @@
             
             </HBox>
                  
-            <!-- Admin / My View toggle — only visible for Security role -->
+            <!-- Admin / Employee toggle — Admin is disabled without the ADMIN role -->
             <SegmentedButton
-                visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
                 selectedKey="{dashboard>/sectionViewMode/TVS}"
                 selectionChange=".onViewModeChange($event, 'TVS')"
                 class="sapUiSmallMarginEnd">
@@ -23,7 +22,9 @@
                 <items>
                     <SegmentedButtonItem
                         key="org"
-                        text="Admin" />
+                        text="Admin"
+                        enabled="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
+                        tooltip="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' ? '' : 'You have employee access only' }" />
 
                     <SegmentedButtonItem
                         key="my"

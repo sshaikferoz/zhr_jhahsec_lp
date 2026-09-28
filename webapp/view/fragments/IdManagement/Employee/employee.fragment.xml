@@ -44,7 +44,6 @@
 
     <!-- RIGHT : Admin / Employee -->
     <SegmentedButton
-        visible="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' }"
         selectedKey="{dashboard>/sectionViewMode/ID_CARD}"
         selectionChange=".onViewModeChange($event, 'ID_CARD')">
 
@@ -52,7 +51,9 @@
 
             <SegmentedButtonItem
                 key="org"
-                text="Admin"/>
+                text="Admin"
+                enabled="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' }"
+                tooltip="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' ? '' : 'You have employee access only' }"/>
 
             <SegmentedButtonItem
                 key="my"

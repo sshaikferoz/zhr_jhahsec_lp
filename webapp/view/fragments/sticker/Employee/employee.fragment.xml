@@ -42,14 +42,15 @@
 
         <!-- Right: Admin / Employee -->
         <SegmentedButton
-            visible="{= ${GetAuthModel>/0/STK_ROLE} === 'ADMIN' }"
             selectedKey="{dashboard>/sectionViewMode/STICKER}"
             selectionChange=".onViewModeChange($event, 'STICKER')">
 
             <items>
                 <SegmentedButtonItem
                     key="org"
-                    text="Admin"/>
+                    text="Admin"
+                    enabled="{= ${GetAuthModel>/0/STK_ROLE} === 'ADMIN' }"
+                    tooltip="{= ${GetAuthModel>/0/STK_ROLE} === 'ADMIN' ? '' : 'You have employee access only' }"/>
 
                 <SegmentedButtonItem
                     key="my"
