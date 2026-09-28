@@ -198,7 +198,7 @@
         <f:Card class="jhahDataCard">
             <f:content>
                 <VBox class="jhahPairCardInner" renderType="Bare" width="100%">
-                    <Title text="Processing Breakdown" level="H6" class="sapUiSmallMarginBottom" />
+                    <Title text="Violation Summary" level="H6" class="sapUiSmallMarginBottom" />
                     <Text
                         text="No data available"
                         class="jhahMutedText jhahNoDataValue"

@@ -233,7 +233,7 @@
                     class="jhahMutedText sapUiTinyMarginEnd" />
 
                 <Title
-                    text="Pending Traffic Violation Requests"
+                    text="Pending Violation Requests"
                     level="H6" />
 
             </HBox>
