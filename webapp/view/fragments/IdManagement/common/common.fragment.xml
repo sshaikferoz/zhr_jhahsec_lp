@@ -23,7 +23,7 @@
                         class="jhahInnerTable"
                         fixedLayout="false"
                         noDataText="No data available"
-                        items="{dashboard>/idCard/pendingrecords}">
+                        items="{dashboard>requests}">
 
                         <columns>
                          <Column>

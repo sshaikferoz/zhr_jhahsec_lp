@@ -15,10 +15,9 @@
                  
             <!-- Admin / My View toggle — only visible for Security role -->
             <SegmentedButton
-                id="idsegTVS"
                 visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
-                selectedKey="{dashboard>/viewMode}"
-                selectionChange=".onViewModeChange"
+                selectedKey="{dashboard>/sectionViewMode/TVS}"
+                selectionChange=".onViewModeChange($event, 'TVS')"
                 class="sapUiSmallMarginEnd">
 
                 <items>

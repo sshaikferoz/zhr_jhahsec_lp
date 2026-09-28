@@ -33,10 +33,9 @@
 
             <!-- RIGHT : Admin / Employee -->
             <SegmentedButton
-                id="idsegBusinessVisitor"
                 visible="{= ${GetAuthModel>/0/VAR_ROLE} === 'ADMIN' }"
-                selectedKey="{dashboard>/viewMode}"
-                selectionChange=".onViewModeChange">
+                selectedKey="{dashboard>/sectionViewMode/BUSINESS_VISITOR}"
+                selectionChange=".onViewModeChange($event, 'BUSINESS_VISITOR')">
 
                 <items>
 

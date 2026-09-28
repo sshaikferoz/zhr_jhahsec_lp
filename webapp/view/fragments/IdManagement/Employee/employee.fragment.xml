@@ -8,6 +8,7 @@
 
     <f:Card
         width="100%"
+        binding="{dashboard>/idCard/employee}"
         class="jhahDataCard">
 
         <f:content>
@@ -43,10 +44,9 @@
 
     <!-- RIGHT : Admin / Employee -->
     <SegmentedButton
-        id="idsegIDCard"
         visible="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' }"
-        selectedKey="{dashboard>/viewMode}"
-        selectionChange=".onViewModeChange">
+        selectedKey="{dashboard>/sectionViewMode/ID_CARD}"
+        selectionChange=".onViewModeChange($event, 'ID_CARD')">
 
         <items>
 
@@ -82,7 +82,7 @@
                         <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
                             <!-- Populated state -->
                             <VBox
-                                visible="{dashboard>/idCard/hasData}"
+                                visible="{dashboard>active/hasData}"
                                 renderType="Bare"
                                 width="100%"
                                 class="jhahIdCardBody"
@@ -99,15 +99,15 @@
                                         <VBox class="jhahIdCardHeaderText" renderType="Bare">
                                             <Label text="ACTIVE ID CARD" class="jhahMutedText" />
                                             <Text
-                                                text="{dashboard>/idCard/idNumber}"
-                                                tooltip="{dashboard>/idCard/idNumber}"
+                                                text="{dashboard>active/idNumber}"
+                                                tooltip="{dashboard>active/idNumber}"
                                                 class="jhahIdCardName"
                                             />
                                         </VBox>
                                     </HBox>
                                     <ObjectStatus
-                                        text="{dashboard>/idCard/statusText}"
-                                        state="{dashboard>/idCard/statusState}"
+                                        text="{dashboard>active/statusText}"
+                                        state="{dashboard>active/statusState}"
                                         class="jhahBadgeStatus"
                                     />
                                 </HBox>
@@ -115,12 +115,12 @@
                                 <VBox class="jhahIdCardExpiry" renderType="Bare" width="100%">
                                     <HBox justifyContent="SpaceBetween" class="jhahIdCardRow" renderType="Bare">
                                         <Label text="Days to Expiry" class="jhahIdCardLabel" />
-                                        <Text text="{dashboard>/idCard/daysToExpire}" class="jhahIdCardValue" />
+                                        <Text text="{dashboard>active/daysToExpire}" class="jhahIdCardValue" />
                                     </HBox>
                                     <ProgressIndicator
-                                        percentValue="{dashboard>/idCard/expiryPercent}"
+                                        percentValue="{dashboard>active/expiryPercent}"
                                         showValue="false"
-                                        state="{dashboard>/idCard/statusState}"
+                                        state="{dashboard>active/statusState}"
                                         class="jhahExpiryProgress"
                                     />
                                 </VBox>
@@ -129,8 +129,8 @@
                                     text="Renew ID Card"
                                     type="Emphasized"
                                     icon="sap-icon://request"
-                                    enabled="{dashboard>/idCard/isExpiringSoon}"
-                                    tooltip="{= ${dashboard>/idCard/isExpiringSoon} ? 'Your ID is eligible for renewal.' : 'Renewal is available within 30 days of your ID expiration.' }"
+                                    enabled="{dashboard>active/isExpiringSoon}"
+                                    tooltip="{= ${dashboard>active/isExpiringSoon} ? 'Your ID is eligible for renewal.' : 'Renewal is available within 30 days of your ID expiration.' }"
                                     press=".onRenewIdCard"
                                     class="jhahRenewBtn"
                                 />
@@ -138,7 +138,7 @@
 
                             <!-- Empty state -->
                             <VBox
-                                visible="{= !${dashboard>/idCard/hasData} }"
+                                visible="{= !${dashboard>active/hasData} }"
                                 renderType="Bare"
                                 justifyContent="Start"
                                 width="100%"

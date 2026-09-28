@@ -158,6 +158,15 @@ sap.ui.define(
           isEmbedFrame: false,
           embedTitle: "",
           viewMode: "org", // "org" = admin/full-org view, "my" = personal view
+          // Admin / Employee toggle state of each dashboard card, keyed by
+          // application. Kept per card so switching one card leaves the others
+          // untouched. Set from the user's role in Main.controller.
+          sectionViewMode: {
+            TVS: "",
+            STICKER: "",
+            ID_CARD: "",
+            BUSINESS_VISITOR: "",
+          },
           isAdmin: true, // Security role starts in admin (org) mode
           logoUrl: sAssetBase + "logo_new.png",
           patternUrl: sAssetBase + "pattern.png",
@@ -175,20 +184,39 @@ sap.ui.define(
             email: "-",
             initials: "-",
           },
-          // Active ID card, populated from the ID service's /activeID entity
-          // (see Main.controller#_fetchActiveIdCard). Mirrors the reference
-          // project's ActiveIdCard fragment contract: an ID number, a days-to-
-          // expiry countdown, an "expiring soon" flag (<= 30 days) that gates
-          // the Renew action, and a validity progress indicator. Defaults keep
-          // the card in its "No data available" state until the fetch returns.
+          // ID Management card state. Each view mode owns its own node and its
+          // fragment is element-bound to it, so the admin and employee cards
+          // never read or overwrite each other's data.
+          //  - admin: AdminKPI counts and all pending requests.
+          //  - employee: the user's active card and own pending requests.
+          //    `active` is populated from the ID service's /activeID entity
+          //    (see Main.controller#_fetchActiveIdCard): an ID number, a
+          //    days-to-expiry countdown, an "expiring soon" flag (<= 30 days)
+          //    that gates the Renew action, and a validity progress indicator.
+          //    Defaults keep the card in its "No data available" state until
+          //    the fetch returns.
           idCard: {
-            hasData: false,
-            idNumber: "-",
-            daysToExpire: "-",
-            isExpiringSoon: false,
-            expiryPercent: 0,
-            statusText: "",
-            statusState: "None",
+            admin: {
+              kpi: {
+                totalIdRequests: 0,
+                approvedCards: 0,
+                pendingReview: 0,
+                rejectedCards: 0,
+              },
+              requests: [],
+            },
+            employee: {
+              active: {
+                hasData: false,
+                idNumber: "-",
+                daysToExpire: "-",
+                isExpiringSoon: false,
+                expiryPercent: 0,
+                statusText: "",
+                statusState: "None",
+              },
+              requests: [],
+            },
           },
           navItems: oPersona.navItems,
           // Sticker Management section state.

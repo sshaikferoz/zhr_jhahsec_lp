@@ -9,6 +9,7 @@
 
     <f:Card
         width="100%"
+        binding="{dashboard>/idCard/admin}"
         class="jhahDataCard">
 
         <f:content>
@@ -49,10 +50,9 @@
 
     <!-- RIGHT : Admin / Employee -->
     <SegmentedButton
-        id="idsegIDCardemp"
         visible="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' }"
-        selectedKey="{dashboard>/viewMode}"
-        selectionChange=".onViewModeChange">
+        selectedKey="{dashboard>/sectionViewMode/ID_CARD}"
+        selectionChange=".onViewModeChange($event, 'ID_CARD')">
 
         <items>
 
@@ -107,7 +107,7 @@
                                         class="jhahKpiTitle"/>
 
                                     <Text
-                                        text="{dashboard>/idCard/adminKpi/totalIdRequests}"
+                                        text="{dashboard>kpi/totalIdRequests}"
                                         class="jhahMutedText jhahNoDataValue"/>
 
                                 </VBox>
@@ -144,7 +144,7 @@
                                         class="jhahKpiTitle"/>
 
                                     <Text
-                                        text="{dashboard>/idCard/adminKpi/approvedCards}"
+                                        text="{dashboard>kpi/approvedCards}"
                                         class="jhahMutedText jhahNoDataValue"/>
 
                                 </VBox>
@@ -181,7 +181,7 @@
                                         class="jhahKpiTitle"/>
 
                                     <Text
-                                        text="{dashboard>/idCard/adminKpi/pendingReview}"
+                                        text="{dashboard>kpi/pendingReview}"
                                         class="jhahMutedText jhahNoDataValue"/>
 
                                 </VBox>
@@ -218,7 +218,7 @@
                                         class="jhahKpiTitle"/>
 
                                     <Text
-                                        text="{dashboard>/idCard/adminKpi/rejectedCards}"
+                                        text="{dashboard>kpi/rejectedCards}"
                                         class="jhahMutedText jhahNoDataValue"/>
 
                                 </VBox>

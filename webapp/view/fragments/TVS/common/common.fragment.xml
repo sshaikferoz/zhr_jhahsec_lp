@@ -23,10 +23,9 @@
                 <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
             </HBox>
             <SegmentedButton
-                id="idsegTVSemp"
                 visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
-                selectedKey="{dashboard>/viewMode}"
-                selectionChange=".onViewModeChange"
+                selectedKey="{dashboard>/sectionViewMode/TVS}"
+                selectionChange=".onViewModeChange($event, 'TVS')"
                 class="sapUiSmallMarginEnd">
 
                 <items>

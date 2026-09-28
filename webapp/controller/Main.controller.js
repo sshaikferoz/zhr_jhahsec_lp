@@ -76,7 +76,7 @@ sap.ui.define([
             ? 0
             : Math.max(0, Math.min(100, Math.round((iDays / 365) * 100)));
 
-          oDashboardModel.setProperty("/idCard", {
+          oDashboardModel.setProperty("/idCard/employee/active", {
             hasData: !!oData.IdNumber,
             idNumber: oData.IdNumber || "-",
             daysToExpire: isNaN(iDays) ? "-" : String(iDays),
@@ -160,7 +160,7 @@ sap.ui.define([
 
           var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
 
-          oDashboardModel.setProperty("/idCard/pendingrecords", aPendingRecords);
+          oDashboardModel.setProperty("/idCard/admin/requests", aPendingRecords);
 
           console.log("Pending Records:", oDashboardModel.getData());
 
@@ -207,7 +207,7 @@ sap.ui.define([
 
           var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
 
-          oDashboardModel.setProperty("/idCard/pendingrecords", aPendingRecords);
+          oDashboardModel.setProperty("/idCard/employee/requests", aPendingRecords);
 
           console.log("Pending Records:", oDashboardModel.getData());
 
@@ -273,8 +273,7 @@ sap.ui.define([
       oListBinding.requestContexts(0, 1).then(function (aContexts) {
         var oAdminData = aContexts.length > 0 ? aContexts[0].getObject() : {};
 
-        oDashboardModel.setProperty("/idCard/adminKpi", {
-          personaRole: oAdminData.PersonaRole || "",
+        oDashboardModel.setProperty("/idCard/admin/kpi", {
           totalIdRequests: oAdminData.TotalIdRequests || 0,
           approvedCards: oAdminData.ApprovedCards || 0,
           pendingReview: oAdminData.PendingReview || 0,
@@ -282,8 +281,7 @@ sap.ui.define([
         });
       }).catch(function (oError) {
         console.error("Failed to load Admin KPI:", oError);
-        oDashboardModel.setProperty("/adminKpi", {
-          personaRole: "",
+        oDashboardModel.setProperty("/idCard/admin/kpi", {
           totalIdRequests: 0,
           approvedCards: 0,
           pendingReview: 0,
@@ -318,7 +316,14 @@ sap.ui.define([
         })
         .requestContexts()
         .then(function (aContexts) {
-          if (!aContexts.length) {
+          // Both modes share /sticker/kpis; drop a response that lands after
+          // the user has already switched the card to the other mode.
+          var sRequestedMode = sStickerRole === true ? "org" : "my";
+          if (
+            !aContexts.length ||
+            oDashboardModel.getProperty("/sectionViewMode/STICKER") !==
+              sRequestedMode
+          ) {
             return;
           }
 
@@ -482,6 +487,11 @@ sap.ui.define([
               function (oCtx) {
                 var o = oCtx.getObject();
                 return {
+                  // Key-predicate path built by the OData model from the
+                  // service metadata, e.g. /StickerMaster(StkReqId='682',
+                  // IsActiveEntity=true). It doubles as the Fiori elements
+                  // object-page route, so the link never hand-builds keys.
+                  path: this._getCanonicalPath(oCtx),
                   reqId: o.StkReqId,
                   reqIdStr: o.StkReqIdStr || o.StkReqId,
                   stkType: o.StkType || "-",
@@ -576,6 +586,16 @@ sap.ui.define([
       return aParts.length === 3
         ? aParts[2] + "/" + aParts[1] + "/" + aParts[0]
         : "-";
+    },
+    _getCanonicalPath: function (oContext) {
+      try {
+        return oContext.getCanonicalPath();
+      } catch (oError) {
+        // Key properties missing from the response — the row stays visible,
+        // its link just has nowhere to go.
+        Log.warning("No canonical path for " + oContext.getPath(), oError);
+        return "";
+      }
     },
     _fetchLandingKpis: function () {
       var oODataModel = this.getOwnerComponent().getModel();
@@ -791,16 +811,20 @@ sap.ui.define([
       return oFragmentMap[sApp]?.[sViewMode] || null;
     },
 
-    _getViewContainer: function (sApp) {
+    _getViewContainer: function (sApp, sViewMode) {
 
+      // One slot per card and mode (see Main.view.xml). Each slot's
+      // visibility is bound to /sectionViewMode/<app>, so the model alone
+      // decides which mode of a card is on screen.
       var oContainerMap = {
-        TVS: "tvsVBox",
-        STICKER: "stickerVBox",
-        ID_CARD: "idVBox",
-        BUSINESS_VISITOR: "varVBox"
+        TVS: { org: "tvsOrgVBox", my: "tvsMyVBox" },
+        STICKER: { org: "stickerOrgVBox", my: "stickerMyVBox" },
+        ID_CARD: { org: "idOrgVBox", my: "idMyVBox" },
+        BUSINESS_VISITOR: { org: "varOrgVBox", my: "varMyVBox" }
       };
 
-      return this.byId(oContainerMap[sApp]) || null;
+      var sId = oContainerMap[sApp]?.[sViewMode];
+      return (sId && this.byId(sId)) || null;
     },
 
     _getInitialMode: function (sRole) {
@@ -816,74 +840,72 @@ sap.ui.define([
       return null;
     },
 
-    // _loadDynamicFragment: function (sFragmentName, sApp) {
+    /**
+     * Switches a single dashboard card to the given mode and refreshes its
+     * data. Other cards are not touched.
+     */
+    _showSection: function (sApp, sViewMode) {
 
-    //   var oContainer = this._getViewContainer(sApp);
+      var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+      oDashboardModel.setProperty("/sectionViewMode/" + sApp, sViewMode);
 
-    //   if (!oContainer) {
-    //     console.error("Container not found for:", sApp);
-    //     return;
-    //   }
-
-    //   // IMPORTANT: destroy old fragment controls
-    //   oContainer.destroyItems();
-
-    //   this.loadFragment({
-    //     name: sFragmentName,
-    //     type: "XML"
-    //   }).then(function (oFragment) {
-
-    //     oContainer.addItem(oFragment);
-
-    //   }).catch(function (oError) {
-
-    //     console.error(
-    //       "Error loading fragment:",
-    //       sFragmentName,
-    //       oError
-    //     );
-
-    //   });
-    // },
-    _loadDynamicFragment: function (sFragmentName, sApp, sViewMode) {
-
-      var oContainer = this._getViewContainer(sApp);
-
-      if (!oContainer) {
-        console.error("Container not found for:", sApp);
-        return;
-      }
-
-      oContainer.destroyItems();
-
-      this.loadFragment({
-        name: sFragmentName,
-        type: "XML"
-      }).then(function (oFragment) {
-
-        oContainer.addItem(oFragment);
+      return this._loadSectionFragment(sApp, sViewMode).then(function () {
 
         if (sViewMode === "org") {
           this._loadAdminData(sApp);
-
         } else if (sViewMode === "my") {
           this._loadEmployeeData(sApp);
         }
 
       }.bind(this)).catch(function (oError) {
 
-        console.error(
-          "Error loading fragment:",
-          sFragmentName,
-          oError
-        );
+        console.error("Error loading section:", sApp, sViewMode, oError);
 
       });
     },
 
-    _loadEmployeeData: function (sApp) {
+    /**
+     * Loads a card fragment into its slot once and reuses it afterwards.
+     * The promise is cached, so repeated or rapid toggles never create the
+     * same controls twice.
+     */
+    _loadSectionFragment: function (sApp, sViewMode) {
 
-      console.log("Employee view loaded:", sApp);
+      this._mSectionFragments = this._mSectionFragments || {};
+      var sKey = sApp + "/" + sViewMode;
+
+      if (!this._mSectionFragments[sKey]) {
+
+        var sFragmentName = this._getViewFragment(sApp, sViewMode);
+        var oContainer = this._getViewContainer(sApp, sViewMode);
+
+        if (!sFragmentName || !oContainer) {
+          return Promise.reject(
+            new Error("No fragment or container configured for " + sKey)
+          );
+        }
+
+        this._mSectionFragments[sKey] = this.loadFragment({
+          name: sFragmentName,
+          type: "XML"
+        }).then(function (oFragment) {
+
+          oContainer.addItem(oFragment);
+          return oFragment;
+
+        }).catch(function (oError) {
+
+          // Let the next toggle retry instead of replaying the failure.
+          delete this._mSectionFragments[sKey];
+          throw oError;
+
+        }.bind(this));
+      }
+
+      return this._mSectionFragments[sKey];
+    },
+
+    _loadEmployeeData: function (sApp) {
 
       if (sApp === "ID_CARD") {
         this._getIDEmpPendingRequests();
@@ -906,102 +928,40 @@ sap.ui.define([
 
     _loadAdminData: function (sApp) {
 
-      console.log("Admin view loaded:", sApp);
-
       if (sApp === "ID_CARD") {
+        this._fetchAdminKpi();
         this._getIDPendingRequests();
       }
 
       if (sApp === "STICKER") {
         this._fetchStickerData(true);
+        // Feeds the admin card's Active Sticker and Request Status tables.
+        this._fetchStickerMasterForUser();
       }
 
       if (sApp === "TVS") {
         this._fetchViolationAdminKpis();
-        this._fetchAdminKpi();
       }
 
-        if (sApp === "BUSINESS_VISITOR") {
-       this._fetchLandingKpis();
+      if (sApp === "BUSINESS_VISITOR") {
+        this._fetchLandingKpis();
       }
     },
 
-    onViewModeChange: function (oEvent) {
-
-      var oButton = oEvent.getSource();
-      var sButtonId = oButton.getId();
-
-      var sApp = null;
-
-      if (sButtonId.includes("idsegTVS")) {
-
-        sApp = "TVS";
-
-      } else if (sButtonId.includes("idsegSticker")) {
-
-        sApp = "STICKER";
-
-      } else if (sButtonId.includes("idsegIDCard")) {
-
-        sApp = "ID_CARD";
-
-      } else if (sButtonId.includes("idsegBusinessVisitor")) {
-
-        sApp = "BUSINESS_VISITOR";
-      }
+    /**
+     * Admin / Employee toggle of a dashboard card. The application key is
+     * passed from the XML view, e.g.
+     * selectionChange=".onViewModeChange($event, 'ID_CARD')".
+     */
+    onViewModeChange: function (oEvent, sApp) {
 
       if (!sApp) {
-        console.error(
-          "Application could not be identified from button:",
-          sButtonId
-        );
+        console.error("onViewModeChange called without an application key");
         return;
       }
 
-      // Selected key from SegmentedButton
-      var sViewMode = oEvent
-        .getParameter("item")
-        .getKey();
-
-      console.log("Application:", sApp);
-      console.log("View Mode:", sViewMode);
-
-      var oDashboardModel =
-        this.getOwnerComponent().getModel("dashboard");
-
-      // Store selected mode
-      oDashboardModel.setProperty(
-        "/viewMode",
-        sViewMode
-      );
-
-      // Store My View status
-      oDashboardModel.setProperty(
-        "/isMyView",
-        sViewMode === "my"
-      );
-
-      // Get fragment
-      var sFragmentName = this._getViewFragment(
-        sApp,
-        sViewMode
-      );
-
-      if (!sFragmentName) {
-        console.error(
-          "No fragment configured for:",
-          sApp,
-          sViewMode
-        );
-        return;
-      }
-
-      // Load fragment into corresponding VBox
-      this._loadDynamicFragment(
-        sFragmentName,
-        sApp,
-        sViewMode
-      );
+      var sViewMode = oEvent.getParameter("item").getKey();
+      this._showSection(sApp, sViewMode);
     },
 
     _loadInitialFragments: function () {
@@ -1046,29 +1006,9 @@ sap.ui.define([
           oApplication.role
         );
 
-        if (!sViewMode) {
-          return;
+        if (sViewMode) {
+          this._showSection(oApplication.app, sViewMode);
         }
-
-        var sFragmentName = this._getViewFragment(
-          oApplication.app,
-          sViewMode
-        );
-
-        if (!sFragmentName) {
-          console.error(
-            "No initial fragment found for:",
-            oApplication.app,
-            sViewMode
-          );
-          return;
-        }
-
-        this._loadDynamicFragment(
-          sFragmentName,
-          oApplication.app,
-          sViewMode
-        );
 
       }.bind(this));
     },
@@ -1114,23 +1054,8 @@ sap.ui.define([
     onNavItemSelect: function (oEvent) {
       var oItem = oEvent.getParameter("listItem");
       var sKey = oItem.getCustomData()[0].getValue();
-      var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
 
-      // Update selected flag on each nav item so binding reflects new state
-      var aNavItems = oDashboardModel.getProperty("/navItems");
-      var sTitle = "";
-      aNavItems.forEach(function (oNav, i) {
-        var bSelected = oNav.key === sKey;
-        oDashboardModel.setProperty(
-          "/navItems/" + i + "/selected",
-          bSelected,
-        );
-        if (bSelected) {
-          sTitle = oNav.title;
-        }
-      });
-      oDashboardModel.setProperty("/selectedNavKey", sKey);
-      oDashboardModel.setProperty("/embedTitle", sTitle);
+      this._selectNavItem(sKey);
 
       if (sKey === "vendor") {
         this._loadAppInFrame("BusiVisitorAccess", "manage");
@@ -1141,33 +1066,88 @@ sap.ui.define([
       } else if (sKey === "id") {
         this._loadAppInFrame("idmanagementsystem", "manage");
       } else if (sKey === "dashboard") {
-        var sRole = oDashboardModel.getProperty("/role");
-        this._loadDashboardForRole(sRole);
+        this._showDashboard();
       }
     },
-    _loadDashboardForRole: function (sRole) {
-      var sFragment = SHELL_FRAGMENTS[sRole];
-      this._loadShellFragment(sFragment);
+
+    /**
+     * Opens the Sticker Master app deep-linked to the pressed request's
+     * object page. The inner route is the entity's canonical path, which is
+     * the route Fiori elements registers for its object page.
+     */
+    onStickerRequestPress: function (oEvent) {
+      var oContext = oEvent.getSource().getBindingContext("dashboard");
+      var sPath = oContext && oContext.getProperty("path");
+
+      if (!sPath) {
+        Log.warning("Sticker request has no object page path", null, "jhah.embed");
+        return;
+      }
+
+      this._selectNavItem("sticker");
+      this._loadAppInFrame("StickerMaster", "manage", sPath);
     },
-    _loadShellFragment: function (sFragmentName) {
+
+    /**
+     * Renew ID Card — opens the ID Management System app, matching the
+     * side-nav entry. Enabled only while the active card is expiring soon.
+     */
+    onRenewIdCard: function () {
+      this._selectNavItem("id");
+      this._loadAppInFrame("idmanagementsystem", "manage");
+    },
+
+    /**
+     * Marks the side-nav entry for sKey as selected and uses its title as
+     * the embedded app's title.
+     */
+    _selectNavItem: function (sKey) {
       var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
-      oDashboardModel.setProperty("/isEmbedFrame", false);
+      var aNavItems = oDashboardModel.getProperty("/navItems") || [];
+      var sTitle = "";
+
+      aNavItems.forEach(function (oNav, i) {
+        var bSelected = oNav.key === sKey;
+        oDashboardModel.setProperty("/navItems/" + i + "/selected", bSelected);
+        if (bSelected) {
+          sTitle = oNav.title;
+        }
+      });
+
+      oDashboardModel.setProperty("/selectedNavKey", sKey);
+      oDashboardModel.setProperty("/embedTitle", sTitle);
+    },
+
+    /**
+     * Returns from an embedded app to the dashboard. The dashboard cards were
+     * only hidden, so they come back with their current mode and data.
+     */
+    _showDashboard: function () {
+      // Invalidate any embed still resolving its shell URL.
+      this._iEmbedToken = (this._iEmbedToken || 0) + 1;
+
+      this.getOwnerComponent()
+        .getModel("dashboard")
+        .setProperty("/isEmbedFrame", false);
       this._setEmbedMode(false);
 
       var oContainer = this.byId("dashboardContent");
-      oContainer.destroyItems();
+      oContainer.setBusy(false);
+      this._destroyEmbeddedContent();
+    },
 
-      return Fragment.load({
-        id: this.getView().getId(),
-        name: sFragmentName,
-        controller: this,
-        type: "XML",
-      }).then(
-        function (oShell) {
-          oContainer.addItem(oShell);
-          this._configureVisitorChart();
-        }.bind(this),
-      );
+    /**
+     * Destroys the embedded iframe or error strip, leaving the dashboard
+     * cards in place.
+     */
+    _destroyEmbeddedContent: function () {
+      var oDashboard = this.byId("dashboardContainer");
+
+      this.byId("dashboardContent").getItems().forEach(function (oItem) {
+        if (oItem !== oDashboard) {
+          oItem.destroy();
+        }
+      });
     },
     _loadAppInFrame: function (sSemanticObject, sAction, sInnerRoute) {
       var that = this;
@@ -1176,7 +1156,7 @@ sap.ui.define([
       this._setEmbedMode(true);
 
       var oContainer = this.byId("dashboardContent");
-      oContainer.destroyItems();
+      this._destroyEmbeddedContent();
       oContainer.setBusy(true);
 
       var bAdmin = oDashboardModel.getProperty("/isAdmin");
@@ -1235,7 +1215,7 @@ sap.ui.define([
             return;
           }
           oContainer.setBusy(false);
-          oContainer.destroyItems();
+          that._destroyEmbeddedContent();
           oContainer.addItem(
             new MessageStrip({
               type: "Error",

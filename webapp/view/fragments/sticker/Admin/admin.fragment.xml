@@ -50,10 +50,9 @@
 
     <!-- RIGHT : Admin / Employee -->
     <SegmentedButton
-        id="idsegSticker"
         visible="{= ${GetAuthModel>/0/STK_ROLE} === 'ADMIN' }"
-        selectedKey="{dashboard>/viewMode}"
-        selectionChange=".onViewModeChange">
+        selectedKey="{dashboard>/sectionViewMode/STICKER}"
+        selectionChange=".onViewModeChange($event, 'STICKER')">
 
         <items>
 
