@@ -3,48 +3,114 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
 >
-    <VBox
+    <VBox id="_IDGenVBox12"
         class="jhahSection"
         renderType="Bare"
         visible="{dashboard>/access/id}"
     >
-        <Title text="ID Management System" level="H5" class="jhahSectionTitle" />
-        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
+        <Title id="_IDGenTitle1" text="ID Management System" level="H5" class="jhahSectionTitle" />
+        <HBox id="_IDGenHBox9" class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+            <f:Card id="_IDGenCard2" class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                        <core:Icon src="sap-icon://id-card" class="jhahKpiIcon jhahKpiIconBlue" />
-                        <VBox class="jhahKpiTextCol" renderType="Bare">
-                            <Label text="Total ID Request" class="jhahKpiTitle" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                    <HBox id="_IDGenHBox10" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon id="_IDGenIcon1" src="sap-icon://sum" class="jhahKpiIcon jhahKpiIconBlue" />
+                        <VBox id="_IDGenVBox13" class="jhahKpiTextCol" renderType="Bare">
+                            <Label id="_IDGenLabel5" text="Total ID Request" class="jhahKpiTitle" />
+                            <!-- <Text text="No data available" class="jhahMutedText jhahNoDataValue" /> -->
+                            <Text id="_IDGenText10" 
+                                text="{dashboard>/idCard/adminKpi/totalIdRequests}" 
+                                class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                     </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
+            <f:Card id="_IDGenCard3" class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                        <core:Icon src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen" />
-                        <VBox class="jhahKpiTextCol" renderType="Bare">
-                            <Label text="Approved Cards" class="jhahKpiTitle" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                    <HBox id="_IDGenHBox11" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon id="_IDGenIcon2" src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen" />
+                        <VBox id="_IDGenVBox14" class="jhahKpiTextCol" renderType="Bare">
+                            <Label id="_IDGenLabel6" text="Approved" class="jhahKpiTitle" />
+                            <!-- <Text text="No data available" class="jhahMutedText jhahNoDataValue" /> -->
+                            <Text id="_IDGenText11" 
+                                text="{dashboard>/idCard/adminKpi/approvedCards}" 
+                                class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                     </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
+            <f:Card id="_IDGenCard4" class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                        <core:Icon src="sap-icon://pending" class="jhahKpiIcon jhahKpiIconOrange" />
-                        <VBox class="jhahKpiTextCol" renderType="Bare">
-                            <Label text="Pending Review" class="jhahKpiTitle" />
-                            <Text text="No data available" class="jhahMutedText jhahNoDataValue" />
+                    <HBox id="_IDGenHBox12" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon id="_IDGenIcon3" src="sap-icon://pending" class="jhahKpiIcon jhahKpiIconOrange" />
+                        <VBox id="_IDGenVBox15" class="jhahKpiTextCol" renderType="Bare">
+                            <Label id="_IDGenLabel7" text="Pending Review" class="jhahKpiTitle" />
+                            <!-- <Text text="No data available" class="jhahMutedText jhahNoDataValue" /> -->
+                            <Text id="_IDGenText12" 
+                                text="{dashboard>/idCard/adminKpi/pendingReview}" 
+                                class="jhahMutedText jhahNoDataValue" />
+                        </VBox>
+                    </HBox>
+                </f:content>
+            </f:Card>
+
+<!-- rejected card -->
+            <f:Card id="_IDGenCard1" class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
+                <f:content>
+                    <HBox id="_IDGenHBox" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon id="_IDGenIcon" src="sap-icon://decline" class="jhahKpiIcon jhahKpiIconRed" />
+                        <VBox id="_IDGenVBox3" class="jhahKpiTextCol" renderType="Bare">
+                            <Label id="_IDGenLabel" text="Rejected" class="jhahKpiTitle" />
+                            <!-- <Text text="No data available" class="jhahMutedText jhahNoDataValue" /> -->
+                            <Text id="_IDGenText" 
+                                text="{dashboard>/idCard/adminKpi/rejectedCards}" 
+                                class="jhahMutedText jhahNoDataValue" />
                         </VBox>
                     </HBox>
                 </f:content>
             </f:Card>
         </HBox>
-        <f:Card class="jhahDataCard">
+        <!-- <core:Fragment
+                fragmentName="com.jhah.zhrjhahseclp.fragments.security.AdminCard"
+                type="XML"
+            /> -->
+        <f:Card id="_IDGenCard5" class="jhahDataCard">
+            <f:content>
+                <VBox id="_IDGenVBox16" class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <HBox id="_IDGenHBox13" alignItems="Center" class="sapUiSmallMarginBottom">
+                        <core:Icon id="_IDGenIcon4" src="sap-icon://id-card" class="jhahMutedText sapUiTinyMarginEnd" />
+                        <Title id="_IDGenTitle2" text="ID Card Requests" level="H6" />
+                    </HBox>
+                    
+                    <Table id="_IDGenTable" 
+                        items="{dashboard>/idCardRequests}" 
+                        class="jhahInnerTable" 
+                        fixedLayout="false" 
+                        noDataText="No data available"
+                    >
+                        <columns>
+                            <Column id="_IDGenColumn"><Text id="_IDGenText13" text="REQUEST ID" /></Column>
+                            <Column id="_IDGenColumn1"><Text id="_IDGenText14" text="EMPLOYEE NAME" /></Column>
+                            <Column id="_IDGenColumn2"><Text id="_IDGenText15" text="DEPARTMENT" /></Column>
+                            <Column id="_IDGenColumn3" hAlign="End"><Text id="_IDGenText16" text="STATUS" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem id="_IDGenColumnListItem">
+                                <cells>
+                                    <Text id="_IDGenText17" text="{dashboard>RequestId}" />
+                                    <Text id="_IDGenText18" text="{dashboard>EmployeeName}" />
+                                    <Text id="_IDGenText19" text="{dashboard>Department}" />
+                                    <ObjectStatus id="_IDGenObjectStatus3" 
+                                        text="{dashboard>Status}" 
+                                        state="{= ${dashboard>Status} === 'Approved' ? 'Success' : (${dashboard>Status} === 'Rejected' ? 'Error' : 'Warning') }" 
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </f:content>
+        </f:Card>
+        <!-- <f:Card class="jhahDataCard">
             <f:content>
                 <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
                     <HBox alignItems="Center" class="sapUiSmallMarginBottom">
@@ -61,6 +127,6 @@
                     </Table>
                 </VBox>
             </f:content>
-        </f:Card>
+        </f:Card> -->
     </VBox>
 </core:FragmentDefinition>

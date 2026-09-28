@@ -1,0 +1,91 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+
+
+<!-- Active and inprogress card -->
+
+<VBox>
+ 
+
+<!-- table -->
+
+ <f:Card class="jhahDataCard">
+            <f:content>
+                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://id-card" class="jhahMutedText sapUiTinyMarginEnd" />
+                        <Title text="ID Card Requests" level="H6" />
+                    </HBox>
+                    <Table
+                        class="jhahInnerTable"
+                        fixedLayout="false"
+                        noDataText="No data available"
+                        items="{dashboard>/idCard/pendingrecords}">
+
+                        <columns>
+                         <Column>
+                                <Text text="Id No." />
+                            </Column>
+
+                            <Column>
+                                <Text text="Request Id" />
+                            </Column>
+
+                             <Column>
+                                <Text text="Payroll No." />
+                            </Column>
+
+                            <Column>
+                                <Text text="Employee Name" />
+                            </Column>                           
+                            <Column>
+                                <Text text="Loc" />
+                            </Column>
+
+                            <Column>
+                                <Text text="STATUS" />
+                            </Column>
+                        </columns>
+
+                        <items>
+
+                            <ColumnListItem>
+
+                                <cells>
+                                  <Text
+                                        text="{dashboard>IdNumber}" />
+
+                                    <Text
+                                        text="{dashboard>RequestId}" />
+
+                                      <Text
+                                        text="{dashboard>PayrollNum}" />
+
+                                    <Text
+                                        text="{dashboard>FullName}" />
+                                    
+                                     <Text
+                                        text="{dashboard>LocationDesc}" />
+
+                                    <ObjectStatus
+                                        text="{dashboard>IDStatusDesc}"
+                                        state="Warning" />
+
+                                </cells>
+
+                            </ColumnListItem>
+
+                        </items>
+
+                    </Table>
+                </VBox>
+            </f:content>
+        </f:Card>
+
+        </VBox>
+
+
+</core:FragmentDefinition>

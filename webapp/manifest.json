@@ -48,6 +48,15 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "zsrv_hr_jhahsec_auth_info": {
+        "uri": "/sap/opu/odata4/sap/zsb_jhahsec_auth_o4/srvd_a2x/sap/zsrv_hr_jhahsec_auth_info/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/zsrv_hr_jhahsec_auth_info/metadata.xml",
+          "odataVersion": "4.0"
+        }
       }
     }
   },
@@ -131,6 +140,15 @@
           "earlyRequests": false,
           "groupId": "$direct"
         }
+      },
+      "Auth_Info": {
+        "dataSource": "zsrv_hr_jhahsec_auth_info",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
       }
     },
     "resources": {
@@ -156,7 +174,9 @@
         {
           "name": "RouteMain",
           "pattern": ":?query:",
-          "target": ["TargetMain"]
+          "target": [
+            "TargetMain"
+          ]
         }
       ],
       "targets": {

@@ -20,6 +20,10 @@ server:
             url: http://jhah.virtual.ip.dhc:443
             client: '022'
             destination: s4hanadt_BAS
+          - path: /sap/opu/odata4/sap/zsb_jhahsec_auth_o4/srvd_a2x/sap/zsrv_hr_jhahsec_auth_info/0001/
+            url: http://jhah.virtual.ip.dhc:443
+            client: '022'
+            destination: s4hanadt_BAS
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -41,6 +45,22 @@ server:
             mockdataPath: ./webapp/localService/mainService/data
             generateMockData: true
             resolveExternalServiceReferences: true
+          - urlPath: /sap/opu/odata4/sap/zui_hr_stk/srvd/sap/zsrv_hr_stk/0001
+            metadataPath: ./webapp/localService/stickerService/metadata.xml
+            mockdataPath: ./webapp/localService/stickerService/data
+            generateMockData: true
+          - urlPath: /sap/opu/odata4/sap/zsrv_hr_tvs_o4/srvd/sap/zsrv_hr_stk/0001
+            metadataPath: ./webapp/localService/tvsService/metadata.xml
+            mockdataPath: ./webapp/localService/tvsService/data
+            generateMockData: true
+          - urlPath: /sap/opu/odata4/sap/zsrv_hr_id_o4/srvd/sap/zsrv_hr_id_app/0001
+            metadataPath: ./webapp/localService/idService/metadata.xml
+            mockdataPath: ./webapp/localService/idService/data
+            generateMockData: true
+          - urlPath: /sap/opu/odata4/sap/zsb_jhahsec_auth_o4/srvd_a2x/sap/zsrv_hr_jhahsec_auth_info/0001
+            metadataPath: ./webapp/localService/zsrv_hr_jhahsec_auth_info/metadata.xml
+            mockdataPath: ./webapp/localService/zsrv_hr_jhahsec_auth_info/data
+            generateMockData: true
         annotations: []
 builder:
   resources:

@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+>
+
+
+    <f:Card
+        width="100%"
+        class="jhahDataCard">
+
+        <f:content>
+
+      <VBox
+    width="100%"
+    renderType="Bare"
+    class="jhahSection">
+
+    <!-- Header Row -->
+    <HBox
+        width="100%"
+        renderType="Bare"
+        alignItems="Center"
+        justifyContent="SpaceBetween"
+        class="jhahKpiRow">
+
+        <!-- Left: Pin + Title -->
+        <HBox
+            renderType="Bare"
+            alignItems="Center">
+
+            <core:Icon
+                src="sap-icon://pushpin-off"
+                class="jhahMutedText sapUiTinyMarginEnd"/>
+
+            <Title
+                text="Sticker Management System"
+                level="H5"
+                class="jhahSectionTitle"/>
+
+        </HBox>
+
+        <!-- Right: Admin / Employee -->
+        <SegmentedButton
+            id="idsegStickeremp"
+            visible="{= ${GetAuthModel>/0/STK_ROLE} === 'ADMIN' }"
+            selectedKey="{dashboard>/viewMode}"
+            selectionChange=".onViewModeChange">
+
+            <items>
+                <SegmentedButtonItem
+                    key="org"
+                    text="Admin"/>
+
+                <SegmentedButtonItem
+                    key="my"
+                    text="Employee"/>
+            </items>
+
+        </SegmentedButton>
+
+    </HBox>
+
+    <!-- Sticker Content -->
+    <core:Fragment
+        fragmentName="com.jhah.zhrjhahseclp.view.fragments.sticker.common.common"
+        type="XML"/>
+
+</VBox>
+
+        </f:content>
+
+    </f:Card>
+
+</core:FragmentDefinition>
