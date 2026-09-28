@@ -935,7 +935,7 @@ sap.ui.define([
 
       if (sApp === "STICKER") {
         this._fetchStickerData(true);
-        // Feeds the admin card's Active Sticker and Request Status tables.
+        // Feeds the admin card's Request Status table.
         this._fetchStickerMasterForUser();
       }
 

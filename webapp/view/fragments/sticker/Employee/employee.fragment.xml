@@ -65,6 +65,71 @@
         fragmentName="com.jhah.zhrjhahseclp.view.fragments.sticker.common.common"
         type="XML"/>
 
+    <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
+            <!-- Active Sticker card -->
+            <VBox class="jhahHalfCardWrap" renderType="Bare">
+                <layoutData>
+                    <FlexItemData growFactor="1" baseSize="0%" />
+                </layoutData>
+                <f:Card class="jhahDataCard" width="100%">
+                    <f:content>
+                        <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
+                            <Label text="ACTIVE STICKER" class="jhahMutedText" />
+                            <!-- No active sticker -->
+                            <Text
+                                text="No data available"
+                                class="jhahMutedText jhahNoDataValue"
+                                visible="{= !${dashboard>/sticker/active/hasData} }"
+                            />
+                            <!-- Active sticker details -->
+                            <VBox
+                                renderType="Bare"
+                                class="jhahActiveSticker"
+                                visible="{dashboard>/sticker/active/hasData}"
+                            >
+                                <HBox alignItems="Center">
+                                    <Avatar
+                                        src="sap-icon://car-rental"
+                                        displaySize="S"
+                                        displayShape="Square"
+                                        backgroundColor="Accent6"
+                                        class="sapUiSmallMarginEnd"
+                                    />
+                                    <VBox renderType="Bare">
+                                        <Title
+                                            text="{dashboard>/sticker/active/plate}"
+                                            level="H5"
+                                            class="jhahHighlightValue"
+                                        />
+                                        <ObjectAttribute text="{dashboard>/sticker/active/type}" />
+                                    </VBox>
+                                </HBox>
+                                <ObjectAttribute
+                                    text="{dashboard>/sticker/active/vehicle}"
+                                    class="sapUiTinyMarginTop"
+                                    visible="{= !!${dashboard>/sticker/active/vehicle} }"
+                                />
+                                <HBox
+                                    class="jhahActiveStickerFooter sapUiSmallMarginTop"
+                                    alignItems="Center"
+                                    justifyContent="SpaceBetween"
+                                >
+                                    <ObjectStatus
+                                        text="{dashboard>/sticker/active/status}"
+                                        state="{dashboard>/sticker/active/statusState}"
+                                    />
+                                    <ObjectAttribute
+                                        title="Expires"
+                                        text="{dashboard>/sticker/active/expiry}"
+                                    />
+                                </HBox>
+                            </VBox>
+                        </VBox>
+                    </f:content>
+                </f:Card>
+            </VBox>
+        </HBox>
+
 </VBox>
 
         </f:content>
