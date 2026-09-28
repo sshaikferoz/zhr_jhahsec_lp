@@ -13,30 +13,26 @@
             
             </HBox>
                  
-            <!-- Admin / Employee toggle — Admin is disabled without the ADMIN role -->
-            <SegmentedButton
-                selectedKey="{dashboard>/sectionViewMode/TVS}"
-                selectionChange=".onViewModeChange($event, 'TVS')"
-                class="sapUiSmallMarginEnd">
+            <!-- Admin / My View toggle — only visible for Security role -->
+           <SegmentedButton
+    visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/TVS}"
+    selectionChange=".onViewModeChange($event, 'TVS')"
+    width="180px"
+    class="jhahTVSSegmentedButton">
 
-                <items>
-                    <SegmentedButtonItem
-                        key="org"
-                        text="Admin"
-                        enabled="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
-                        tooltip="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' ? '' : 'You have employee access only' }" />
+    <items>
+        <SegmentedButtonItem
+            key="org"
+            text="Admin" />
 
-                    <SegmentedButtonItem
-                        key="my"
-                        text="Employee" />
-                </items>
-            </SegmentedButton>
+        <SegmentedButtonItem
+            key="my"
+            text="Employee" />
+    </items>
 
-            <!-- <Link
-                text="View all >"
-                press=".onViolationsNavPress"
-                tooltip="Open the Traffic Violation System app"
-            /> -->
+</SegmentedButton>
+
         </HBox>
 
         <!-- Headline counts -->

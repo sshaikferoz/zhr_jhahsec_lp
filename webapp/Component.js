@@ -330,6 +330,9 @@ sap.ui.define(
                   "All violations recorded in the system to date, in any status.",
               },
             ],
+             employee: {
+              requests:[]
+             },
             adminAlerts: [
               {
                 title: "Stagnant Tickets",

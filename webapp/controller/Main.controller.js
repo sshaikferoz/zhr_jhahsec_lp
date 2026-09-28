@@ -110,7 +110,7 @@ sap.ui.define([
           var oGetAuthModel = this.getView().getModel("GetAuthModel");
 
           oGetAuthModel.setData(aData);
-          // oGetAuthModel.getData()[0].TVS_ROLE = "ADMIN";
+          oGetAuthModel.getData()[0].TVS_ROLE = "ADMIN";
           // oGetAuthModel.getData()[0].VAR_ROLE = "ADMIN";
           // oGetAuthModel.getData()[0].ID_ROLE = "ADMIN";
           // oGetAuthModel.getData()[0].STK_ROLE = "ADMIN";
@@ -225,17 +225,16 @@ sap.ui.define([
     _getTVSEmpPendingRequests: function () {
 
       var oModel = this.getOwnerComponent().getModel("tvs");
-      var sCreatedBy = this.getView().getModel("GetAuthModel").getData()[0].USERID;
 
       var oBinding = oModel.bindList(
         "/header",
         null,
-        null,
+        undefined, // No sorter / CreatedAt removed
         [
           new sap.ui.model.Filter(
-            "CreatedBy",
+            "Status",
             sap.ui.model.FilterOperator.EQ,
-            sCreatedBy
+            "INP"
           )
         ]
       );
@@ -243,21 +242,30 @@ sap.ui.define([
       oBinding.requestContexts(0, 5)
         .then(function (aContexts) {
 
-          var aPendingRecords = aContexts.map(function (oContext) {
+          var aRecords = aContexts.map(function (oContext) {
             return oContext.getObject();
           });
 
-          var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+          var oDashboardModel =
+            this.getOwnerComponent().getModel("dashboard");
 
-          // oDashboardModel.setProperty("/idCard/pendingrecords", aPendingRecords);
+          oDashboardModel.setProperty(
+            "/violations/employee/requests",
+            aRecords
+          );
 
-          // console.log("Pending Records:", oDashboardModel.getData());
+          console.log(
+            "Top 5 INP TVS Records:",
+            oDashboardModel.getProperty(
+              "/violations/employee/requests"
+            )
+          );
 
         }.bind(this))
         .catch(function (oError) {
 
           console.error(
-            "Failed to fetch pending records:",
+            "Failed to fetch TVS INP records:",
             oError
           );
 
@@ -322,7 +330,7 @@ sap.ui.define([
           if (
             !aContexts.length ||
             oDashboardModel.getProperty("/sectionViewMode/STICKER") !==
-              sRequestedMode
+            sRequestedMode
           ) {
             return;
           }
@@ -615,7 +623,7 @@ sap.ui.define([
       oDashboardModel.setProperty("/violations/isAdmin", sVarRole === "ADMIN");
       var isVarAdmin = oDashboardModel.getData().violations.isAdmin;
 
-      isVarAdmin = "false" ; 
+      isVarAdmin = "false";
       // if (isVarAdmin == "true") {
       //   isVarAdmin = "X"
       // } else if (isVarAdmin == "false") {
@@ -919,6 +927,7 @@ sap.ui.define([
 
       if (sApp === "TVS") {
         this._fetchViolationUserKpis();
+        this._getTVSEmpPendingRequests();
       }
 
       if (sApp === "BUSINESS_VISITOR") {

@@ -5,9 +5,333 @@
 >
 
  
-<core:Fragment
+<!-- <core:Fragment
                 fragmentName="com.jhah.zhrjhahseclp.view.fragments.TVS.common.common"
                 type="XML"
-            />
+            /> -->
+  <f:Card
+        width="100%"
+        class="jhahDataCard">
+
+        <f:content>
+
+            <VBox
+                width="100%"
+                renderType="Bare"
+                class="jhahSection">
+
+                <!-- Section Header -->
+                <HBox
+                    justifyContent="SpaceBetween"
+                    alignItems="Center"
+                    class="jhahSectionHeader">
+
+                    <HBox alignItems="Center">
+                        <core:Icon
+                            src="sap-icon://warning"
+                            class="jhahMutedText sapUiTinyMarginEnd" />
+
+                        <Title
+                            text="Traffic Violation System"
+                            level="H5"
+                            class="jhahSectionTitle" />
+                    </HBox>
+
+                    <SegmentedButton
+                        selectedKey="{dashboard>/sectionViewMode/TVS}"
+                        selectionChange=".onViewModeChange($event, 'TVS')"
+                        width="180px"
+                        class="jhahTVSSegmentedButton">
+
+                        <items>
+
+                            <SegmentedButtonItem
+                                key="org"
+                                text="Admin"
+                                enabled="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
+                                tooltip="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' ? '' : 'You have employee access only' }" />
+
+                            <SegmentedButtonItem
+                                key="my"
+                                text="Employee" />
+
+                        </items>
+
+                    </SegmentedButton>
+
+                </HBox>
+
+
+                <!-- ========================= -->
+                <!-- Personal KPI Cards -->
+                <!-- ========================= -->
+
+                <HBox
+                    class="jhahKpiRow"
+                    renderType="Bare"
+                    wrap="Wrap">
+
+                    <!-- KPI 1 -->
+                    <f:Card
+                        class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon"
+                        tooltip="{dashboard>/violations/userKpis/0/tooltip}">
+
+                        <f:content>
+
+                            <HBox
+                                class="jhahKpiCardInner jhahKpiCardIconInner"
+                                renderType="Bare"
+                                alignItems="Center">
+
+                                <core:Icon
+                                    src="sap-icon://in-progress"
+                                    class="jhahKpiIcon jhahKpiIconOrange" />
+
+                                <VBox
+                                    class="jhahKpiTextCol"
+                                    renderType="Bare">
+
+                                    <Label
+                                        text="{dashboard>/violations/userKpis/0/title}"
+                                        class="jhahKpiTitle" />
+
+                                    <ObjectNumber
+                                        number="{dashboard>/violations/userKpis/0/value}"
+                                        emphasized="true"
+                                        state="{dashboard>/violations/userKpis/0/valueState}"
+                                        class="jhahKpiValue"
+                                        visible="{dashboard>/violations/hasUserData}" />
+
+                                    <Text
+                                        text="No data available"
+                                        class="jhahMutedText jhahNoDataValue"
+                                        visible="{= !${dashboard>/violations/hasUserData} }" />
+
+                                </VBox>
+
+                            </HBox>
+
+                        </f:content>
+
+                    </f:Card>
+
+
+                    <!-- KPI 2 -->
+                    <f:Card
+                        class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
+                        tooltip="{dashboard>/violations/userKpis/1/tooltip}">
+
+                        <f:content>
+
+                            <HBox
+                                class="jhahKpiCardInner jhahKpiCardIconInner"
+                                renderType="Bare"
+                                alignItems="Center">
+
+                                <core:Icon
+                                    src="sap-icon://history"
+                                    class="jhahKpiIcon jhahKpiIconBlue" />
+
+                                <VBox
+                                    class="jhahKpiTextCol"
+                                    renderType="Bare">
+
+                                    <Label
+                                        text="{dashboard>/violations/userKpis/1/title}"
+                                        class="jhahKpiTitle" />
+
+                                    <ObjectNumber
+                                        number="{dashboard>/violations/userKpis/1/value}"
+                                        emphasized="true"
+                                        state="{dashboard>/violations/userKpis/1/valueState}"
+                                        class="jhahKpiValue"
+                                        visible="{dashboard>/violations/hasUserData}" />
+
+                                    <Text
+                                        text="No data available"
+                                        class="jhahMutedText jhahNoDataValue"
+                                        visible="{= !${dashboard>/violations/hasUserData} }" />
+
+                                </VBox>
+
+                            </HBox>
+
+                        </f:content>
+
+                    </f:Card>
+
+
+                    <!-- KPI 3 -->
+                    <f:Card
+                        class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
+                        tooltip="{dashboard>/violations/userKpis/2/tooltip}">
+
+                        <f:content>
+
+                            <HBox
+                                class="jhahKpiCardInner jhahKpiCardIconInner"
+                                renderType="Bare"
+                                alignItems="Center">
+
+                                <core:Icon
+                                    src="sap-icon://sum"
+                                    class="jhahKpiIcon jhahKpiIconBlue" />
+
+                                <VBox
+                                    class="jhahKpiTextCol"
+                                    renderType="Bare">
+
+                                    <Label
+                                        text="{dashboard>/violations/userKpis/2/title}"
+                                        class="jhahKpiTitle" />
+
+                                    <ObjectNumber
+                                        number="{dashboard>/violations/userKpis/2/value}"
+                                        emphasized="true"
+                                        state="{dashboard>/violations/userKpis/2/valueState}"
+                                        class="jhahKpiValue"
+                                        visible="{dashboard>/violations/hasUserData}" />
+
+                                    <Text
+                                        text="No data available"
+                                        class="jhahMutedText jhahNoDataValue"
+                                        visible="{= !${dashboard>/violations/hasUserData} }" />
+
+                                </VBox>
+
+                            </HBox>
+
+                        </f:content>
+
+                    </f:Card>
+
+                </HBox>
+
+
+                <!-- ================================= -->
+                <!-- TVS Employee Pending Requests -->
+                <!-- ================================= -->
+
+<f:Card
+    width="100%"
+    class="jhahDataCard sapUiSmallMarginTop">
+
+    <f:content>
+
+        <VBox
+            class="sapUiSmallMargin"
+            renderType="Bare"
+            width="100%">
+
+            <!-- Table Header -->
+            <HBox
+                alignItems="Center"
+                class="sapUiSmallMarginBottom">
+
+                <core:Icon
+                    src="sap-icon://warning"
+                    class="jhahMutedText sapUiTinyMarginEnd" />
+
+                <Title
+                    text="Pending Traffic Violation Requests"
+                    level="H6" />
+
+            </HBox>
+
+            <!-- TVS Requests Table -->
+            <Table
+                class="jhahInnerTable"
+                fixedLayout="false"
+                noDataText="No pending requests"
+                items="{dashboard>/violations/employee/requests}">
+
+                <columns>
+
+                    <Column>
+                        <Text text="Violation No." />
+                    </Column>
+
+                    <Column>
+                        <Text text="JHAH ID" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Employee Name" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Violation Date" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Location" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Violation Type" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Points" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Status" />
+                    </Column>
+
+                </columns>
+
+                <items>
+
+                    <ColumnListItem>
+
+                        <cells>
+
+                            <Text
+                                text="{dashboard>ViolationNo}" />
+
+                            <Text
+                                text="{dashboard>JhahId}" />
+
+                            <Text
+                                text="{dashboard>ViolatorName}" />
+
+                            <Text
+                                text="{dashboard>ViolationDate}" />
+
+                            <Text
+                                text="{dashboard>LocationDesc}" />
+
+                            <Text
+                                text="{dashboard>ViolationTypeDesc}" />
+
+                            <ObjectNumber
+                                number="{dashboard>ViolationPoints}"
+                                unit="Points" />
+
+                            <ObjectStatus
+                                text="{dashboard>StatusDesc}"
+                                state="Warning" />
+
+                        </cells>
+
+                    </ColumnListItem>
+
+                </items>
+
+            </Table>
+
+        </VBox>
+
+    </f:content>
+
+</f:Card>
+
+            </VBox>
+
+        </f:content>
+
+    </f:Card>
+
 
 </core:FragmentDefinition>
