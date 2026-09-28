@@ -125,6 +125,7 @@
                                     />
                                 </VBox>
 
+                                <!-- Renew ID Card: hidden for now, uncomment to show.
                                 <Button
                                     text="Renew ID Card"
                                     type="Emphasized"
@@ -134,6 +135,7 @@
                                     press=".onRenewIdCard"
                                     class="jhahRenewBtn"
                                 />
+                                -->
                             </VBox>
 
                             <!-- Empty state -->
