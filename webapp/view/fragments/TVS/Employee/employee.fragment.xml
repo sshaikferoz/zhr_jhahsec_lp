@@ -38,6 +38,7 @@
                     </HBox>
 
                     <SegmentedButton
+                    id="idsegTVS1"
     visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
     selectedKey="{dashboard>/sectionViewMode/TVS}"
     selectionChange=".onViewModeChange($event, 'TVS')"

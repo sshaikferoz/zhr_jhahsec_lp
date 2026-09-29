@@ -69,9 +69,11 @@
 
     </SegmentedButton> -->
     <SegmentedButton
+     id="idsegIDCard"
     visible="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' }"
     selectedKey="{dashboard>/sectionViewMode/ID_CARD}"
-    selectionChange=".onViewModeChange($event, 'ID_CARD')">
+    selectionChange=".onViewModeChange($event, 'ID_CARD')"
+    width="180px">
 
     <items>
 

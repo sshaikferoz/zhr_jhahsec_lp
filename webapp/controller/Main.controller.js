@@ -110,10 +110,10 @@ sap.ui.define([
           var oGetAuthModel = this.getView().getModel("GetAuthModel");
 
           oGetAuthModel.setData(aData);
-          // oGetAuthModel.getData()[0].TVS_ROLE = "ADMIN";
-          // oGetAuthModel.getData()[0].VAR_ROLE = "ADMIN";
-          // oGetAuthModel.getData()[0].ID_ROLE = "ADMIN";
-          // oGetAuthModel.getData()[0].STK_ROLE = "ADMIN";
+          oGetAuthModel.getData()[0].TVS_ROLE = "ADMIN";
+          oGetAuthModel.getData()[0].VAR_ROLE = "ADMIN";
+          oGetAuthModel.getData()[0].ID_ROLE = "ADMIN";
+          oGetAuthModel.getData()[0].STK_ROLE = "ADMIN";
 
           console.log(
             "GetAuthModel:",
@@ -134,6 +134,34 @@ sap.ui.define([
           throw oError;
         });
     },
+    onStickerRequestPress: function (oEvent) {
+        var oCtx = oEvent.getSource().getBindingContext("dashboard");
+        if (!oCtx) {
+          return;
+        }
+        var oReq = oCtx.getObject();
+        var sInnerRoute =
+          "/StickerMaster(StkReqId='" +
+          oReq.reqId +
+          "',DraftUUID=" +
+          oReq.draftUUID +
+          ",IsActiveEntity=" +
+          (oReq.isActive ? "true" : "false") +
+          ")";
+
+        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+        var aNavItems = oDashboardModel.getProperty("/navItems") || [];
+        aNavItems.forEach(function (oNav, i) {
+          oDashboardModel.setProperty(
+            "/navItems/" + i + "/selected",
+            oNav.key === "sticker",
+          );
+        });
+        oDashboardModel.setProperty("/selectedNavKey", "sticker");
+        oDashboardModel.setProperty("/embedTitle", "Sticker Management");
+
+        this._loadAppInFrame("StickerMaster", "manage", sInnerRoute);
+      },
     _getIDPendingRequests: function () {
 
       var oModel = this.getOwnerComponent().getModel("idmgmt");
@@ -954,42 +982,96 @@ sap.ui.define([
       }
     },
 
-    onViewModeChange: function (oEvent) {
+    // onViewModeChange: function (oEvent) {
 
-      var oButton = oEvent.getSource();
-      var sButtonId = oButton.getId();
+    //   var oButton = oEvent.getSource();
+    //   var sButtonId = oButton.getId();
 
-      var sApp = null;
+    //   var sApp = null;
 
-      if (sButtonId.includes("idsegTVS")) {
+    //   if (sButtonId.includes("idsegTVS")) {
 
-        sApp = "TVS";
+    //     sApp = "TVS";
 
-      } else if (sButtonId.includes("idsegSticker")) {
+    //   } else if (sButtonId.includes("idsegSticker")) {
 
-        sApp = "STICKER";
+    //     sApp = "STICKER";
 
-      } else if (sButtonId.includes("idsegIDCard")) {
+    //   } else if (sButtonId.includes("idsegIDCard")) {
 
-        sApp = "ID_CARD";
+    //     sApp = "ID_CARD";
 
-      } else if (sButtonId.includes("idsegBusinessVisitor")) {
+    //   } else if (sButtonId.includes("idsegBusinessVisitor")) {
 
-        sApp = "BUSINESS_VISITOR";
-      }
+    //     sApp = "BUSINESS_VISITOR";
+    //   }
 
-      if (!sApp) {
-        console.error(
-          "Application could not be identified from button:",
-          sButtonId
-        );
+    //   if (!sApp) {
+    //     console.error(
+    //       "Application could not be identified from button:",
+    //       sButtonId
+    //     );
+    //     return;
+    //   }
+
+    //   // Selected key from SegmentedButton
+    //   var sViewMode = oEvent
+    //     .getParameter("item")
+    //     .getKey();
+
+    //   console.log("Application:", sApp);
+    //   console.log("View Mode:", sViewMode);
+
+    //   var oDashboardModel =
+    //     this.getOwnerComponent().getModel("dashboard");
+
+    //   // Store selected mode
+    //   oDashboardModel.setProperty(
+    //     "/viewMode",
+    //     sViewMode
+    //   );
+
+    //   // Store My View status
+    //   oDashboardModel.setProperty(
+    //     "/isMyView",
+    //     sViewMode === "my"
+    //   );
+
+    //   // Get fragment
+    //   var sFragmentName = this._getViewFragment(
+    //     sApp,
+    //     sViewMode
+    //   );
+
+    //   if (!sFragmentName) {
+    //     console.error(
+    //       "No fragment configured for:",
+    //       sApp,
+    //       sViewMode
+    //     );
+    //     return;
+    //   }
+
+    //   // Load fragment into corresponding VBox
+    //   this._loadDynamicFragment(
+    //     sFragmentName,
+    //     sApp,
+    //     sViewMode
+    //   );
+    // },
+
+   onViewModeChange: function (oEvent, sApp) {
+
+    // Get selected SegmentedButtonItem
+    var oItem = oEvent.getParameter("item");
+
+    if (!oItem) {
+        console.error("Selected item could not be determined.");
         return;
       }
 
-      // Selected key from SegmentedButton
-      var sViewMode = oEvent
-        .getParameter("item")
-        .getKey();
+    // Get selected key: "org" or "my"
+    var sViewMode = oItem.getKey();
 
       console.log("Application:", sApp);
       console.log("View Mode:", sViewMode);
@@ -997,19 +1079,33 @@ sap.ui.define([
       var oDashboardModel =
         this.getOwnerComponent().getModel("dashboard");
 
-      // Store selected mode
+    if (!oDashboardModel) {
+        console.error("Dashboard model not found.");
+        return;
+    }
+
+    /*
+     * Store selected mode separately for each application
+     *
+     * TVS              -> dashboard>/sectionViewMode/TVS
+     * STICKER          -> dashboard>/sectionViewMode/STICKER
+     * ID_CARD          -> dashboard>/sectionViewMode/ID_CARD
+     * BUSINESS_VISITOR -> dashboard>/sectionViewMode/BUSINESS_VISITOR
+     */
       oDashboardModel.setProperty(
-        "/viewMode",
+        "/sectionViewMode/" + sApp,
         sViewMode
       );
 
-      // Store My View status
+    /*
+     * Store My View status separately for each application
+     */
       oDashboardModel.setProperty(
-        "/isMyView",
+        "/isMyView/" + sApp,
         sViewMode === "my"
       );
 
-      // Get fragment
+    // Get fragment based on application and view mode
       var sFragmentName = this._getViewFragment(
         sApp,
         sViewMode
@@ -1024,82 +1120,165 @@ sap.ui.define([
         return;
       }
 
-      // Load fragment into corresponding VBox
+    // Load the corresponding fragment
       this._loadDynamicFragment(
         sFragmentName,
         sApp,
         sViewMode
       );
     },
-
     _loadInitialFragments: function () {
 
-      var oAuthModel =
+    var oAuthModel =
         this.getView().getModel("GetAuthModel");
 
-      if (!oAuthModel) {
+    if (!oAuthModel) {
         console.error("GetAuthModel not found");
         return;
-      }
+    }
 
-      var oAuthData = oAuthModel.getProperty("/0");
+    var oAuthData = oAuthModel.getProperty("/0");
 
-      if (!oAuthData) {
+    if (!oAuthData) {
         console.error("Authentication data not available");
         return;
-      }
+    }
 
-      var aApplications = [
+    var oDashboardModel =
+        this.getOwnerComponent().getModel("dashboard");
+
+    var aApplications = [
         {
-          app: "TVS",
-          role: oAuthData.TVS_ROLE
+            app: "TVS",
+            role: oAuthData.TVS_ROLE
         },
         {
-          app: "STICKER",
-          role: oAuthData.STK_ROLE
+            app: "STICKER",
+            role: oAuthData.STK_ROLE
         },
         {
-          app: "ID_CARD",
-          role: oAuthData.ID_ROLE
+            app: "ID_CARD",
+            role: oAuthData.ID_ROLE
         },
         {
-          app: "BUSINESS_VISITOR",
-          role: oAuthData.VAR_ROLE
+            app: "BUSINESS_VISITOR",
+            role: oAuthData.VAR_ROLE
         }
-      ];
+    ];
 
-      aApplications.forEach(function (oApplication) {
+    aApplications.forEach(function (oApplication) {
 
         var sViewMode = this._getInitialMode(
-          oApplication.role
+            oApplication.role
         );
 
         if (!sViewMode) {
-          return;
+            return;
         }
 
+        // IMPORTANT:
+        // Store initial mode so SegmentedButton selectedKey
+        // gets the correct value.
+        oDashboardModel.setProperty(
+            "/sectionViewMode/" + oApplication.app,
+            sViewMode
+        );
+
+        oDashboardModel.setProperty(
+            "/isMyView/" + oApplication.app,
+            sViewMode === "my"
+        );
+
         var sFragmentName = this._getViewFragment(
-          oApplication.app,
-          sViewMode
+            oApplication.app,
+            sViewMode
         );
 
         if (!sFragmentName) {
-          console.error(
-            "No initial fragment found for:",
-            oApplication.app,
-            sViewMode
-          );
-          return;
+            console.error(
+                "No initial fragment found for:",
+                oApplication.app,
+                sViewMode
+            );
+            return;
         }
 
         this._loadDynamicFragment(
-          sFragmentName,
-          oApplication.app,
-          sViewMode
+            sFragmentName,
+            oApplication.app,
+            sViewMode
         );
 
-      }.bind(this));
-    },
+    }.bind(this));
+},
+    // _loadInitialFragments: function () {
+
+    //   var oAuthModel =
+    //     this.getView().getModel("GetAuthModel");
+
+    //   if (!oAuthModel) {
+    //     console.error("GetAuthModel not found");
+    //     return;
+    //   }
+
+    //   var oAuthData = oAuthModel.getProperty("/0");
+
+    //   if (!oAuthData) {
+    //     console.error("Authentication data not available");
+    //     return;
+    //   }
+
+    //   var aApplications = [
+    //     {
+    //       app: "TVS",
+    //       role: oAuthData.TVS_ROLE
+    //     },
+    //     {
+    //       app: "STICKER",
+    //       role: oAuthData.STK_ROLE
+    //     },
+    //     {
+    //       app: "ID_CARD",
+    //       role: oAuthData.ID_ROLE
+    //     },
+    //     {
+    //       app: "BUSINESS_VISITOR",
+    //       role: oAuthData.VAR_ROLE
+    //     }
+    //   ];
+
+    //   aApplications.forEach(function (oApplication) {
+
+    //     var sViewMode = this._getInitialMode(
+    //       oApplication.role
+    //     );
+
+    //     if (!sViewMode) {
+    //       return;
+    //     }
+
+    //     var sFragmentName = this._getViewFragment(
+    //       oApplication.app,
+    //       sViewMode
+    //     );
+
+    //     if (!sFragmentName) {
+    //       console.error(
+    //         "No initial fragment found for:",
+    //         oApplication.app,
+    //         sViewMode
+    //       );
+    //       return;
+    //     }
+
+    //     this._loadDynamicFragment(
+    //       sFragmentName,
+    //       oApplication.app,
+    //       sViewMode
+    //     );
+
+    //   }.bind(this));
+    // },
     _applyNavAuthorization: function () {
 
       var oAuthModel = this.getView().getModel("GetAuthModel");
