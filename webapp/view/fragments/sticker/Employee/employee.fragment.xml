@@ -42,6 +42,24 @@
 
         <!-- Right: Admin / Employee -->
         <SegmentedButton
+    visible="{= ${GetAuthModel>/0/STK_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/STICKER}"
+    selectionChange=".onViewModeChange($event, 'STICKER')">
+
+    <items>
+
+        <SegmentedButtonItem
+            key="org"
+            text="Admin"/>
+
+        <SegmentedButtonItem
+            key="my"
+            text="Employee"/>
+
+    </items>
+
+</SegmentedButton>
+        <!-- <SegmentedButton
             selectedKey="{dashboard>/sectionViewMode/STICKER}"
             selectionChange=".onViewModeChange($event, 'STICKER')">
 
@@ -57,7 +75,7 @@
                     text="Employee"/>
             </items>
 
-        </SegmentedButton>
+        </SegmentedButton> -->
 
     </HBox>
 

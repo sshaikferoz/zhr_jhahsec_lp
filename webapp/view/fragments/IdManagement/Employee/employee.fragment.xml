@@ -43,7 +43,7 @@
     </HBox>
 
     <!-- RIGHT : Admin / Employee -->
-    <SegmentedButton
+    <!-- <SegmentedButton
         selectedKey="{dashboard>/sectionViewMode/ID_CARD}"
         selectionChange=".onViewModeChange($event, 'ID_CARD')">
 
@@ -61,7 +61,25 @@
 
         </items>
 
-    </SegmentedButton>
+    </SegmentedButton> -->
+    <SegmentedButton
+    visible="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/ID_CARD}"
+    selectionChange=".onViewModeChange($event, 'ID_CARD')">
+
+    <items>
+
+        <SegmentedButtonItem
+            key="org"
+            text="Admin"/>
+
+        <SegmentedButtonItem
+            key="my"
+            text="Employee"/>
+
+    </items>
+
+</SegmentedButton>
 
 </HBox>
 <VBox

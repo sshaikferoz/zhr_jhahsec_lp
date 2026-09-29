@@ -32,7 +32,7 @@
             />
 
             <!-- RIGHT : Admin / Employee -->
-            <SegmentedButton
+            <!-- <SegmentedButton
                 selectedKey="{dashboard>/sectionViewMode/BUSINESS_VISITOR}"
                 selectionChange=".onViewModeChange($event, 'BUSINESS_VISITOR')">
 
@@ -52,7 +52,27 @@
 
                 </items>
 
-            </SegmentedButton>
+            </SegmentedButton> -->
+            <SegmentedButton
+    visible="{= ${GetAuthModel>/0/VAR_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/BUSINESS_VISITOR}"
+    selectionChange=".onViewModeChange($event, 'BUSINESS_VISITOR')">
+
+    <items>
+
+        <SegmentedButtonItem
+            key="org"
+            text="Admin"
+        />
+
+        <SegmentedButtonItem
+            key="my"
+            text="Employee"
+        />
+
+    </items>
+
+</SegmentedButton>
 
         </HBox>
 

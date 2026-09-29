@@ -225,6 +225,7 @@ sap.ui.define([
     _getTVSEmpPendingRequests: function () {
 
       var oModel = this.getOwnerComponent().getModel("tvs");
+      var sCreatedBy = this.getView().getModel("GetAuthModel").getData()[0].USERID;
 
       var oBinding = oModel.bindList(
         "/header",
@@ -235,6 +236,11 @@ sap.ui.define([
             "Status",
             sap.ui.model.FilterOperator.EQ,
             "INP"
+          ),
+          new sap.ui.model.Filter(
+            "CreatedBy",
+            sap.ui.model.FilterOperator.EQ,
+            sCreatedBy
           )
         ]
       );
@@ -605,79 +611,169 @@ sap.ui.define([
         return "";
       }
     },
-    _fetchLandingKpis: function () {
-      var oODataModel = this.getOwnerComponent().getModel();
-      var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
-      if (!oODataModel) {
+    _fetchLandingKpis: function (sVarRole) {
+    var oODataModel = this.getOwnerComponent().getModel();
+    var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+
+    if (!oODataModel || !oDashboardModel) {
         return;
-      }
-      // These KPIs feed the Business Visitor Access section only — skip the
-      // request entirely when that section is hidden for this user.
-      // if (oDashboardModel.getProperty("/access/vendor") === false) {
-      //   return;
-      // }
+    }
 
-      var oGetAuthModel = this.getView().getModel("GetAuthModel").getData();
-      var sVarRole = oGetAuthModel[0].VAR_ROLE;
+    // var isVarAdmin = sVarRole === "ADMIN";
 
-      oDashboardModel.setProperty("/violations/isAdmin", sVarRole === "ADMIN");
-      var isVarAdmin = oDashboardModel.getData().violations.isAdmin;
+    oDashboardModel.setProperty(
+        "/violations/isAdmin",
+        sVarRole
+    );
 
-      isVarAdmin = "false";
-      // if (isVarAdmin == "true") {
-      //   isVarAdmin = "X"
-      // } else if (isVarAdmin == "false") {
-      //   isVarAdmin = " ";
-      // }
-      var sPath = "/LandingPageKPI(" + isVarAdmin + ")/Set";
-      var oBinding = oODataModel.bindList(sPath);
-      oBinding
+    var sPath =
+        "/LandingPageKPI(" + sVarRole + ")/Set";
+
+    oODataModel
+        .bindList(sPath)
         .requestContexts()
         .then(function (aContexts) {
-          if (!aContexts.length) {
-            return;
-          }
-          var oData = aContexts[0].getObject();
+            if (!aContexts.length) {
+                return;
+            }
 
-          oDashboardModel.setProperty(
-            "/vendorKpis/0/value",
-            String(oData.TotalRequests),
-          );
-          oDashboardModel.setProperty(
-            "/vendorKpis/1/value",
-            String(oData.ApprovedRequests),
-          );
-          oDashboardModel.setProperty("/vendorKpis/2/title", "In Progress");
-          oDashboardModel.setProperty(
-            "/vendorKpis/2/value",
-            String(oData.InProgressRequests),
-          );
+            var oData = aContexts[0].getObject();
 
-          var iTotalVisitors =
-            (oData.totalBusinessReqs || 0) +
-            (oData.totalTempStaffReqs || 0) +
-            (oData.totalTempJobReqs || 0) +
-            (oData.totalProjectReqs || 0) +
-            (oData.totalSecurityRequests || 0);
-          oDashboardModel.setProperty(
-            "/visitorChart/centerLabel",
-            iTotalVisitors + " TODAY",
-          );
-          oDashboardModel.setProperty("/visitorChart/data", [
-            { Category: "Business", Count: oData.totalBusinessReqs || 0 },
-            {
-              Category: "Temporary Staff Access",
-              Count: oData.totalTempStaffReqs || 0,
-            },
-            { Category: "Temporary Job", Count: oData.totalTempJobReqs || 0 },
-            { Category: "Project", Count: oData.totalProjectReqs || 0 },
-            { Category: "Security", Count: oData.totalSecurityRequests || 0 },
-          ]);
+            oDashboardModel.setProperty(
+                "/vendorKpis/0/value",
+                String(oData.TotalRequests)
+            );
+
+            oDashboardModel.setProperty(
+                "/vendorKpis/1/value",
+                String(oData.ApprovedRequests)
+            );
+
+            oDashboardModel.setProperty(
+                "/vendorKpis/2/title",
+                "In Progress"
+            );
+
+            oDashboardModel.setProperty(
+                "/vendorKpis/2/value",
+                String(oData.InProgressRequests)
+            );
+
+            var iTotalVisitors =
+                (oData.totalBusinessReqs || 0) +
+                (oData.totalTempStaffReqs || 0) +
+                (oData.totalTempJobReqs || 0) +
+                (oData.totalProjectReqs || 0) +
+                (oData.totalSecurityRequests || 0);
+
+            oDashboardModel.setProperty(
+                "/visitorChart/centerLabel",
+                iTotalVisitors + " TODAY"
+            );
+
+            oDashboardModel.setProperty(
+                "/visitorChart/data",
+                [
+                    {
+                        Category: "Business",
+                        Count: oData.totalBusinessReqs || 0
+                    },
+                    {
+                        Category: "Temporary Staff Access",
+                        Count: oData.totalTempStaffReqs || 0
+                    },
+                    {
+                        Category: "Temporary Job",
+                        Count: oData.totalTempJobReqs || 0
+                    },
+                    {
+                        Category: "Project",
+                        Count: oData.totalProjectReqs || 0
+                    },
+                    {
+                        Category: "Security",
+                        Count: oData.totalSecurityRequests || 0
+                    }
+                ]
+            );
         })
         .catch(function () {
-          // backend unreachable — static mock data remains in place
+            // backend unreachable — static mock data remains in place
         });
-    },
+},
+    // _fetchLandingKpis: function () {
+    //   var oODataModel = this.getOwnerComponent().getModel();
+    //   var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+    //   if (!oODataModel) {
+    //     return;
+    //   }
+    //   // These KPIs feed the Business Visitor Access section only — skip the
+    //   // request entirely when that section is hidden for this user.
+    //   // if (oDashboardModel.getProperty("/access/vendor") === false) {
+    //   //   return;
+    //   // }
+
+    //   var oGetAuthModel = this.getView().getModel("GetAuthModel").getData();
+    //   var sVarRole = oGetAuthModel[0].VAR_ROLE;
+
+    //   oDashboardModel.setProperty("/violations/isAdmin", sVarRole === "ADMIN");
+    //   var isVarAdmin = oDashboardModel.getData().violations.isAdmin;
+
+    //   // isVarAdmin = "false";
+    //   // if (isVarAdmin == "true") {
+    //   //   isVarAdmin = "X"
+    //   // } else if (isVarAdmin == "false") {
+    //   //   isVarAdmin = " ";
+    //   // }
+    //   var sPath = "/LandingPageKPI(" + isVarAdmin + ")/Set";
+    //   var oBinding = oODataModel.bindList(sPath);
+    //   oBinding
+    //     .requestContexts()
+    //     .then(function (aContexts) {
+    //       if (!aContexts.length) {
+    //         return;
+    //       }
+    //       var oData = aContexts[0].getObject();
+
+    //       oDashboardModel.setProperty(
+    //         "/vendorKpis/0/value",
+    //         String(oData.TotalRequests),
+    //       );
+    //       oDashboardModel.setProperty(
+    //         "/vendorKpis/1/value",
+    //         String(oData.ApprovedRequests),
+    //       );
+    //       oDashboardModel.setProperty("/vendorKpis/2/title", "In Progress");
+    //       oDashboardModel.setProperty(
+    //         "/vendorKpis/2/value",
+    //         String(oData.InProgressRequests),
+    //       );
+
+    //       var iTotalVisitors =
+    //         (oData.totalBusinessReqs || 0) +
+    //         (oData.totalTempStaffReqs || 0) +
+    //         (oData.totalTempJobReqs || 0) +
+    //         (oData.totalProjectReqs || 0) +
+    //         (oData.totalSecurityRequests || 0);
+    //       oDashboardModel.setProperty(
+    //         "/visitorChart/centerLabel",
+    //         iTotalVisitors + " TODAY",
+    //       );
+    //       oDashboardModel.setProperty("/visitorChart/data", [
+    //         { Category: "Business", Count: oData.totalBusinessReqs || 0 },
+    //         {
+    //           Category: "Temporary Staff Access",
+    //           Count: oData.totalTempStaffReqs || 0,
+    //         },
+    //         { Category: "Temporary Job", Count: oData.totalTempJobReqs || 0 },
+    //         { Category: "Project", Count: oData.totalProjectReqs || 0 },
+    //         { Category: "Security", Count: oData.totalSecurityRequests || 0 },
+    //       ]);
+    //     })
+    //     .catch(function () {
+    //       // backend unreachable — static mock data remains in place
+    //     });
+    // },
     _fetchViolationUserKpis: function () {
       var oTvsModel = this.getOwnerComponent().getModel("tvs");
       var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
@@ -931,7 +1027,7 @@ sap.ui.define([
       }
 
       if (sApp === "BUSINESS_VISITOR") {
-        this._fetchLandingKpis();
+        this._fetchLandingKpis(false);
       }
     },
 
@@ -953,7 +1049,7 @@ sap.ui.define([
       }
 
       if (sApp === "BUSINESS_VISITOR") {
-        this._fetchLandingKpis();
+        this._fetchLandingKpis(true);
       }
     },
 

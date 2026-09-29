@@ -38,6 +38,26 @@
                     </HBox>
 
                     <SegmentedButton
+    visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/TVS}"
+    selectionChange=".onViewModeChange($event, 'TVS')"
+    width="180px"
+    class="jhahTVSSegmentedButton">
+
+    <items>
+
+        <SegmentedButtonItem
+            key="org"
+            text="Admin" />
+
+        <SegmentedButtonItem
+            key="my"
+            text="Employee" />
+
+    </items>
+
+</SegmentedButton>
+                    <!-- <SegmentedButton
                         selectedKey="{dashboard>/sectionViewMode/TVS}"
                         selectionChange=".onViewModeChange($event, 'TVS')"
                         width="180px"
@@ -57,7 +77,7 @@
 
                         </items>
 
-                    </SegmentedButton>
+                    </SegmentedButton> -->
 
                 </HBox>
 
