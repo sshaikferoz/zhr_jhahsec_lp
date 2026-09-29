@@ -110,10 +110,10 @@ sap.ui.define([
           var oGetAuthModel = this.getView().getModel("GetAuthModel");
 
           oGetAuthModel.setData(aData);
-          oGetAuthModel.getData()[0].TVS_ROLE = "ADMIN";
-          oGetAuthModel.getData()[0].VAR_ROLE = "ADMIN";
-          oGetAuthModel.getData()[0].ID_ROLE = "ADMIN";
-          oGetAuthModel.getData()[0].STK_ROLE = "ADMIN";
+          // oGetAuthModel.getData()[0].TVS_ROLE = "ADMIN";
+          // oGetAuthModel.getData()[0].VAR_ROLE = "ADMIN";
+          // oGetAuthModel.getData()[0].ID_ROLE = "ADMIN";
+          // oGetAuthModel.getData()[0].STK_ROLE = "ADMIN";
 
           console.log(
             "GetAuthModel:",
@@ -947,7 +947,7 @@ sap.ui.define([
       }
 
       if (sApp === "STICKER") {
-        this._fetchStickerMasterForUser();
+        // this._fetchStickerMasterForUser();
         this._fetchStickerData(false);
       }
 
@@ -970,6 +970,7 @@ sap.ui.define([
 
       if (sApp === "STICKER") {
         this._fetchStickerData(true);
+        this._fetchStickerMasterForUser();
       }
 
       if (sApp === "TVS") {
