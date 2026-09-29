@@ -406,13 +406,20 @@ sap.ui.define([
     //     });
     // },
     _fetchEmployeeData: function () {
-      var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
-      const oModel = this.getOwnerComponent().getModel();
-      const oBinding = oModel.bindList("/EmployeeHeader");
+      const oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+      const oModel = this.getOwnerComponent().getModel("Auth_Info");
+      const oBinding = oModel.bindList("/HRInfo");
+
+      // "19830101" -> "01/01/1983"; empty for "00000000" or invalid values
+      const formatSapDate = (sDate) => {
+        if (!sDate || sDate === "00000000" || !/^\d{8}$/.test(sDate)) {
+          return "";
+        }
+        return `${sDate.substring(6, 8)}/${sDate.substring(4, 6)}/${sDate.substring(0, 4)}`;
+      };
 
       oBinding.requestContexts(0, 1)
         .then((aContexts) => {
-
           if (!aContexts.length) {
             return;
           }
@@ -420,35 +427,56 @@ sap.ui.define([
           const oEmployee = aContexts[0].getObject();
 
           const oUser = {
+            // Identity
+            id: oEmployee.Pernr || "",
+            loginId: oEmployee.Usrid || "",
+            name: oEmployee.UserName || "",
+            arabicName: oEmployee.ArabicName || "",
             initials: oEmployee.UserName
               ? oEmployee.UserName
-                .split(" ")
+                .trim()
+                .split(/\s+/)
                 .map(sName => sName.charAt(0))
                 .join("")
                 .substring(0, 2)
                 .toUpperCase()
               : "",
 
-            name: oEmployee.UserName || "",
+            // Job
+            positionId: oEmployee.UserPosition || "",
+            position: oEmployee.PostionText || "",
             role: oEmployee.PostionText || "",
 
-            id: oEmployee.Pernr || "",
-            loginId: oEmployee.Usrid || "",
-            governmentId: oEmployee.GovermentID || "",
+            // Organization
+            companyCode: oEmployee.CompanyCode || "",
+            location: oEmployee.Location || "",
+            organizationId: oEmployee.Organization || "",
+            organization: oEmployee.OrgText || "",
+            departmentId: oEmployee.DepartmentOrg || "",
+            department: oEmployee.DepartmentText || "",
+            cSuiteId: oEmployee.CsuiteOrg || "",
+            cSuite: oEmployee.CSuiteName || "",
+            unitId: oEmployee.Unit || "",
+            unit: oEmployee.UnitText || "",
 
-            department: oEmployee.OrganizationText || "",
-            position: oEmployee.PostionText || "",
-
-            dob: oEmployee.DOB || "",
-            gender: oEmployee.GenderDesc || "",
+            // Personal
+            governmentId: oEmployee.GovernmentID || "",
+            badgeNumber: oEmployee.BadgeNumber || "",
+            nationalityCode: oEmployee.Nationality || "",
+            nationality: oEmployee.NationalityDesc || "",
+            dob: formatSapDate(oEmployee.DOB),
+            gender: oEmployee.gender || "",
             bloodGroup: oEmployee.BloodGroup || "",
 
-            email: oEmployee.EMail || ""
+            // Contact
+            email: oEmployee.EMail || "",
+            phone: oEmployee.Phone || "",
+
+            // Contract
+            contractEndDate: formatSapDate(oEmployee.ContractEnddate)
           };
 
           oDashboardModel.setProperty("/user", oUser);
-
-          console.log("Dashboard User:", oDashboardModel.getProperty("/user"));
         })
         .catch((oError) => {
           console.error("EmployeeHeader GET failed:", oError);
@@ -595,7 +623,7 @@ sap.ui.define([
       oDashboardModel.setProperty("/violations/isAdmin", sVarRole === "ADMIN");
       var isVarAdmin = oDashboardModel.getData().violations.isAdmin;
 
-      isVarAdmin = "false" ; 
+      isVarAdmin = "false";
       // if (isVarAdmin == "true") {
       //   isVarAdmin = "X"
       // } else if (isVarAdmin == "false") {
@@ -921,8 +949,8 @@ sap.ui.define([
         this._fetchAdminKpi();
       }
 
-        if (sApp === "BUSINESS_VISITOR") {
-       this._fetchLandingKpis();
+      if (sApp === "BUSINESS_VISITOR") {
+        this._fetchLandingKpis();
       }
     },
 

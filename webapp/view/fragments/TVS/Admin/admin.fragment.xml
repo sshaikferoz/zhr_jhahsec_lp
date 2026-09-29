@@ -14,29 +14,45 @@
             </HBox>
                  
             <!-- Admin / My View toggle — only visible for Security role -->
-            <SegmentedButton
-                id="idsegTVS"
-                visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
-                selectedKey="{dashboard>/viewMode}"
-                selectionChange=".onViewModeChange"
-                class="sapUiSmallMarginEnd">
+           <!-- <SegmentedButton
+    visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/TVS}"
+    selectionChange=".onViewModeChange($event, 'TVS')"
+    width="180px"
+    class="jhahTVSSegmentedButton">
 
-                <items>
-                    <SegmentedButtonItem
-                        key="org"
-                        text="Admin" />
+    <items>
+        <SegmentedButtonItem
+            key="org"
+            text="Admin" />
 
-                    <SegmentedButtonItem
-                        key="my"
-                        text="Employee" />
-                </items>
-            </SegmentedButton>
+        <SegmentedButtonItem
+            key="my"
+            text="Employee" />
+    </items>
 
-            <!-- <Link
-                text="View all >"
-                press=".onViolationsNavPress"
-                tooltip="Open the Traffic Violation System app"
-            /> -->
+</SegmentedButton> -->
+<SegmentedButton
+    visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/TVS}"
+    selectionChange=".onViewModeChange($event, 'TVS')"
+    width="180px"
+    class="jhahTVSSegmentedButton">
+
+    <items>
+
+        <SegmentedButtonItem
+            key="org"
+            text="Admin" />
+
+        <SegmentedButtonItem
+            key="my"
+            text="Employee" />
+
+    </items>
+
+</SegmentedButton>
+
         </HBox>
 
         <!-- Headline counts -->
@@ -202,7 +218,7 @@
         <f:Card class="jhahDataCard">
             <f:content>
                 <VBox class="jhahPairCardInner" renderType="Bare" width="100%">
-                    <Title text="Processing Breakdown" level="H6" class="sapUiSmallMarginBottom" />
+                    <Title text="Violation Summary" level="H6" class="sapUiSmallMarginBottom" />
                     <Text
                         text="No data available"
                         class="jhahMutedText jhahNoDataValue"

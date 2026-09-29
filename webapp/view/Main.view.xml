@@ -96,9 +96,13 @@ xmlns:core="sap.ui.core">
                         renderType="Bare"
                         class="jhahDashboardContent">
 
+                        <!-- Hidden (not destroyed) while another app is embedded,
+                             so returning to the dashboard keeps its state. -->
                         <VBox
+                            id="dashboardContainer"
                             width="100%"
                             renderType="Bare"
+                            visible="{= !${dashboard>/isEmbedFrame} }"
                             class="jhahDashboardContainer">
 
                             <!-- ================================================= -->
@@ -133,6 +137,18 @@ xmlns:core="sap.ui.core">
                                         width="100%"
                                         renderType="Bare"
                                         class="jhahDashboardCard jhahDashboardCardSpacing">
+
+                                        <VBox
+                                            id="varOrgVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/BUSINESS_VISITOR} === 'org' }"/>
+
+                                        <VBox
+                                            id="varMyVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/BUSINESS_VISITOR} === 'my' }"/>
                                     </VBox>
 
 
@@ -145,6 +161,18 @@ xmlns:core="sap.ui.core">
                                         width="100%"
                                         renderType="Bare"
                                         class="jhahDashboardCard">
+
+                                        <VBox
+                                            id="idOrgVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/ID_CARD} === 'org' }"/>
+
+                                        <VBox
+                                            id="idMyVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/ID_CARD} === 'my' }"/>
                                     </VBox>
 
                                 </VBox>
@@ -170,6 +198,18 @@ xmlns:core="sap.ui.core">
                                         width="100%"
                                         renderType="Bare"
                                         class="jhahDashboardCard jhahDashboardCardSpacing">
+
+                                        <VBox
+                                            id="tvsOrgVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/TVS} === 'org' }"/>
+
+                                        <VBox
+                                            id="tvsMyVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/TVS} === 'my' }"/>
                                     </VBox>
 
 
@@ -182,6 +222,18 @@ xmlns:core="sap.ui.core">
                                         width="100%"
                                         renderType="Bare"
                                         class="jhahDashboardCard">
+
+                                        <VBox
+                                            id="stickerOrgVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/STICKER} === 'org' }"/>
+
+                                        <VBox
+                                            id="stickerMyVBox"
+                                            width="100%"
+                                            renderType="Bare"
+                                            visible="{= ${dashboard>/sectionViewMode/STICKER} === 'my' }"/>
                                     </VBox>
 
                                 </VBox>

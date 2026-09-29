@@ -32,17 +32,17 @@
             />
 
             <!-- RIGHT : Admin / Employee -->
-            <SegmentedButton
-                id="idsegBusinessVisitor"
-                visible="{= ${GetAuthModel>/0/VAR_ROLE} === 'ADMIN' }"
-                selectedKey="{dashboard>/viewMode}"
-                selectionChange=".onViewModeChange">
+            <!-- <SegmentedButton
+                selectedKey="{dashboard>/sectionViewMode/BUSINESS_VISITOR}"
+                selectionChange=".onViewModeChange($event, 'BUSINESS_VISITOR')">
 
                 <items>
 
                     <SegmentedButtonItem
                         key="org"
                         text="Admin"
+                        enabled="{= ${GetAuthModel>/0/VAR_ROLE} === 'ADMIN' }"
+                        tooltip="{= ${GetAuthModel>/0/VAR_ROLE} === 'ADMIN' ? '' : 'You have employee access only' }"
                     />
 
                     <SegmentedButtonItem
@@ -52,7 +52,27 @@
 
                 </items>
 
-            </SegmentedButton>
+            </SegmentedButton> -->
+            <SegmentedButton
+    visible="{= ${GetAuthModel>/0/VAR_ROLE} === 'ADMIN' }"
+    selectedKey="{dashboard>/sectionViewMode/BUSINESS_VISITOR}"
+    selectionChange=".onViewModeChange($event, 'BUSINESS_VISITOR')">
+
+    <items>
+
+        <SegmentedButtonItem
+            key="org"
+            text="Admin"
+        />
+
+        <SegmentedButtonItem
+            key="my"
+            text="Employee"
+        />
+
+    </items>
+
+</SegmentedButton>
 
         </HBox>
 

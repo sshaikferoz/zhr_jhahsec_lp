@@ -23,7 +23,7 @@
                         class="jhahInnerTable"
                         fixedLayout="false"
                         noDataText="No data available"
-                        items="{dashboard>/idCard/pendingrecords}">
+                        items="{dashboard>requests}">
 
                         <columns>
                          <Column>
@@ -42,11 +42,11 @@
                                 <Text text="Employee Name" />
                             </Column>                           
                             <Column>
-                                <Text text="Loc" />
+                                <Text text="Location" />
                             </Column>
 
                             <Column>
-                                <Text text="STATUS" />
+                                <Text text="Status" />
                             </Column>
                         </columns>
 
