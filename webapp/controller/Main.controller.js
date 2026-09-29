@@ -969,8 +969,8 @@ sap.ui.define([
       }
 
       if (sApp === "STICKER") {
-        this._fetchStickerData(true);
         this._fetchStickerMasterForUser();
+        this._fetchStickerData(true);
       }
 
       if (sApp === "TVS") {
