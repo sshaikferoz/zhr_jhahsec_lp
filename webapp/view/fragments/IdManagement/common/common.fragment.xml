@@ -26,9 +26,6 @@
                         items="{dashboard>requests}">
 
                         <columns>
-                         <Column>
-                                <Text text="Id No." />
-                            </Column>
 
                             <Column>
                                 <Text text="Request Id" />
@@ -36,11 +33,7 @@
 
                              <Column>
                                 <Text text="Payroll No." />
-                            </Column>
-
-                            <Column>
-                                <Text text="Employee Name" />
-                            </Column>                           
+                            </Column>                     
                             <Column>
                                 <Text text="Location" />
                             </Column>
@@ -55,17 +48,11 @@
                             <ColumnListItem>
 
                                 <cells>
-                                  <Text
-                                        text="{dashboard>IdNumber}" />
-
                                     <Text
                                         text="{dashboard>RequestId}" />
 
                                       <Text
                                         text="{dashboard>PayrollNum}" />
-
-                                    <Text
-                                        text="{dashboard>FullName}" />
                                     
                                      <Text
                                         text="{dashboard>LocationDesc}" />

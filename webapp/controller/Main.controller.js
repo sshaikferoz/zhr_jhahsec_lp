@@ -110,10 +110,10 @@ sap.ui.define([
           var oGetAuthModel = this.getView().getModel("GetAuthModel");
 
           oGetAuthModel.setData(aData);
-          // oGetAuthModel.getData()[0].TVS_ROLE = "ADMIN";
-          // oGetAuthModel.getData()[0].VAR_ROLE = "ADMIN";
-          // oGetAuthModel.getData()[0].ID_ROLE = "ADMIN";
-          // oGetAuthModel.getData()[0].STK_ROLE = "ADMIN";
+          // oGetAuthModel.getData()[0].TVS_ROLE = "";
+          // oGetAuthModel.getData()[0].VAR_ROLE = "";
+          oGetAuthModel.getData()[0].ID_ROLE = "ADMIN";
+          oGetAuthModel.getData()[0].STK_ROLE = "ADMIN";
 
           console.log(
             "GetAuthModel:",
@@ -135,33 +135,33 @@ sap.ui.define([
         });
     },
     onStickerRequestPress: function (oEvent) {
-        var oCtx = oEvent.getSource().getBindingContext("dashboard");
-        if (!oCtx) {
-          return;
-        }
-        var oReq = oCtx.getObject();
-        var sInnerRoute =
-          "/StickerMaster(StkReqId='" +
-          oReq.reqId +
-          "',DraftUUID=" +
-          oReq.draftUUID +
-          ",IsActiveEntity=" +
-          (oReq.isActive ? "true" : "false") +
-          ")";
+      var oCtx = oEvent.getSource().getBindingContext("dashboard");
+      if (!oCtx) {
+        return;
+      }
+      var oReq = oCtx.getObject();
+      var sInnerRoute =
+        "/StickerMaster(StkReqId='" +
+        oReq.reqId +
+        "',DraftUUID=" +
+        oReq.draftUUID +
+        ",IsActiveEntity=" +
+        (oReq.isActive ? "true" : "false") +
+        ")";
 
-        var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
-        var aNavItems = oDashboardModel.getProperty("/navItems") || [];
-        aNavItems.forEach(function (oNav, i) {
-          oDashboardModel.setProperty(
-            "/navItems/" + i + "/selected",
-            oNav.key === "sticker",
-          );
-        });
-        oDashboardModel.setProperty("/selectedNavKey", "sticker");
-        oDashboardModel.setProperty("/embedTitle", "Sticker Management");
+      var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
+      var aNavItems = oDashboardModel.getProperty("/navItems") || [];
+      aNavItems.forEach(function (oNav, i) {
+        oDashboardModel.setProperty(
+          "/navItems/" + i + "/selected",
+          oNav.key === "sticker",
+        );
+      });
+      oDashboardModel.setProperty("/selectedNavKey", "sticker");
+      oDashboardModel.setProperty("/embedTitle", "Sticker Management");
 
-        this._loadAppInFrame("StickerMaster", "manage", sInnerRoute);
-      },
+      this._loadAppInFrame("StickerMaster", "manage", sInnerRoute);
+    },
     _getIDPendingRequests: function () {
 
       var oModel = this.getOwnerComponent().getModel("idmgmt");
@@ -436,7 +436,21 @@ sap.ui.define([
     _fetchEmployeeData: function () {
       const oDashboardModel = this.getOwnerComponent().getModel("dashboard");
       const oModel = this.getOwnerComponent().getModel("Auth_Info");
-      const oBinding = oModel.bindList("/HRInfo");
+      var sUsrid = this.getView().getModel("GetAuthModel").getData()[0].USERID;
+      // const oBinding = oModel.bindList("/HRInfo");
+      var oBinding = oModel.bindList(
+        "/HRInfo",
+        null,
+        null,
+        [
+          new sap.ui.model.Filter(
+            "Usrid",
+            sap.ui.model.FilterOperator.EQ,
+            sUsrid
+          )
+        ]
+      );
+
 
       // "19830101" -> "01/01/1983"; empty for "00000000" or invalid values
       const formatSapDate = (sDate) => {
@@ -513,104 +527,291 @@ sap.ui.define([
     _fetchStickerMasterForUser: function () {
       var oStickerModel = this.getOwnerComponent().getModel("sticker");
       var oDashboardModel = this.getOwnerComponent().getModel("dashboard");
-      if (!oStickerModel) {
-        return;
-      }
 
-      var oBinding = oStickerModel.bindList(
-        "/StickerMaster",
-        undefined,
-        [new Sorter("RequestDate", true)],
-        [new Filter("IsActiveEntity", FilterOperator.EQ, true)],
-        {
-          $select:
-            "StkReqId,StkReqIdStr,StkType,StkTypeDesc,Status,StatsCriticality," +
-            "ExpireDate,RequestDate,PlateNumEng,ArabicPlateNum," +
-            "ManufacturerDesc,ColorDesc,DraftUUID,IsActiveEntity",
-        },
+      // ============================================================
+      // 1. Get Active Sticker from ZSRV_HR_STK
+      // ============================================================
+
+     var oActiveStickerBinding = oStickerModel.bindList(
+  "/Activesticker"
+);
+
+oActiveStickerBinding
+  .requestContexts(0, 2)
+  .then(
+    function (aContexts) {
+      console.log("ActiveSticker contexts:", aContexts);
+
+      var aRequests = aContexts.map(
+        function (oCtx) {
+          var o = oCtx.getObject();
+
+          return {
+            reqId: o.StkReqId,
+            reqIdStr: o.StkReqIdStr || o.StkReqId,
+            stkType: o.StkType || "-",
+            type: o.StkTypeDesc || "-",
+            status: o.Status || "-",
+
+            statusState: this._stickerCriticalityState(
+              o.StatsCriticality
+            ),
+
+            crit: o.StatsCriticality,
+
+            expiry: this._formatOdataDate(
+              o.ExpireDate
+            ),
+
+            plate:
+              o.PlateNumEng ||
+              o.ArabicPlateNum ||
+              "-",
+
+            vehicle: [
+              o.ManufacturerDesc,
+              o.ColorDesc
+            ]
+              .filter(Boolean)
+              .join(" · "),
+
+            draftUUID:
+              o.DraftUUID ||
+              "00000000-0000-0000-0000-000000000000",
+
+            isActive:
+              o.IsActiveEntity !== false
+          };
+        }.bind(this)
       );
 
-      oBinding
-        .requestContexts(0, 50)
-        .then(
-          function (aContexts) {
-            var aRequests = aContexts.map(
-              function (oCtx) {
-                var o = oCtx.getObject();
-                return {
-                  reqId: o.StkReqId,
-                  reqIdStr: o.StkReqIdStr || o.StkReqId,
-                  stkType: o.StkType || "-",
-                  type: o.StkTypeDesc || "-",
-                  status: o.Status || "-",
-                  statusState: this._stickerCriticalityState(
-                    o.StatsCriticality,
-                  ),
-                  crit: o.StatsCriticality,
-                  expiry: this._formatOdataDate(o.ExpireDate),
-                  plate: o.PlateNumEng || o.ArabicPlateNum || "-",
-                  vehicle: [o.ManufacturerDesc, o.ColorDesc]
-                    .filter(Boolean)
-                    .join(" · "),
-                  draftUUID:
-                    o.DraftUUID || "00000000-0000-0000-0000-000000000000",
-                  isActive: o.IsActiveEntity !== false,
-                };
-              }.bind(this),
-            );
+      console.log("aRequests:", aRequests);
 
-            // KPI counts reflect all of the user's requests; the table shows
-            // only the 5 most recent to keep the card compact.
-            oDashboardModel.setProperty(
-              "/sticker/requests",
-              aRequests.slice(0, 5),
-            );
-            oDashboardModel.setProperty(
-              "/sticker/hasUserData",
-              aRequests.length > 0,
-            );
+      // ============================================================
+      // Existing dashboard properties
+      // ============================================================
 
-            var iInProgress = aRequests.filter(function (r) {
-              return r.crit === 2;
-            }).length;
-            var aActive = aRequests.filter(function (r) {
-              return r.crit === 3;
-            });
-            oDashboardModel.setProperty(
-              "/sticker/userKpis/0/value",
-              String(aRequests.length),
-            );
-            oDashboardModel.setProperty(
-              "/sticker/userKpis/1/value",
-              String(iInProgress),
-            );
-            oDashboardModel.setProperty(
-              "/sticker/userKpis/2/value",
-              String(aActive.length),
-            );
+      oDashboardModel.setProperty(
+        "/sticker/requests",
+        aRequests.slice(0, 5)
+      );
 
-            // Active Sticker = most recent active/approved request
-            if (aActive.length) {
-              var oA = aActive[0];
-              oDashboardModel.setProperty("/sticker/active", {
-                hasData: true,
-                plate: oA.plate,
-                type: oA.type,
-                vehicle: oA.vehicle,
-                expiry: oA.expiry,
-                status: oA.status,
-                statusState: oA.statusState,
-              });
+      oDashboardModel.setProperty(
+        "/sticker/hasUserData",
+        aRequests.length > 0
+      );
 
-              console.log("oDashboardModelmaster", oDashboardModel.getData());
-            } else {
-              oDashboardModel.setProperty("/sticker/active/hasData", false);
-            }
-          }.bind(this),
-        )
-        .catch(function () {
-          // backend unreachable — "No data available" placeholder remains
-        });
+      // ============================================================
+      // KPI counts
+      // ============================================================
+
+      var iInProgress = aRequests.filter(
+        function (r) {
+          return r.crit === 2;
+        }
+      ).length;
+
+      // Activesticker already contains active stickers
+      var aActive = aRequests;
+
+      oDashboardModel.setProperty(
+        "/sticker/userKpis/0/value",
+        String(aRequests.length)
+      );
+
+      oDashboardModel.setProperty(
+        "/sticker/userKpis/1/value",
+        String(iInProgress)
+      );
+
+      oDashboardModel.setProperty(
+        "/sticker/userKpis/2/value",
+        String(aActive.length)
+      );
+
+      // ============================================================
+      // Active Sticker 1
+      // ============================================================
+
+      if (aActive.length > 0) {
+        var oA = aActive[0];
+
+        oDashboardModel.setProperty(
+          "/sticker/active",
+          {
+            hasData: true,
+            plate: oA.plate,
+            type: oA.type,
+            vehicle: oA.vehicle,
+            expiry: oA.expiry,
+            status: oA.status,
+            statusState: oA.statusState
+          }
+        );
+      } else {
+        oDashboardModel.setProperty(
+          "/sticker/active",
+          {
+            hasData: false
+          }
+        );
+      }
+
+      // ============================================================
+      // Active Sticker 2
+      // ============================================================
+
+      if (aActive.length > 1) {
+        var oA2 = aActive[1];
+
+        oDashboardModel.setProperty(
+          "/sticker/active2",
+          {
+            hasData: true,
+            plate: oA2.plate,
+            type: oA2.type,
+            vehicle: oA2.vehicle,
+            expiry: oA2.expiry,
+            status: oA2.status,
+            statusState: oA2.statusState
+          }
+        );
+      } else {
+        oDashboardModel.setProperty(
+          "/sticker/active2",
+          {
+            hasData: false
+          }
+        );
+      }
+
+      console.log(
+        "Dashboard model:",
+        oDashboardModel.getData()
+      );
+    }.bind(this)
+  )
+  .catch(
+    function (oError) {
+      console.error(
+        "ActiveSticker service failed:",
+        oError
+      );
+
+      oDashboardModel.setProperty(
+        "/sticker/active",
+        {
+          hasData: false
+        }
+      );
+
+      oDashboardModel.setProperty(
+        "/sticker/active2",
+        {
+          hasData: false
+        }
+      );
+    }
+  );
+
+      // if (!oStickerModel) {
+      //   return;
+      // }
+
+      // var oBinding = oStickerModel.bindList(
+      //   "/StickerMaster",
+      //   undefined,
+      //   [new Sorter("RequestDate", true)],
+      //   [new Filter("IsActiveEntity", FilterOperator.EQ, true)],
+      //   {
+      //     $select:
+      //       "StkReqId,StkReqIdStr,StkType,StkTypeDesc,Status,StatsCriticality," +
+      //       "ExpireDate,RequestDate,PlateNumEng,ArabicPlateNum," +
+      //       "ManufacturerDesc,ColorDesc,DraftUUID,IsActiveEntity",
+      //   },
+      // );
+
+      // oBinding
+      //   .requestContexts(0, 50)
+      //   .then(
+      //     function (aContexts) {
+      //       var aRequests = aContexts.map(
+      //         function (oCtx) {
+      //           var o = oCtx.getObject();
+      //           return {
+      //             reqId: o.StkReqId,
+      //             reqIdStr: o.StkReqIdStr || o.StkReqId,
+      //             stkType: o.StkType || "-",
+      //             type: o.StkTypeDesc || "-",
+      //             status: o.Status || "-",
+      //             statusState: this._stickerCriticalityState(
+      //               o.StatsCriticality,
+      //             ),
+      //             crit: o.StatsCriticality,
+      //             expiry: this._formatOdataDate(o.ExpireDate),
+      //             plate: o.PlateNumEng || o.ArabicPlateNum || "-",
+      //             vehicle: [o.ManufacturerDesc, o.ColorDesc]
+      //               .filter(Boolean)
+      //               .join(" · "),
+      //             draftUUID:
+      //               o.DraftUUID || "00000000-0000-0000-0000-000000000000",
+      //             isActive: o.IsActiveEntity !== false,
+      //           };
+      //         }.bind(this),
+      //       );
+
+      //       // KPI counts reflect all of the user's requests; the table shows
+      //       // only the 5 most recent to keep the card compact.
+      //       oDashboardModel.setProperty(
+      //         "/sticker/requests",
+      //         aRequests.slice(0, 5),
+      //       );
+      //       oDashboardModel.setProperty(
+      //         "/sticker/hasUserData",
+      //         aRequests.length > 0,
+      //       );
+
+      //       var iInProgress = aRequests.filter(function (r) {
+      //         return r.crit === 2;
+      //       }).length;
+      //       var aActive = aRequests.filter(function (r) {
+      //         return r.crit === 3;
+      //       });
+      //       oDashboardModel.setProperty(
+      //         "/sticker/userKpis/0/value",
+      //         String(aRequests.length),
+      //       );
+      //       oDashboardModel.setProperty(
+      //         "/sticker/userKpis/1/value",
+      //         String(iInProgress),
+      //       );
+      //       oDashboardModel.setProperty(
+      //         "/sticker/userKpis/2/value",
+      //         String(aActive.length),
+      //       );
+
+      //       // Active Sticker = most recent active/approved request
+      //       if (aActive.length) {
+      //         var oA = aActive[0];
+      //         oDashboardModel.setProperty("/sticker/active", {
+      //           hasData: true,
+      //           plate: oA.plate,
+      //           type: oA.type,
+      //           vehicle: oA.vehicle,
+      //           expiry: oA.expiry,
+      //           status: oA.status,
+      //           statusState: oA.statusState,
+      //         });
+
+      //         console.log("oDashboardModelmaster", oDashboardModel.getData());
+      //       } else {
+      //         oDashboardModel.setProperty("/sticker/active/hasData", false);
+      //       }
+      //     }.bind(this),
+      //   )
+      //   .catch(function () {
+      //     // backend unreachable — "No data available" placeholder remains
+      //   });
     },
     _stickerCriticalityState: function (iCrit) {
       switch (iCrit) {
@@ -872,35 +1073,6 @@ sap.ui.define([
       return null;
     },
 
-    // _loadDynamicFragment: function (sFragmentName, sApp) {
-
-    //   var oContainer = this._getViewContainer(sApp);
-
-    //   if (!oContainer) {
-    //     console.error("Container not found for:", sApp);
-    //     return;
-    //   }
-
-    //   // IMPORTANT: destroy old fragment controls
-    //   oContainer.destroyItems();
-
-    //   this.loadFragment({
-    //     name: sFragmentName,
-    //     type: "XML"
-    //   }).then(function (oFragment) {
-
-    //     oContainer.addItem(oFragment);
-
-    //   }).catch(function (oError) {
-
-    //     console.error(
-    //       "Error loading fragment:",
-    //       sFragmentName,
-    //       oError
-    //     );
-
-    //   });
-    // },
     _loadDynamicFragment: function (sFragmentName, sApp, sViewMode) {
 
       var oContainer = this._getViewContainer(sApp);
@@ -1061,18 +1233,18 @@ sap.ui.define([
     //   );
     // },
 
-   onViewModeChange: function (oEvent, sApp) {
+    onViewModeChange: function (oEvent, sApp) {
 
-    // Get selected SegmentedButtonItem
-    var oItem = oEvent.getParameter("item");
+      // Get selected SegmentedButtonItem
+      var oItem = oEvent.getParameter("item");
 
-    if (!oItem) {
+      if (!oItem) {
         console.error("Selected item could not be determined.");
         return;
       }
 
-    // Get selected key: "org" or "my"
-    var sViewMode = oItem.getKey();
+      // Get selected key: "org" or "my"
+      var sViewMode = oItem.getKey();
 
       console.log("Application:", sApp);
       console.log("View Mode:", sViewMode);
@@ -1080,33 +1252,33 @@ sap.ui.define([
       var oDashboardModel =
         this.getOwnerComponent().getModel("dashboard");
 
-    if (!oDashboardModel) {
+      if (!oDashboardModel) {
         console.error("Dashboard model not found.");
         return;
-    }
+      }
 
-    /*
-     * Store selected mode separately for each application
-     *
-     * TVS              -> dashboard>/sectionViewMode/TVS
-     * STICKER          -> dashboard>/sectionViewMode/STICKER
-     * ID_CARD          -> dashboard>/sectionViewMode/ID_CARD
-     * BUSINESS_VISITOR -> dashboard>/sectionViewMode/BUSINESS_VISITOR
-     */
+      /*
+       * Store selected mode separately for each application
+       *
+       * TVS              -> dashboard>/sectionViewMode/TVS
+       * STICKER          -> dashboard>/sectionViewMode/STICKER
+       * ID_CARD          -> dashboard>/sectionViewMode/ID_CARD
+       * BUSINESS_VISITOR -> dashboard>/sectionViewMode/BUSINESS_VISITOR
+       */
       oDashboardModel.setProperty(
         "/sectionViewMode/" + sApp,
         sViewMode
       );
 
-    /*
-     * Store My View status separately for each application
-     */
+      /*
+       * Store My View status separately for each application
+       */
       oDashboardModel.setProperty(
         "/isMyView/" + sApp,
         sViewMode === "my"
       );
 
-    // Get fragment based on application and view mode
+      // Get fragment based on application and view mode
       var sFragmentName = this._getViewFragment(
         sApp,
         sViewMode
@@ -1121,7 +1293,7 @@ sap.ui.define([
         return;
       }
 
-    // Load the corresponding fragment
+      // Load the corresponding fragment
       this._loadDynamicFragment(
         sFragmentName,
         sApp,
@@ -1130,156 +1302,88 @@ sap.ui.define([
     },
     _loadInitialFragments: function () {
 
-    var oAuthModel =
+      var oAuthModel =
         this.getView().getModel("GetAuthModel");
 
-    if (!oAuthModel) {
+      if (!oAuthModel) {
         console.error("GetAuthModel not found");
         return;
-    }
+      }
 
-    var oAuthData = oAuthModel.getProperty("/0");
+      var oAuthData = oAuthModel.getProperty("/0");
 
-    if (!oAuthData) {
+      if (!oAuthData) {
         console.error("Authentication data not available");
         return;
-    }
+      }
 
-    var oDashboardModel =
+      var oDashboardModel =
         this.getOwnerComponent().getModel("dashboard");
 
-    var aApplications = [
+      var aApplications = [
         {
-            app: "TVS",
-            role: oAuthData.TVS_ROLE
+          app: "TVS",
+          role: oAuthData.TVS_ROLE
         },
         {
-            app: "STICKER",
-            role: oAuthData.STK_ROLE
+          app: "STICKER",
+          role: oAuthData.STK_ROLE
         },
         {
-            app: "ID_CARD",
-            role: oAuthData.ID_ROLE
+          app: "ID_CARD",
+          role: oAuthData.ID_ROLE
         },
         {
-            app: "BUSINESS_VISITOR",
-            role: oAuthData.VAR_ROLE
+          app: "BUSINESS_VISITOR",
+          role: oAuthData.VAR_ROLE
         }
-    ];
+      ];
 
-    aApplications.forEach(function (oApplication) {
+      aApplications.forEach(function (oApplication) {
 
         var sViewMode = this._getInitialMode(
-            oApplication.role
+          oApplication.role
         );
 
         if (!sViewMode) {
-            return;
+          return;
         }
 
         // IMPORTANT:
         // Store initial mode so SegmentedButton selectedKey
         // gets the correct value.
         oDashboardModel.setProperty(
-            "/sectionViewMode/" + oApplication.app,
-            sViewMode
+          "/sectionViewMode/" + oApplication.app,
+          sViewMode
         );
 
         oDashboardModel.setProperty(
-            "/isMyView/" + oApplication.app,
-            sViewMode === "my"
+          "/isMyView/" + oApplication.app,
+          sViewMode === "my"
         );
 
         var sFragmentName = this._getViewFragment(
-            oApplication.app,
-            sViewMode
+          oApplication.app,
+          sViewMode
         );
 
         if (!sFragmentName) {
-            console.error(
-                "No initial fragment found for:",
-                oApplication.app,
-                sViewMode
-            );
-            return;
+          console.error(
+            "No initial fragment found for:",
+            oApplication.app,
+            sViewMode
+          );
+          return;
         }
 
         this._loadDynamicFragment(
-            sFragmentName,
-            oApplication.app,
-            sViewMode
+          sFragmentName,
+          oApplication.app,
+          sViewMode
         );
 
-    }.bind(this));
-},
-    // _loadInitialFragments: function () {
-
-    //   var oAuthModel =
-    //     this.getView().getModel("GetAuthModel");
-
-    //   if (!oAuthModel) {
-    //     console.error("GetAuthModel not found");
-    //     return;
-    //   }
-
-    //   var oAuthData = oAuthModel.getProperty("/0");
-
-    //   if (!oAuthData) {
-    //     console.error("Authentication data not available");
-    //     return;
-    //   }
-
-    //   var aApplications = [
-    //     {
-    //       app: "TVS",
-    //       role: oAuthData.TVS_ROLE
-    //     },
-    //     {
-    //       app: "STICKER",
-    //       role: oAuthData.STK_ROLE
-    //     },
-    //     {
-    //       app: "ID_CARD",
-    //       role: oAuthData.ID_ROLE
-    //     },
-    //     {
-    //       app: "BUSINESS_VISITOR",
-    //       role: oAuthData.VAR_ROLE
-    //     }
-    //   ];
-
-    //   aApplications.forEach(function (oApplication) {
-
-    //     var sViewMode = this._getInitialMode(
-    //       oApplication.role
-    //     );
-
-    //     if (!sViewMode) {
-    //       return;
-    //     }
-
-    //     var sFragmentName = this._getViewFragment(
-    //       oApplication.app,
-    //       sViewMode
-    //     );
-
-    //     if (!sFragmentName) {
-    //       console.error(
-    //         "No initial fragment found for:",
-    //         oApplication.app,
-    //         sViewMode
-    //       );
-    //       return;
-    //     }
-
-    //     this._loadDynamicFragment(
-    //       sFragmentName,
-    //       oApplication.app,
-    //       sViewMode
-    //     );
-
-    //   }.bind(this));
-    // },
+      }.bind(this));
+    },
     _applyNavAuthorization: function () {
 
       var oAuthModel = this.getView().getModel("GetAuthModel");

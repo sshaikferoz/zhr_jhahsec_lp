@@ -37,9 +37,9 @@
         renderType="Bare"
         alignItems="Center">
 
-        <core:Icon
+        <!-- <core:Icon
             src="sap-icon://id-card"
-            class="jhahMutedText sapUiTinyMarginEnd"/>
+            class="jhahMutedText sapUiTinyMarginEnd"/> -->
 
         <Title
             text="Sticker Management System"

@@ -29,9 +29,9 @@
             renderType="Bare"
             alignItems="Center">
 
-            <core:Icon
+            <!-- <core:Icon
                 src="sap-icon://pushpin-off"
-                class="jhahMutedText sapUiTinyMarginEnd"/>
+                class="jhahMutedText sapUiTinyMarginEnd"/> -->
 
             <Title
                 text="Sticker Management System"

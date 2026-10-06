@@ -37,9 +37,9 @@
         renderType="Bare"
         alignItems="Center">
 
-        <core:Icon
+        <!-- <core:Icon
             src="sap-icon://customer-and-contacts"
-            class="jhahMutedText sapUiTinyMarginEnd"/>
+            class="jhahMutedText sapUiTinyMarginEnd"/> -->
 
         <Title
             text="ID Management System"
