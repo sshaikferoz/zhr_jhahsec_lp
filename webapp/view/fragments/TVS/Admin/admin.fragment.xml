@@ -8,7 +8,7 @@
 <VBox class="jhahSection" renderType="Bare">
         <HBox justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
             <HBox alignItems="Center">
-                <core:Icon src="sap-icon://warning" class="jhahMutedText sapUiTinyMarginEnd" />
+                <!-- <core:Icon src="sap-icon://warning" class="jhahMutedText sapUiTinyMarginEnd" /> -->
                 <Title text="Traffic Violation System" level="H5" class="jhahSectionTitle" />
             
             </HBox>
@@ -33,6 +33,7 @@
 
 </SegmentedButton> -->
 <SegmentedButton
+     id="idsegTVS"
     visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
     selectedKey="{dashboard>/sectionViewMode/TVS}"
     selectionChange=".onViewModeChange($event, 'TVS')"

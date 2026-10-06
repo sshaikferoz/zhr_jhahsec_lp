@@ -27,9 +27,9 @@
                     class="jhahSectionHeader">
 
                     <HBox alignItems="Center">
-                        <core:Icon
+                        <!-- <core:Icon
                             src="sap-icon://warning"
-                            class="jhahMutedText sapUiTinyMarginEnd" />
+                            class="jhahMutedText sapUiTinyMarginEnd" /> -->
 
                         <Title
                             text="Traffic Violation System"
@@ -38,6 +38,7 @@
                     </HBox>
 
                     <SegmentedButton
+                    id="idsegTVS1"
     visible="{= ${GetAuthModel>/0/TVS_ROLE} === 'ADMIN' }"
     selectedKey="{dashboard>/sectionViewMode/TVS}"
     selectionChange=".onViewModeChange($event, 'TVS')"
@@ -248,9 +249,9 @@
                 alignItems="Center"
                 class="sapUiSmallMarginBottom">
 
-                <core:Icon
+                <!-- <core:Icon
                     src="sap-icon://warning"
-                    class="jhahMutedText sapUiTinyMarginEnd" />
+                    class="jhahMutedText sapUiTinyMarginEnd" /> -->
 
                 <Title
                     text="Pending Violation Requests"

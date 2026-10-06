@@ -37,9 +37,9 @@
         renderType="Bare"
         alignItems="Center">
 
-        <core:Icon
+        <!-- <core:Icon
             src="sap-icon://customer-and-contacts"
-            class="jhahMutedText sapUiTinyMarginEnd"/>
+            class="jhahMutedText sapUiTinyMarginEnd"/> -->
 
         <Title
             text="ID Management System"
@@ -69,9 +69,11 @@
 
     </SegmentedButton> -->
     <SegmentedButton
+     id="idsegIDCard"
     visible="{= ${GetAuthModel>/0/ID_ROLE} === 'ADMIN' }"
     selectedKey="{dashboard>/sectionViewMode/ID_CARD}"
-    selectionChange=".onViewModeChange($event, 'ID_CARD')">
+    selectionChange=".onViewModeChange($event, 'ID_CARD')"
+    width="180px">
 
     <items>
 

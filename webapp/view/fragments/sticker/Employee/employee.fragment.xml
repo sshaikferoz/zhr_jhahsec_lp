@@ -29,9 +29,9 @@
             renderType="Bare"
             alignItems="Center">
 
-            <core:Icon
+            <!-- <core:Icon
                 src="sap-icon://pushpin-off"
-                class="jhahMutedText sapUiTinyMarginEnd"/>
+                class="jhahMutedText sapUiTinyMarginEnd"/> -->
 
             <Title
                 text="Sticker Management System"
@@ -42,6 +42,7 @@
 
         <!-- Right: Admin / Employee -->
         <SegmentedButton
+        id="idsegSticker"
     visible="{= ${GetAuthModel>/0/STK_ROLE} === 'ADMIN' }"
     selectedKey="{dashboard>/sectionViewMode/STICKER}"
     selectionChange=".onViewModeChange($event, 'STICKER')">
