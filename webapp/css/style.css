@@ -1535,32 +1535,22 @@ html.jhahHtml body,
    EMBEDDED APP FRAME
    ============================================================ */
 
-.jhahDashboardContent > .sapUiHtmlContent,
-.jhahDashboardContent > .sapUiHtmlContent iframe {
-  width: 100% !important;
+.jhahEmbedFrame {
+  display: block;
 
-  flex: 1 1 auto;
+  width: 100%;
 
-  padding: 0 !important;
+  height: calc(100vh - 6.25rem);
+
+  min-height: calc(100vh - 6.25rem);
+
+  border: none;
 }
 
 .jhahDashboardContentEmbed {
   padding: 0 !important;
 
   gap: 0 !important;
-}
-
-.jhahMainScrollEmbed,
-.jhahMainScrollEmbed.sapMScrollCont {
-  padding: 0 !important;
-
-  margin: 0 !important;
-}
-
-.jhahMainScrollEmbed > .sapMScrollContScroll {
-  padding: 0 !important;
-
-  margin: 0 !important;
 }
 
 

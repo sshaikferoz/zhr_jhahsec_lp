@@ -1,0 +1,152 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <!-- Traffic Violation System, employee view: the user's own figures. -->
+    <f:Card
+        width="100%"
+        binding="{dashboard>/violations/employee}"
+        class="jhahDataCard">
+        <f:content>
+            <VBox width="100%" renderType="Bare" class="jhahSection">
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
+                    <HBox alignItems="Center">
+                        <Title
+                            id="title"
+                            text="{i18n>violationsTitle}"
+                            level="H5"
+                            class="jhahSectionTitle"/>
+                    </HBox>
+                    <SegmentedButton
+                        id="viewModeToggle"
+                        ariaLabelledBy="title"
+                        visible="{dashboard>/sections/violations/isAdmin}"
+                        selectedKey="{dashboard>/sections/violations/viewMode}"
+                        selectionChange=".onViewModeChange($event, 'violations')"
+                        width="180px"
+                        class="jhahTVSSegmentedButton">
+                        <items>
+                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                        </items>
+                    </SegmentedButton>
+                </HBox>
+
+                <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+                    <f:Card
+                        class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon"
+                        tooltip="{i18n>violationsOwnInProgressTooltip}">
+                        <f:content>
+                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon src="sap-icon://in-progress" class="jhahKpiIcon jhahKpiIconOrange"/>
+                                <VBox class="jhahKpiTextCol" renderType="Bare">
+                                    <Label text="{i18n>kpiInProgress}" class="jhahKpiTitle"/>
+                                    <ObjectNumber
+                                        number="{dashboard>kpi/inProgress}"
+                                        emphasized="true"
+                                        state="Warning"
+                                        class="jhahKpiValue"
+                                        visible="{dashboard>kpi/hasData}"/>
+                                    <Text
+                                        text="{i18n>noData}"
+                                        class="jhahMutedText jhahNoDataValue"
+                                        visible="{= !${dashboard>kpi/hasData} }"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                    <!-- Titles are kept short so the three cards fit across the
+                         dashboard column; the tooltips carry the detail. -->
+                    <f:Card
+                        class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
+                        tooltip="{i18n>violationsOwnLast12MonthsTooltip}">
+                        <f:content>
+                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon src="sap-icon://history" class="jhahKpiIcon jhahKpiIconBlue"/>
+                                <VBox class="jhahKpiTextCol" renderType="Bare">
+                                    <Label text="{i18n>violationsOwnLast12Months}" class="jhahKpiTitle"/>
+                                    <ObjectNumber
+                                        number="{dashboard>kpi/last12Months}"
+                                        emphasized="true"
+                                        class="jhahKpiValue"
+                                        visible="{dashboard>kpi/hasData}"/>
+                                    <Text
+                                        text="{i18n>noData}"
+                                        class="jhahMutedText jhahNoDataValue"
+                                        visible="{= !${dashboard>kpi/hasData} }"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                    <f:Card
+                        class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
+                        tooltip="{i18n>violationsOwnLifetimeTooltip}">
+                        <f:content>
+                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon src="sap-icon://sum" class="jhahKpiIcon jhahKpiIconBlue"/>
+                                <VBox class="jhahKpiTextCol" renderType="Bare">
+                                    <Label text="{i18n>violationsOwnLifetime}" class="jhahKpiTitle"/>
+                                    <ObjectNumber
+                                        number="{dashboard>kpi/lifetime}"
+                                        emphasized="true"
+                                        class="jhahKpiValue"
+                                        visible="{dashboard>kpi/hasData}"/>
+                                    <Text
+                                        text="{i18n>noData}"
+                                        class="jhahMutedText jhahNoDataValue"
+                                        visible="{= !${dashboard>kpi/hasData} }"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                </HBox>
+
+                <f:Card width="100%" class="jhahDataCard sapUiSmallMarginTop">
+                    <f:content>
+                        <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                            <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                                <Title id="requestsTitle" text="{i18n>violationsRequestsTitle}" level="H6"/>
+                            </HBox>
+                            <Table
+                                id="requestsTable"
+                                ariaLabelledBy="requestsTitle"
+                                class="jhahInnerTable"
+                                fixedLayout="false"
+                                noDataText="{i18n>violationsNoRequests}"
+                                items="{dashboard>requests}">
+                                <columns>
+                                    <Column><Text text="{i18n>violationsNumber}"/></Column>
+                                    <Column><Text text="{i18n>userJhahId}"/></Column>
+                                    <Column><Text text="{i18n>violationsEmployeeName}"/></Column>
+                                    <Column><Text text="{i18n>violationsDate}"/></Column>
+                                    <Column><Text text="{i18n>columnLocation}"/></Column>
+                                    <Column><Text text="{i18n>violationsType}"/></Column>
+                                    <Column><Text text="{i18n>violationsPoints}"/></Column>
+                                    <Column><Text text="{i18n>columnStatus}"/></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{dashboard>ViolationNo}"/>
+                                            <Text text="{dashboard>JhahId}"/>
+                                            <Text text="{dashboard>ViolatorName}"/>
+                                            <Text text="{dashboard>ViolationDate}"/>
+                                            <Text text="{dashboard>LocationDesc}"/>
+                                            <Text text="{dashboard>ViolationTypeDesc}"/>
+                                            <ObjectNumber number="{dashboard>ViolationPoints}" unit="{i18n>violationsPoints}"/>
+                                            <ObjectStatus text="{dashboard>StatusDesc}" state="Warning"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                    </f:content>
+                </f:Card>
+
+            </VBox>
+        </f:content>
+    </f:Card>
+
+</core:FragmentDefinition>

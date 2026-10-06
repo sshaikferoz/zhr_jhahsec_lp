@@ -1,0 +1,94 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <!-- Sticker request counts. Bound relative to the node of the view it is
+         included in: /sticker/admin or /sticker/employee. -->
+    <VBox>
+        <VBox class="jhahSection" renderType="Bare">
+            <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+                <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
+                    <f:content>
+                        <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                            <core:Icon src="sap-icon://document" class="jhahKpiIcon jhahKpiIconBlue"/>
+                            <VBox class="jhahKpiTextCol" renderType="Bare">
+                                <Label text="{i18n>kpiTotalRequests}" class="jhahKpiTitle"/>
+                                <ObjectNumber
+                                    number="{dashboard>kpi/total}"
+                                    emphasized="true"
+                                    class="jhahKpiValue"
+                                    visible="{dashboard>hasKpiData}"/>
+                                <Text
+                                    text="{i18n>noData}"
+                                    class="jhahMutedText jhahNoDataValue"
+                                    visible="{= !${dashboard>hasKpiData} }"/>
+                            </VBox>
+                        </HBox>
+                    </f:content>
+                </f:Card>
+                <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
+                    <f:content>
+                        <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                            <core:Icon src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen"/>
+                            <VBox class="jhahKpiTextCol" renderType="Bare">
+                                <Label text="{i18n>kpiApproved}" class="jhahKpiTitle"/>
+                                <ObjectNumber
+                                    number="{dashboard>kpi/approved}"
+                                    emphasized="true"
+                                    state="Success"
+                                    class="jhahKpiValue"
+                                    visible="{dashboard>hasKpiData}"/>
+                                <Text
+                                    text="{i18n>noData}"
+                                    class="jhahMutedText jhahNoDataValue"
+                                    visible="{= !${dashboard>hasKpiData} }"/>
+                            </VBox>
+                        </HBox>
+                    </f:content>
+                </f:Card>
+                <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
+                    <f:content>
+                        <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                            <core:Icon src="sap-icon://in-progress" class="jhahKpiIcon jhahKpiIconOrange"/>
+                            <VBox class="jhahKpiTextCol" renderType="Bare">
+                                <Label text="{i18n>kpiInProgress}" class="jhahKpiTitle"/>
+                                <ObjectNumber
+                                    number="{dashboard>kpi/inProgress}"
+                                    emphasized="true"
+                                    state="Warning"
+                                    class="jhahKpiValue"
+                                    visible="{dashboard>hasKpiData}"/>
+                                <Text
+                                    text="{i18n>noData}"
+                                    class="jhahMutedText jhahNoDataValue"
+                                    visible="{= !${dashboard>hasKpiData} }"/>
+                            </VBox>
+                        </HBox>
+                    </f:content>
+                </f:Card>
+                <f:Card class="jhahKpiCard jhahAccentRed jhahThirdCard jhahKpiCardIcon">
+                    <f:content>
+                        <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                            <core:Icon src="sap-icon://decline" class="jhahKpiIcon jhahKpiIconRed"/>
+                            <VBox class="jhahKpiTextCol" renderType="Bare">
+                                <Label text="{i18n>kpiRejected}" class="jhahKpiTitle"/>
+                                <ObjectNumber
+                                    number="{dashboard>kpi/rejected}"
+                                    emphasized="true"
+                                    state="Error"
+                                    class="jhahKpiValue"
+                                    visible="{dashboard>hasKpiData}"/>
+                                <Text
+                                    text="{i18n>noData}"
+                                    class="jhahMutedText jhahNoDataValue"
+                                    visible="{= !${dashboard>hasKpiData} }"/>
+                            </VBox>
+                        </HBox>
+                    </f:content>
+                </f:Card>
+            </HBox>
+        </VBox>
+    </VBox>
+
+</core:FragmentDefinition>

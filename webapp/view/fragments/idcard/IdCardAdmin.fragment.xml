@@ -1,0 +1,97 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <!-- ID Management System, admin view: organization-wide request counts
+         and all pending requests. -->
+    <f:Card
+        width="100%"
+        binding="{dashboard>/idCard/admin}"
+        class="jhahDataCard">
+        <f:content>
+            <VBox width="100%" renderType="Bare" class="jhahSection">
+
+                <HBox
+                    width="100%"
+                    renderType="Bare"
+                    alignItems="Center"
+                    justifyContent="SpaceBetween"
+                    class="jhahKpiRow">
+                    <HBox renderType="Bare" alignItems="Center">
+                        <Title
+                            id="title"
+                            text="{i18n>idCardTitle}"
+                            level="H5"
+                            class="jhahSectionTitle"/>
+                    </HBox>
+                    <SegmentedButton
+                        id="viewModeToggle"
+                        ariaLabelledBy="title"
+                        visible="{dashboard>/sections/idCard/isAdmin}"
+                        selectedKey="{dashboard>/sections/idCard/viewMode}"
+                        selectionChange=".onViewModeChange($event, 'idCard')"
+                        width="180px">
+                        <items>
+                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                        </items>
+                    </SegmentedButton>
+                </HBox>
+
+                <HBox width="100%" class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+                    <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
+                        <f:content>
+                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon src="sap-icon://sum" class="jhahKpiIcon jhahKpiIconBlue"/>
+                                <VBox class="jhahKpiTextCol" renderType="Bare">
+                                    <Label text="{i18n>idCardKpiTotal}" class="jhahKpiTitle"/>
+                                    <Text text="{dashboard>kpi/totalIdRequests}" class="jhahMutedText jhahNoDataValue"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                    <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
+                        <f:content>
+                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen"/>
+                                <VBox class="jhahKpiTextCol" renderType="Bare">
+                                    <Label text="{i18n>kpiApproved}" class="jhahKpiTitle"/>
+                                    <Text text="{dashboard>kpi/approvedCards}" class="jhahMutedText jhahNoDataValue"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                    <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
+                        <f:content>
+                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon src="sap-icon://pending" class="jhahKpiIcon jhahKpiIconOrange"/>
+                                <VBox class="jhahKpiTextCol" renderType="Bare">
+                                    <Label text="{i18n>kpiPendingReview}" class="jhahKpiTitle"/>
+                                    <Text text="{dashboard>kpi/pendingReview}" class="jhahMutedText jhahNoDataValue"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                    <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
+                        <f:content>
+                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon src="sap-icon://decline" class="jhahKpiIcon jhahKpiIconRed"/>
+                                <VBox class="jhahKpiTextCol" renderType="Bare">
+                                    <Label text="{i18n>kpiRejected}" class="jhahKpiTitle"/>
+                                    <Text text="{dashboard>kpi/rejectedCards}" class="jhahMutedText jhahNoDataValue"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                </HBox>
+
+                <core:Fragment
+                    fragmentName="com.jhah.zhrjhahseclp.view.fragments.idcard.IdCardRequests"
+                    type="XML"/>
+
+            </VBox>
+        </f:content>
+    </f:Card>
+
+</core:FragmentDefinition>

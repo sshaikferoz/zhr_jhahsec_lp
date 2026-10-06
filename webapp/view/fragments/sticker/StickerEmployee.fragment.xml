@@ -1,0 +1,110 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <!-- Sticker Management, employee view: the user's own request counts and
+         their active sticker. -->
+    <f:Card
+        width="100%"
+        binding="{dashboard>/sticker/employee}"
+        class="jhahDataCard">
+        <f:content>
+            <VBox width="100%" renderType="Bare" class="jhahSection">
+
+                <HBox
+                    width="100%"
+                    renderType="Bare"
+                    alignItems="Center"
+                    justifyContent="SpaceBetween"
+                    class="jhahKpiRow">
+                    <HBox renderType="Bare" alignItems="Center">
+                        <Title
+                            id="title"
+                            text="{i18n>stickerTitle}"
+                            level="H5"
+                            class="jhahSectionTitle"/>
+                    </HBox>
+                    <SegmentedButton
+                        id="viewModeToggle"
+                        ariaLabelledBy="title"
+                        visible="{dashboard>/sections/sticker/isAdmin}"
+                        selectedKey="{dashboard>/sections/sticker/viewMode}"
+                        selectionChange=".onViewModeChange($event, 'sticker')">
+                        <items>
+                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                        </items>
+                    </SegmentedButton>
+                </HBox>
+
+                <core:Fragment
+                    fragmentName="com.jhah.zhrjhahseclp.view.fragments.sticker.StickerKpis"
+                    type="XML"/>
+
+                <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
+                    <VBox
+                        binding="{dashboard>/sticker/own/active}"
+                        class="jhahHalfCardWrap"
+                        renderType="Bare">
+                        <layoutData>
+                            <FlexItemData growFactor="1" baseSize="0%"/>
+                        </layoutData>
+                        <f:Card class="jhahDataCard" width="100%">
+                            <f:content>
+                                <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
+                                    <Label text="{i18n>stickerActive}" class="jhahMutedText"/>
+
+                                    <!-- No active sticker -->
+                                    <Text
+                                        text="{i18n>noData}"
+                                        class="jhahMutedText jhahNoDataValue"
+                                        visible="{= !${dashboard>hasData} }"/>
+
+                                    <!-- Active sticker details -->
+                                    <VBox
+                                        renderType="Bare"
+                                        class="jhahActiveSticker"
+                                        visible="{dashboard>hasData}">
+                                        <HBox alignItems="Center">
+                                            <Avatar
+                                                src="sap-icon://car-rental"
+                                                displaySize="S"
+                                                displayShape="Square"
+                                                backgroundColor="Accent6"
+                                                class="sapUiSmallMarginEnd"/>
+                                            <VBox renderType="Bare">
+                                                <Title
+                                                    text="{dashboard>plate}"
+                                                    level="H5"
+                                                    class="jhahHighlightValue"/>
+                                                <ObjectAttribute text="{dashboard>type}"/>
+                                            </VBox>
+                                        </HBox>
+                                        <ObjectAttribute
+                                            text="{dashboard>vehicle}"
+                                            class="sapUiTinyMarginTop"
+                                            visible="{= !!${dashboard>vehicle} }"/>
+                                        <HBox
+                                            class="jhahActiveStickerFooter sapUiSmallMarginTop"
+                                            alignItems="Center"
+                                            justifyContent="SpaceBetween">
+                                            <ObjectStatus
+                                                text="{dashboard>status}"
+                                                state="{dashboard>statusState}"/>
+                                            <ObjectAttribute
+                                                title="{i18n>stickerExpires}"
+                                                text="{dashboard>expiry}"/>
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </f:content>
+    </f:Card>
+
+</core:FragmentDefinition>

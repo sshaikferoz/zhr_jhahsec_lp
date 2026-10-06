@@ -1,0 +1,91 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <!-- Sticker Management, admin view: organization-wide request counts and
+         the status of the user's own requests. -->
+    <f:Card
+        width="100%"
+        binding="{dashboard>/sticker/admin}"
+        class="jhahDataCard">
+        <f:content>
+            <VBox width="100%" renderType="Bare" class="jhahSection">
+
+                <HBox
+                    width="100%"
+                    renderType="Bare"
+                    alignItems="Center"
+                    justifyContent="SpaceBetween"
+                    class="jhahKpiRow">
+                    <HBox renderType="Bare" alignItems="Center">
+                        <Title
+                            id="title"
+                            text="{i18n>stickerTitle}"
+                            level="H5"
+                            class="jhahSectionTitle"/>
+                    </HBox>
+                    <SegmentedButton
+                        id="viewModeToggle"
+                        ariaLabelledBy="title"
+                        visible="{dashboard>/sections/sticker/isAdmin}"
+                        selectedKey="{dashboard>/sections/sticker/viewMode}"
+                        selectionChange=".onViewModeChange($event, 'sticker')">
+                        <items>
+                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                        </items>
+                    </SegmentedButton>
+                </HBox>
+
+                <core:Fragment
+                    fragmentName="com.jhah.zhrjhahseclp.view.fragments.sticker.StickerKpis"
+                    type="XML"/>
+
+                <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
+                    <VBox class="jhahHalfCardWrap" renderType="Bare" width="100%">
+                        <layoutData>
+                            <FlexItemData growFactor="1" baseSize="0%"/>
+                        </layoutData>
+                        <f:Card class="jhahDataCard" width="100%">
+                            <f:content>
+                                <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
+                                    <Title
+                                        id="requestsTitle"
+                                        text="{i18n>stickerRequestsTitle}"
+                                        level="H6"
+                                        class="sapUiSmallMarginBottom"/>
+                                    <Table
+                                        id="requestsTable"
+                                        ariaLabelledBy="requestsTitle"
+                                        items="{dashboard>/sticker/own/requests}"
+                                        showSeparators="Inner"
+                                        class="jhahInnerTable"
+                                        fixedLayout="false"
+                                        noDataText="{i18n>noData}">
+                                        <columns>
+                                            <Column><Text text="{i18n>stickerRequestNumber}"/></Column>
+                                            <Column><Text text="{i18n>stickerType}"/></Column>
+                                            <Column hAlign="End"><Text text="{i18n>columnStatus}"/></Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem>
+                                                <cells>
+                                                    <Link text="{dashboard>reqIdStr}" press=".onStickerRequestPress"/>
+                                                    <Text text="{dashboard>type}"/>
+                                                    <ObjectStatus text="{dashboard>status}" state="{dashboard>statusState}"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </f:content>
+    </f:Card>
+
+</core:FragmentDefinition>

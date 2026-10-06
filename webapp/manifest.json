@@ -3,7 +3,13 @@
   "sap.app": {
     "id": "com.jhah.zhrjhahseclp",
     "type": "application",
-    "i18n": "i18n/i18n.properties",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": [
+        ""
+      ],
+      "fallbackLocale": ""
+    },
     "applicationVersion": {
       "version": "0.0.1"
     },
@@ -84,8 +90,6 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.ui.layout": {},
-        "sap.tnt": {},
         "sap.f": {},
         "sap.viz": {}
       }
@@ -98,7 +102,12 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.jhah.zhrjhahseclp.i18n.i18n"
+          "bundleName": "com.jhah.zhrjhahseclp.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": "",
+          "async": true
         }
       },
       "": {
@@ -141,7 +150,7 @@
           "groupId": "$direct"
         }
       },
-      "Auth_Info": {
+      "authInfo": {
         "dataSource": "zsrv_hr_jhahsec_auth_info",
         "preload": true,
         "settings": {
@@ -166,9 +175,7 @@
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
-        "path": "com.jhah.zhrjhahseclp.view",
-        "async": true,
-        "viewPath": "com.jhah.zhrjhahseclp.view"
+        "path": "com.jhah.zhrjhahseclp.view"
       },
       "routes": [
         {
@@ -189,8 +196,7 @@
     "rootView": {
       "viewName": "com.jhah.zhrjhahseclp.view.App",
       "type": "XML",
-      "id": "App",
-      "async": true
+      "id": "App"
     }
   }
 }
