@@ -1,0 +1,123 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
+    <!-- Business Visitor Access. Both views of the section show this content. -->
+    <VBox class="jhahSection" renderType="Bare">
+
+        <HBox
+            width="100%"
+            renderType="Bare"
+            alignItems="Center"
+            justifyContent="SpaceBetween"
+            class="jhahKpiRow">
+            <Title
+                id="title"
+                text="{i18n>visitorTitle}"
+                level="H5"
+                class="jhahSectionTitle"/>
+            <SegmentedButton
+                id="viewModeToggle"
+                ariaLabelledBy="title"
+                visible="{dashboard>/sections/visitor/isAdmin}"
+                selectedKey="{dashboard>/sections/visitor/viewMode}"
+                selectionChange=".onViewModeChange($event, 'visitor')">
+                <items>
+                    <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
+                    <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                </items>
+            </SegmentedButton>
+        </HBox>
+
+        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
+                <f:content>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://supplier" class="jhahKpiIcon jhahKpiIconBlue"/>
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{i18n>kpiTotalRequests}" class="jhahKpiTitle"/>
+                            <ObjectNumber
+                                number="{dashboard>/visitor/kpi/total}"
+                                emphasized="true"
+                                class="jhahKpiValue"/>
+                        </VBox>
+                    </HBox>
+                </f:content>
+            </f:Card>
+            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
+                <f:content>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen"/>
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{i18n>kpiApproved}" class="jhahKpiTitle"/>
+                            <ObjectNumber
+                                number="{dashboard>/visitor/kpi/approved}"
+                                emphasized="true"
+                                state="Success"
+                                class="jhahKpiValue"/>
+                        </VBox>
+                    </HBox>
+                </f:content>
+            </f:Card>
+            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
+                <f:content>
+                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon src="sap-icon://pending" class="jhahKpiIcon jhahKpiIconOrange"/>
+                        <VBox class="jhahKpiTextCol" renderType="Bare">
+                            <Label text="{i18n>kpiInProgress}" class="jhahKpiTitle"/>
+                            <ObjectNumber
+                                number="{dashboard>/visitor/kpi/inProgress}"
+                                emphasized="true"
+                                state="Warning"
+                                class="jhahKpiValue"/>
+                        </VBox>
+                    </HBox>
+                </f:content>
+            </f:Card>
+        </HBox>
+
+        <Title
+            text="{i18n>visitorChartTitle}"
+            level="H6"
+            class="jhahSubSectionTitle"/>
+
+        <f:Card class="jhahDataCard">
+            <f:content>
+                <VBox width="100%" class="jhahChartWrap">
+                    <viz:VizFrame
+                        id="categoryChart"
+                        uiConfig="{applicationSet:'fiori'}"
+                        vizType="donut"
+                        width="100%"
+                        height="320px"
+                        vizProperties="{title: {visible: false}}">
+                        <viz:dataset>
+                            <viz.data:FlattenedDataset data="{dashboard>/visitor/chart}">
+                                <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition
+                                        name="Category"
+                                        value="{dashboard>category}"/>
+                                </viz.data:dimensions>
+                                <viz.data:measures>
+                                    <viz.data:MeasureDefinition
+                                        name="Count"
+                                        value="{dashboard>count}"/>
+                                </viz.data:measures>
+                            </viz.data:FlattenedDataset>
+                        </viz:dataset>
+                        <viz:feeds>
+                            <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
+                            <viz.feeds:FeedItem uid="color" type="Dimension" values="Category"/>
+                        </viz:feeds>
+                    </viz:VizFrame>
+                </VBox>
+            </f:content>
+        </f:Card>
+
+    </VBox>
+
+</core:FragmentDefinition>

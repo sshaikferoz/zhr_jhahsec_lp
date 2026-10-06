@@ -1,0 +1,148 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox class="jhahSideNavWrap" renderType="Bare" height="100%" justifyContent="Start">
+        <VBox renderType="Bare">
+            <VBox class="jhahBrandArea" renderType="Bare" justifyContent="Start">
+                <Image
+                    src="{dashboard>/logoUrl}"
+                    alt="{i18n>appTitle}"
+                    decorative="false"
+                    densityAware="false"
+                    class="jhahBrandLogo"
+                    width="100%"/>
+            </VBox>
+
+            <!-- An entry is shown once the user is known to have access to its
+                 application, i.e. once its section has a view mode. -->
+            <List
+                id="navList"
+                mode="SingleSelectMaster"
+                showSeparators="None"
+                backgroundDesign="Transparent"
+                class="jhahNavList"
+                selectionChange=".onNavItemSelect">
+                <CustomListItem
+                    selected="{= ${dashboard>/selectedNavKey} === 'dashboard' }"
+                    class="jhahNavItem">
+                    <customData>
+                        <core:CustomData key="navKey" value="dashboard"/>
+                    </customData>
+                    <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
+                        <core:Icon src="sap-icon://home" class="jhahNavItemIcon"/>
+                        <Text text="{i18n>navDashboard}" class="jhahNavItemText"/>
+                    </HBox>
+                </CustomListItem>
+                <CustomListItem
+                    visible="{= !!${dashboard>/sections/visitor/viewMode} }"
+                    selected="{= ${dashboard>/selectedNavKey} === 'visitor' }"
+                    class="jhahNavItem">
+                    <customData>
+                        <core:CustomData key="navKey" value="visitor"/>
+                    </customData>
+                    <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
+                        <core:Icon src="sap-icon://supplier" class="jhahNavItemIcon"/>
+                        <Text text="{i18n>visitorTitle}" class="jhahNavItemText"/>
+                    </HBox>
+                </CustomListItem>
+                <CustomListItem
+                    visible="{= !!${dashboard>/sections/violations/viewMode} }"
+                    selected="{= ${dashboard>/selectedNavKey} === 'violations' }"
+                    class="jhahNavItem">
+                    <customData>
+                        <core:CustomData key="navKey" value="violations"/>
+                    </customData>
+                    <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
+                        <core:Icon src="sap-icon://warning" class="jhahNavItemIcon"/>
+                        <Text text="{i18n>violationsTitle}" class="jhahNavItemText"/>
+                    </HBox>
+                </CustomListItem>
+                <CustomListItem
+                    visible="{= !!${dashboard>/sections/sticker/viewMode} }"
+                    selected="{= ${dashboard>/selectedNavKey} === 'sticker' }"
+                    class="jhahNavItem">
+                    <customData>
+                        <core:CustomData key="navKey" value="sticker"/>
+                    </customData>
+                    <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
+                        <core:Icon src="sap-icon://car-rental" class="jhahNavItemIcon"/>
+                        <Text text="{i18n>stickerNavTitle}" class="jhahNavItemText"/>
+                    </HBox>
+                </CustomListItem>
+                <CustomListItem
+                    visible="{= !!${dashboard>/sections/idCard/viewMode} }"
+                    selected="{= ${dashboard>/selectedNavKey} === 'idCard' }"
+                    class="jhahNavItem">
+                    <customData>
+                        <core:CustomData key="navKey" value="idCard"/>
+                    </customData>
+                    <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
+                        <core:Icon src="sap-icon://badge" class="jhahNavItemIcon"/>
+                        <Text text="{i18n>idCardTitle}" class="jhahNavItemText"/>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </VBox>
+
+        <!-- Pattern fills the gap from the end of the menu down to the user card -->
+        <Image src="{dashboard>/patternUrl}" densityAware="false" class="jhahMenuPattern"/>
+
+        <VBox class="jhahSideNavFooter" renderType="Bare">
+            <VBox class="jhahSidebarUserCard" renderType="Bare">
+
+                <HBox alignItems="Center" class="jhahUserCardHeader" renderType="Bare">
+                    <Avatar
+                        displayShape="Circle"
+                        initials="{dashboard>/user/initials}"
+                        displaySize="S"
+                        backgroundColor="Accent6"
+                        class="jhahUserAvatar"/>
+                    <VBox renderType="Bare" class="jhahUserCardNameWrap">
+                        <Text text="{dashboard>/user/name}" class="jhahSidebarName"/>
+                        <Text text="{dashboard>/user/role}" class="jhahSidebarRole jhahSidebarSub"/>
+                    </VBox>
+                </HBox>
+
+                <VBox class="jhahUserCardDivider" renderType="Bare"/>
+
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userJhahId}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/id}" tooltip="{dashboard>/user/id}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userLoginId}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/loginId}" tooltip="{dashboard>/user/loginId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userGovernmentId}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/governmentId}" tooltip="{dashboard>/user/governmentId}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userOrganization}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/department}" tooltip="{dashboard>/user/department}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userPosition}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/position}" tooltip="{dashboard>/user/position}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userDateOfBirth}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/dob}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userGender}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/gender}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow" renderType="Bare">
+                    <Label text="{i18n>userBloodGroup}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/bloodGroup}" wrapping="false" class="jhahSidebarValue jhahUserCardVal"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween" class="jhahUserCardRow jhahUserCardRowLast" renderType="Bare">
+                    <Label text="{i18n>userEmail}" class="jhahSidebarLabel jhahUserCardLabel"/>
+                    <Text text="{dashboard>/user/email}" tooltip="{dashboard>/user/email}" wrapping="false" class="jhahSidebarValue jhahUserCardVal jhahUserCardEmail"/>
+                </HBox>
+
+            </VBox>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

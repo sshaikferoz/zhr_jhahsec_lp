@@ -1,0 +1,119 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <!-- ID Management System, employee view: the user's active ID card and
+         their own pending requests. -->
+    <f:Card
+        width="100%"
+        binding="{dashboard>/idCard/employee}"
+        class="jhahDataCard">
+        <f:content>
+            <VBox width="100%" renderType="Bare" class="jhahSection">
+
+                <HBox
+                    width="100%"
+                    renderType="Bare"
+                    alignItems="Center"
+                    justifyContent="SpaceBetween"
+                    class="jhahKpiRow">
+                    <HBox renderType="Bare" alignItems="Center">
+                        <Title
+                            id="title"
+                            text="{i18n>idCardEmployeeTitle}"
+                            level="H5"
+                            class="jhahSectionTitle"/>
+                    </HBox>
+                    <SegmentedButton
+                        id="viewModeToggle"
+                        ariaLabelledBy="title"
+                        visible="{dashboard>/sections/idCard/isAdmin}"
+                        selectedKey="{dashboard>/sections/idCard/viewMode}"
+                        selectionChange=".onViewModeChange($event, 'idCard')">
+                        <items>
+                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                        </items>
+                    </SegmentedButton>
+                </HBox>
+
+                <VBox class="jhahSection" renderType="Bare">
+
+                    <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
+                        <VBox class="jhahHalfCardWrap" renderType="Bare" width="100%">
+                            <layoutData>
+                                <FlexItemData growFactor="1" baseSize="0%"/>
+                            </layoutData>
+                            <f:Card class="jhahDataCard" width="100%">
+                                <f:content>
+                                    <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
+
+                                        <!-- The user has an active card -->
+                                        <VBox
+                                            visible="{dashboard>active/hasData}"
+                                            renderType="Bare"
+                                            width="100%"
+                                            class="jhahIdCardBody">
+                                            <HBox
+                                                class="jhahIdCardHeader"
+                                                renderType="Bare"
+                                                width="100%"
+                                                justifyContent="SpaceBetween"
+                                                alignItems="Center">
+                                                <HBox renderType="Bare" alignItems="Center">
+                                                    <core:Icon src="sap-icon://badge" class="jhahIdCardHeaderIcon"/>
+                                                    <VBox class="jhahIdCardHeaderText" renderType="Bare">
+                                                        <Label text="{i18n>idCardActive}" class="jhahMutedText"/>
+                                                        <Text
+                                                            text="{dashboard>active/idNumber}"
+                                                            tooltip="{dashboard>active/idNumber}"
+                                                            class="jhahIdCardName"/>
+                                                    </VBox>
+                                                </HBox>
+                                                <ObjectStatus
+                                                    text="{= ${dashboard>active/isExpiringSoon} ? ${i18n>idCardStatusExpiringSoon} : ${i18n>idCardStatusActive} }"
+                                                    state="{dashboard>active/statusState}"
+                                                    class="jhahBadgeStatus"/>
+                                            </HBox>
+
+                                            <VBox class="jhahIdCardExpiry" renderType="Bare" width="100%">
+                                                <HBox justifyContent="SpaceBetween" class="jhahIdCardRow" renderType="Bare">
+                                                    <Label text="{i18n>idCardDaysToExpiry}" class="jhahIdCardLabel"/>
+                                                    <Text text="{dashboard>active/daysToExpire}" class="jhahIdCardValue"/>
+                                                </HBox>
+                                                <ProgressIndicator
+                                                    percentValue="{dashboard>active/expiryPercent}"
+                                                    showValue="false"
+                                                    state="{dashboard>active/statusState}"
+                                                    class="jhahExpiryProgress"/>
+                                            </VBox>
+                                        </VBox>
+
+                                        <!-- No active card -->
+                                        <VBox
+                                            visible="{= !${dashboard>active/hasData} }"
+                                            renderType="Bare"
+                                            justifyContent="Start"
+                                            width="100%">
+                                            <Label text="{i18n>idCardActive}" class="jhahMutedText"/>
+                                            <Text text="{i18n>noData}" class="jhahMutedText jhahNoDataValue"/>
+                                        </VBox>
+
+                                    </VBox>
+                                </f:content>
+                            </f:Card>
+                        </VBox>
+                    </HBox>
+
+                    <core:Fragment
+                        fragmentName="com.jhah.zhrjhahseclp.view.fragments.idcard.IdCardRequests"
+                        type="XML"/>
+
+                </VBox>
+
+            </VBox>
+        </f:content>
+    </f:Card>
+
+</core:FragmentDefinition>

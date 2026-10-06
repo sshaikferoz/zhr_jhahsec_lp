@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <!-- Pending ID card requests. Bound relative to the node of the view it is
+         included in: /idCard/admin or /idCard/employee. -->
+    <VBox>
+        <f:Card class="jhahDataCard">
+            <f:content>
+                <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
+                    <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                        <core:Icon src="sap-icon://id-card" class="jhahMutedText sapUiTinyMarginEnd"/>
+                        <Title id="requestsTitle" text="{i18n>idCardRequestsTitle}" level="H6"/>
+                    </HBox>
+                    <Table
+                        id="requestsTable"
+                        ariaLabelledBy="requestsTitle"
+                        class="jhahInnerTable"
+                        fixedLayout="false"
+                        noDataText="{i18n>noData}"
+                        items="{dashboard>requests}">
+                        <columns>
+                            <Column><Text text="{i18n>idCardRequestId}"/></Column>
+                            <Column><Text text="{i18n>idCardPayrollNumber}"/></Column>
+                            <Column><Text text="{i18n>columnLocation}"/></Column>
+                            <Column><Text text="{i18n>columnStatus}"/></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{dashboard>RequestId}"/>
+                                    <Text text="{dashboard>PayrollNum}"/>
+                                    <Text text="{dashboard>LocationDesc}"/>
+                                    <ObjectStatus text="{dashboard>IDStatusDesc}" state="Warning"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </f:content>
+        </f:Card>
+    </VBox>
+
+</core:FragmentDefinition>

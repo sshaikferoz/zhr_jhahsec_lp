@@ -1,257 +1,196 @@
 <mvc:View
-controllerName="com.jhah.zhrjhahseclp.controller.Main"
-xmlns:mvc="sap.ui.core.mvc"
-xmlns="sap.m"
-xmlns:core="sap.ui.core">
-<Page
-    showHeader="false"
-    enableScrolling="false">
-
-    <content>
-
-        <!-- ===================================================== -->
-        <!-- APPLICATION SHELL -->
-        <!-- ===================================================== -->
-
-        <HBox
-            width="100%"
-            height="100%"
-            renderType="Bare"
-            class="jhahAppLayout">
-
-            <!-- ================================================= -->
-            <!-- SIDE NAVIGATION -->
-            <!-- ================================================= -->
-
-            <VBox
-                width="350px"
+    controllerName="com.jhah.zhrjhahseclp.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page
+        id="page"
+        showHeader="false"
+        enableScrolling="false">
+        <content>
+            <HBox
+                width="100%"
                 height="100%"
                 renderType="Bare"
-                class="jhahSideNavContainer">
+                class="jhahAppLayout">
 
-                <core:Fragment
-                    fragmentName="com.jhah.zhrjhahseclp.view.fragments.common.SideNavigation"
-                    type="XML"/>
-
-            </VBox>
-
-
-            <!-- ================================================= -->
-            <!-- MAIN AREA -->
-            <!-- ================================================= -->
-
-            <VBox
-                width="calc(100% - 350px)"
-                height="100%"
-                renderType="Bare"
-                class="jhahMainArea">
-
-                <!-- ================================================= -->
-                <!-- HEADER -->
-                <!-- ================================================= -->
-
+                <!-- Side navigation -->
                 <VBox
-                    width="100%"
+                    width="350px"
+                    height="100%"
                     renderType="Bare"
-                    class="jhahHeaderContainer">
-
-                    <layoutData>
-                        <FlexItemData
-                            growFactor="0"
-                            shrinkFactor="0"/>
-                    </layoutData>
-
+                    class="jhahSideNavContainer">
                     <core:Fragment
-                        fragmentName="com.jhah.zhrjhahseclp.view.fragments.common.Header"
+                        fragmentName="com.jhah.zhrjhahseclp.view.fragments.shell.SideNavigation"
                         type="XML"/>
-
                 </VBox>
 
-
-                <!-- ================================================= -->
-                <!-- DASHBOARD SCROLL AREA -->
-                <!-- ================================================= -->
-
-                <ScrollContainer
-                    width="100%"
-                    vertical="true"
-                    horizontal="false"
-                    class="jhahDashboardScroll">
-
-                    <layoutData>
-                        <FlexItemData
-                            growFactor="1"
-                            shrinkFactor="1"
-                            baseSize="0%"/>
-                    </layoutData>
-
-
-                    <!-- ================================================= -->
-                    <!-- DASHBOARD CONTENT -->
-                    <!-- ================================================= -->
+                <!-- Main area -->
+                <VBox
+                    width="calc(100% - 350px)"
+                    height="100%"
+                    renderType="Bare"
+                    class="jhahMainArea">
 
                     <VBox
-                        id="dashboardContent"
                         width="100%"
                         renderType="Bare"
-                        class="jhahDashboardContent">
+                        class="jhahHeaderContainer">
+                        <layoutData>
+                            <FlexItemData
+                                growFactor="0"
+                                shrinkFactor="0"/>
+                        </layoutData>
+                        <core:Fragment
+                            fragmentName="com.jhah.zhrjhahseclp.view.fragments.shell.Header"
+                            type="XML"/>
+                    </VBox>
 
-                        <!-- Hidden (not destroyed) while another app is embedded,
-                             so returning to the dashboard keeps its state. -->
+                    <ScrollContainer
+                        id="dashboardScroll"
+                        width="100%"
+                        vertical="true"
+                        horizontal="false"
+                        class="jhahDashboardScroll">
+                        <layoutData>
+                            <FlexItemData
+                                growFactor="1"
+                                shrinkFactor="1"
+                                baseSize="0%"/>
+                        </layoutData>
+
                         <VBox
-                            id="dashboardContainer"
+                            id="dashboardContent"
                             width="100%"
                             renderType="Bare"
-                            visible="{= !${dashboard>/isEmbedFrame} }"
-                            class="jhahDashboardContainer">
+                            class="jhahDashboardContent">
 
-                            <!-- ================================================= -->
-                            <!-- TWO COLUMN LAYOUT -->
-                            <!-- ================================================= -->
-
-                            <HBox
+                            <!-- Hidden (not destroyed) while another app is embedded,
+                                 so returning to the dashboard keeps its state. -->
+                            <VBox
+                                id="dashboardContainer"
                                 width="100%"
                                 renderType="Bare"
-                                alignItems="Start"
-                                justifyContent="SpaceBetween"
-                                class="jhahDashboardRow">
+                                visible="{= !${dashboard>/isEmbedFrame} }"
+                                class="jhahDashboardContainer">
 
-
-                                <!-- ============================================= -->
-                                <!-- LEFT COLUMN -->
-                                <!-- VAR + ID MANAGEMENT -->
-                                <!-- ============================================= -->
-
-                                <VBox
-                                    width="49%"
+                                <!-- Each section has one slot per view. Main.controller
+                                     loads the section fragment into the slot on first
+                                     use; the section's view mode decides which slot
+                                     is on screen. -->
+                                <HBox
+                                    width="100%"
                                     renderType="Bare"
-                                    class="jhahDashboardColumn">
+                                    alignItems="Start"
+                                    justifyContent="SpaceBetween"
+                                    class="jhahDashboardRow">
 
-
-                                    <!-- ========================================= -->
-                                    <!-- VAR / BUSINESS VISITOR -->
-                                    <!-- ========================================= -->
-
+                                    <!-- Left column -->
                                     <VBox
-                                        id="varVBox"
-                                        width="100%"
+                                        width="49%"
                                         renderType="Bare"
-                                        class="jhahDashboardCard jhahDashboardCardSpacing">
+                                        class="jhahDashboardColumn">
 
                                         <VBox
-                                            id="varOrgVBox"
+                                            id="visitorSection"
                                             width="100%"
                                             renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/BUSINESS_VISITOR} === 'org' }"/>
+                                            visible="{= !!${dashboard>/sections/visitor/viewMode} }"
+                                            class="jhahDashboardCard jhahDashboardCardSpacing">
+                                            <VBox
+                                                id="visitorAdminSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/visitor/viewMode} === 'admin' }"/>
+                                            <VBox
+                                                id="visitorEmployeeSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/visitor/viewMode} === 'employee' }"/>
+                                        </VBox>
 
                                         <VBox
-                                            id="varMyVBox"
+                                            id="idCardSection"
                                             width="100%"
                                             renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/BUSINESS_VISITOR} === 'my' }"/>
+                                            visible="{= !!${dashboard>/sections/idCard/viewMode} }"
+                                            class="jhahDashboardCard">
+                                            <VBox
+                                                id="idCardAdminSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/idCard/viewMode} === 'admin' }"/>
+                                            <VBox
+                                                id="idCardEmployeeSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/idCard/viewMode} === 'employee' }"/>
+                                        </VBox>
+
                                     </VBox>
 
-
-                                    <!-- ========================================= -->
-                                    <!-- ID MANAGEMENT -->
-                                    <!-- ========================================= -->
-
+                                    <!-- Right column -->
                                     <VBox
-                                        id="idVBox"
-                                        width="100%"
+                                        width="49%"
                                         renderType="Bare"
-                                        class="jhahDashboardCard">
+                                        class="jhahDashboardColumn">
 
                                         <VBox
-                                            id="idOrgVBox"
+                                            id="violationsSection"
                                             width="100%"
                                             renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/ID_CARD} === 'org' }"/>
+                                            visible="{= !!${dashboard>/sections/violations/viewMode} }"
+                                            class="jhahDashboardCard jhahDashboardCardSpacing">
+                                            <VBox
+                                                id="violationsAdminSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/violations/viewMode} === 'admin' }"/>
+                                            <VBox
+                                                id="violationsEmployeeSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/violations/viewMode} === 'employee' }"/>
+                                        </VBox>
 
                                         <VBox
-                                            id="idMyVBox"
+                                            id="stickerSection"
                                             width="100%"
                                             renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/ID_CARD} === 'my' }"/>
+                                            visible="{= !!${dashboard>/sections/sticker/viewMode} }"
+                                            class="jhahDashboardCard">
+                                            <VBox
+                                                id="stickerAdminSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/sticker/viewMode} === 'admin' }"/>
+                                            <VBox
+                                                id="stickerEmployeeSlot"
+                                                width="100%"
+                                                renderType="Bare"
+                                                visible="{= ${dashboard>/sections/sticker/viewMode} === 'employee' }"/>
+                                        </VBox>
+
                                     </VBox>
 
-                                </VBox>
+                                </HBox>
 
+                            </VBox>
 
-                                <!-- ============================================= -->
-                                <!-- RIGHT COLUMN -->
-                                <!-- TVS + STICKER -->
-                                <!-- ============================================= -->
-
-                                <VBox
-                                    width="49%"
-                                    renderType="Bare"
-                                    class="jhahDashboardColumn">
-
-
-                                    <!-- ========================================= -->
-                                    <!-- TVS -->
-                                    <!-- ========================================= -->
-
-                                    <VBox
-                                        id="tvsVBox"
-                                        width="100%"
-                                        renderType="Bare"
-                                        class="jhahDashboardCard jhahDashboardCardSpacing">
-
-                                        <VBox
-                                            id="tvsOrgVBox"
-                                            width="100%"
-                                            renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/TVS} === 'org' }"/>
-
-                                        <VBox
-                                            id="tvsMyVBox"
-                                            width="100%"
-                                            renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/TVS} === 'my' }"/>
-                                    </VBox>
-
-
-                                    <!-- ========================================= -->
-                                    <!-- STICKER -->
-                                    <!-- ========================================= -->
-
-                                    <VBox
-                                        id="stickerVBox"
-                                        width="100%"
-                                        renderType="Bare"
-                                        class="jhahDashboardCard">
-
-                                        <VBox
-                                            id="stickerOrgVBox"
-                                            width="100%"
-                                            renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/STICKER} === 'org' }"/>
-
-                                        <VBox
-                                            id="stickerMyVBox"
-                                            width="100%"
-                                            renderType="Bare"
-                                            visible="{= ${dashboard>/sectionViewMode/STICKER} === 'my' }"/>
-                                    </VBox>
-
-                                </VBox>
-
-                            </HBox>
+                            <!-- Takes the application opened from the side navigation. -->
+                            <VBox
+                                id="embeddedApp"
+                                width="100%"
+                                renderType="Bare"
+                                visible="{dashboard>/isEmbedFrame}"/>
 
                         </VBox>
 
-                    </VBox>
+                    </ScrollContainer>
 
-                </ScrollContainer>
+                </VBox>
 
-            </VBox>
-
-        </HBox>
-
-    </content>
-
-</Page>
-
+            </HBox>
+        </content>
+    </Page>
 </mvc:View>
