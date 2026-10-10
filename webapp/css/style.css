@@ -1535,22 +1535,38 @@ html.jhahHtml body,
    EMBEDDED APP FRAME
    ============================================================ */
 
-.jhahEmbedFrame {
-  display: block;
+/* The frame fills the whole content area. Every box between the scroll
+   container and the frame passes the available height down, so the frame
+   follows the layout instead of assuming a fixed header height. */
 
-  width: 100%;
-
-  height: calc(100vh - 6.25rem);
-
-  min-height: calc(100vh - 6.25rem);
-
-  border: none;
+.jhahDashboardScrollEmbed > .sapMScrollContScroll {
+  height: 100%;
 }
 
 .jhahDashboardContentEmbed {
+  height: 100%;
+
   padding: 0 !important;
 
   gap: 0 !important;
+}
+
+.jhahEmbeddedApp {
+  flex: 1 1 auto;
+
+  min-height: 0;
+}
+
+.jhahEmbedFrame {
+  display: block;
+
+  flex: 1 1 auto;
+
+  width: 100%;
+
+  min-height: 0;
+
+  border: none;
 }
 
 

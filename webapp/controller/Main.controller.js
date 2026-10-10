@@ -425,6 +425,7 @@ sap.ui.define([
      */
     _setEmbedMode(bEmbed) {
       this.getModel("dashboard").setProperty("/isEmbedFrame", bEmbed);
+      this.byId("dashboardScroll").toggleStyleClass("jhahDashboardScrollEmbed", bEmbed);
       this.byId("dashboardContent").toggleStyleClass("jhahDashboardContentEmbed", bEmbed);
     },
   });

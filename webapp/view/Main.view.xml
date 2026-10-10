@@ -182,7 +182,8 @@
                                 id="embeddedApp"
                                 width="100%"
                                 renderType="Bare"
-                                visible="{dashboard>/isEmbedFrame}"/>
+                                visible="{dashboard>/isEmbedFrame}"
+                                class="jhahEmbeddedApp"/>
 
                         </VBox>
 
