@@ -401,8 +401,8 @@ sap.ui.define([
         return;
       }
 
-      oContainer.setBusy(false);
       if (oEmbedError) {
+        oContainer.setBusy(false);
         Log.error(`Failed to embed ${sKey}`, oEmbedError, LOG_COMPONENT);
         oEmbeddedApp.addItem(
           new MessageStrip({
@@ -415,11 +415,23 @@ sap.ui.define([
       }
 
       Log.info("embedding " + sUrl, null, LOG_COMPONENT);
-      oEmbeddedApp.addItem(
-        new HTML({
-          content: `<iframe class="jhahEmbedFrame" title="${encodeXML(sTitle)}" src="${encodeXML(encodeURI(sUrl))}"></iframe>`,
-        })
-      );
+      const oFrame = new HTML({
+        content: `<iframe class="jhahEmbedFrame" title="${encodeXML(sTitle)}" src="${encodeXML(encodeURI(sUrl))}"></iframe>`,
+      });
+
+      // Stay busy until the launchpad page in the iframe has loaded.
+      oFrame.attachEventOnce("afterRendering", () => {
+        oFrame.getDomRef().addEventListener(
+          "load",
+          () => {
+            if (iToken === this._iEmbedToken) {
+              oContainer.setBusy(false);
+            }
+          },
+          { once: true }
+        );
+      });
+      oEmbeddedApp.addItem(oFrame);
     },
 
     /**

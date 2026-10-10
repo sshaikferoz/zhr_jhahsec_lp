@@ -1551,6 +1551,9 @@ html.jhahHtml body,
   padding: 0 !important;
 
   gap: 0 !important;
+
+  /* Gives the busy indicator room before the frame is in place. */
+  min-height: calc(100vh - 6.25rem);
 }
 
 

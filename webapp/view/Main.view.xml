@@ -62,6 +62,7 @@
                         <VBox
                             id="dashboardContent"
                             width="100%"
+                            busyIndicatorDelay="0"
                             renderType="Bare"
                             class="jhahDashboardContent">
 
