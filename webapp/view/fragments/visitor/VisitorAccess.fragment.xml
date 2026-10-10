@@ -23,7 +23,8 @@
             <SegmentedButton
                 id="viewModeToggle"
                 ariaLabelledBy="title"
-                visible="{dashboard>/sections/visitor/isAdmin}"
+                visible="{dashboard>/hasAdminSection}"
+                enabled="{dashboard>/sections/visitor/isAdmin}"
                 selectedKey="{dashboard>/sections/visitor/viewMode}"
                 selectionChange=".onViewModeChange($event, 'visitor')">
                 <items>
