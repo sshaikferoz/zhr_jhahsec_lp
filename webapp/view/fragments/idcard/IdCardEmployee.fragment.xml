@@ -21,7 +21,7 @@
                     <HBox renderType="Bare" alignItems="Center">
                         <Title
                             id="title"
-                            text="{i18n>idCardEmployeeTitle}"
+                            text="{i18n>idCardTitle}"
                             level="H5"
                             class="jhahSectionTitle"/>
                     </HBox>
