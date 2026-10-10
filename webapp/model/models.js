@@ -46,6 +46,9 @@ sap.ui.define([
         isEmbedFrame: false,
 
         sections: mSections,
+        // True if the user administers at least one section. The view toggle
+        // is then shown on every section, disabled where they are no admin.
+        hasAdminSection: false,
 
         user: {
           id: NO_VALUE,

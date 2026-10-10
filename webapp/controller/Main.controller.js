@@ -141,18 +141,20 @@ sap.ui.define([
       );
 
       const oDashboardModel = this.getModel("dashboard");
+      let bHasAdminSection = false;
       sections.getAll().forEach((oSection) => {
         const sRole = oAuthorization.roles[oSection.key];
         const sViewMode = sections.getInitialViewMode(sRole);
 
         if (sViewMode) {
-          oDashboardModel.setProperty(
-            `/sections/${oSection.key}/isAdmin`,
-            sRole === sections.Role.ADMIN
-          );
+          const bAdmin = sRole === sections.Role.ADMIN;
+
+          bHasAdminSection = bHasAdminSection || bAdmin;
+          oDashboardModel.setProperty(`/sections/${oSection.key}/isAdmin`, bAdmin);
           this._showSection(oSection.key, sViewMode);
         }
       });
+      oDashboardModel.setProperty("/hasAdminSection", bHasAdminSection);
     },
 
     /* =========================================================== */
