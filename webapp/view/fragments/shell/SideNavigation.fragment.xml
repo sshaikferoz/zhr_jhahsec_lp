@@ -42,7 +42,7 @@
                     </customData>
                     <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
                         <core:Icon src="sap-icon://supplier" class="jhahNavItemIcon"/>
-                        <Text text="{i18n>visitorTitle}" class="jhahNavItemText"/>
+                        <Text text="{i18n>visitorNavTitle}" class="jhahNavItemText"/>
                     </HBox>
                 </CustomListItem>
                 <CustomListItem
@@ -54,7 +54,7 @@
                     </customData>
                     <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
                         <core:Icon src="sap-icon://warning" class="jhahNavItemIcon"/>
-                        <Text text="{i18n>violationsTitle}" class="jhahNavItemText"/>
+                        <Text text="{i18n>violationsNavTitle}" class="jhahNavItemText"/>
                     </HBox>
                 </CustomListItem>
                 <CustomListItem
@@ -78,7 +78,7 @@
                     </customData>
                     <HBox alignItems="Center" class="jhahNavItemInner" renderType="Bare">
                         <core:Icon src="sap-icon://badge" class="jhahNavItemIcon"/>
-                        <Text text="{i18n>idCardTitle}" class="jhahNavItemText"/>
+                        <Text text="{i18n>idCardNavTitle}" class="jhahNavItemText"/>
                     </HBox>
                 </CustomListItem>
             </List>

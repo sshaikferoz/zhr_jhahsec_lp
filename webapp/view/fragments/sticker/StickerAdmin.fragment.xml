@@ -5,36 +5,36 @@
 
     <!-- Sticker Management, admin view: organization-wide request counts and
          the status of the user's own requests. -->
-    <f:Card
+    <f:Card id="_IDGenCard8"
         width="100%"
         binding="{dashboard>/sticker/admin}"
         class="jhahDataCard">
         <f:content>
-            <VBox width="100%" renderType="Bare" class="jhahSection">
+            <VBox id="_IDGenVBox13" width="100%" renderType="Bare" class="jhahSection">
 
-                <HBox
+                <HBox id="_IDGenHBox13"
                     width="100%"
                     renderType="Bare"
                     alignItems="Center"
                     justifyContent="SpaceBetween"
                     class="jhahKpiRow">
-                    <HBox renderType="Bare" alignItems="Center">
+                    <HBox id="_IDGenHBox14" renderType="Bare" alignItems="Center">
                         <Title
-                            id="title"
+                            id="title3"
                             text="{i18n>stickerTitle}"
                             level="H5"
                             class="jhahSectionTitle"/>
                     </HBox>
+                    <!-- visible="{dashboard>/hasAdminSection}" -->
                     <SegmentedButton
-                        id="viewModeToggle"
-                        ariaLabelledBy="title"
-                        visible="{dashboard>/hasAdminSection}"
-                        enabled="{dashboard>/sections/sticker/isAdmin}"
+                        id="viewModeToggleSA"
+                        ariaLabelledBy="title"                        
+                        visible="{dashboard>/sections/sticker/isAdmin}"
                         selectedKey="{dashboard>/sections/sticker/viewMode}"
                         selectionChange=".onViewModeChange($event, 'sticker')">
                         <items>
-                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
-                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem4" key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem5" key="employee" text="{i18n>viewModeEmployee}"/>
                         </items>
                     </SegmentedButton>
                 </HBox>
@@ -43,21 +43,21 @@
                     fragmentName="com.jhah.zhrjhahseclp.view.fragments.sticker.StickerKpis"
                     type="XML"/>
 
-                <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
-                    <VBox class="jhahHalfCardWrap" renderType="Bare" width="100%">
+                <HBox id="_IDGenHBox15" class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
+                    <VBox id="_IDGenVBox14" class="jhahHalfCardWrap" renderType="Bare" width="100%">
                         <layoutData>
-                            <FlexItemData growFactor="1" baseSize="0%"/>
+                            <FlexItemData id="_IDGenFlexItemData1" growFactor="1" baseSize="0%"/>
                         </layoutData>
-                        <f:Card class="jhahDataCard" width="100%">
+                        <f:Card id="_IDGenCard9" class="jhahDataCard" width="100%">
                             <f:content>
-                                <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
+                                <VBox id="_IDGenVBox15" class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
                                     <Title
-                                        id="requestsTitle"
+                                        id="requestsTitle1"
                                         text="{i18n>stickerRequestsTitle}"
                                         level="H6"
                                         class="sapUiSmallMarginBottom"/>
                                     <Table
-                                        id="requestsTable"
+                                        id="requestsTable1"
                                         ariaLabelledBy="requestsTitle"
                                         items="{dashboard>/sticker/own/requests}"
                                         showSeparators="Inner"
@@ -65,16 +65,16 @@
                                         fixedLayout="false"
                                         noDataText="{i18n>noData}">
                                         <columns>
-                                            <Column><Text text="{i18n>stickerRequestNumber}"/></Column>
-                                            <Column><Text text="{i18n>stickerType}"/></Column>
-                                            <Column hAlign="End"><Text text="{i18n>columnStatus}"/></Column>
+                                            <Column id="_IDGenColumn"><Text id="_IDGenText7" text="{i18n>stickerRequestNumber}"/></Column>
+                                            <Column id="_IDGenColumn1"><Text id="_IDGenText8" text="{i18n>stickerType}"/></Column>
+                                            <Column id="_IDGenColumn2" hAlign="End"><Text id="_IDGenText9" text="{i18n>columnStatus}"/></Column>
                                         </columns>
                                         <items>
-                                            <ColumnListItem>
+                                            <ColumnListItem id="_IDGenColumnListItem">
                                                 <cells>
-                                                    <Link text="{dashboard>reqIdStr}" press=".onStickerRequestPress"/>
-                                                    <Text text="{dashboard>type}"/>
-                                                    <ObjectStatus text="{dashboard>status}" state="{dashboard>statusState}"/>
+                                                    <Link id="_IDGenLink" text="{dashboard>reqIdStr}" press=".onStickerRequestPress"/>
+                                                    <Text id="_IDGenText10" text="{dashboard>type}"/>
+                                                    <ObjectStatus id="_IDGenObjectStatus1" text="{dashboard>status}" state="{dashboard>statusState}"/>
                                                 </cells>
                                             </ColumnListItem>
                                         </items>

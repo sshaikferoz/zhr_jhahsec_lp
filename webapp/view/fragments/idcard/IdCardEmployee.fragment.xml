@@ -5,85 +5,85 @@
 
     <!-- ID Management System, employee view: the user's active ID card and
          their own pending requests. -->
-    <f:Card
+    <f:Card id="_IDGenCard6"
         width="100%"
         binding="{dashboard>/idCard/employee}"
         class="jhahDataCard">
         <f:content>
-            <VBox width="100%" renderType="Bare" class="jhahSection">
+            <VBox id="_IDGenVBox5" width="100%" renderType="Bare" class="jhahSection">
 
-                <HBox
+                <HBox id="_IDGenHBox7"
                     width="100%"
                     renderType="Bare"
                     alignItems="Center"
                     justifyContent="SpaceBetween"
                     class="jhahKpiRow">
-                    <HBox renderType="Bare" alignItems="Center">
+                    <HBox id="_IDGenHBox8" renderType="Bare" alignItems="Center">
                         <Title
-                            id="title"
+                            id="title2"
                             text="{i18n>idCardTitle}"
                             level="H5"
                             class="jhahSectionTitle"/>
                     </HBox>
+                    <!-- visible="{dashboard>/hasAdminSection}" -->
                     <SegmentedButton
-                        id="viewModeToggle"
-                        ariaLabelledBy="title"
-                        visible="{dashboard>/hasAdminSection}"
-                        enabled="{dashboard>/sections/idCard/isAdmin}"
+                        id="viewModeToggleE"
+                        ariaLabelledBy="title"                        
+                        visible="{dashboard>/sections/idCard/isAdmin}"
                         selectedKey="{dashboard>/sections/idCard/viewMode}"
                         selectionChange=".onViewModeChange($event, 'idCard')">
                         <items>
-                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
-                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem2" key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem3" key="employee" text="{i18n>viewModeEmployee}"/>
                         </items>
                     </SegmentedButton>
                 </HBox>
 
-                <VBox class="jhahSection" renderType="Bare">
+                <VBox id="_IDGenVBox6" class="jhahSection" renderType="Bare">
 
-                    <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
-                        <VBox class="jhahHalfCardWrap" renderType="Bare" width="100%">
+                    <HBox id="_IDGenHBox9" class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
+                        <VBox id="_IDGenVBox7" class="jhahHalfCardWrap" renderType="Bare" width="100%">
                             <layoutData>
-                                <FlexItemData growFactor="1" baseSize="0%"/>
+                                <FlexItemData id="_IDGenFlexItemData" growFactor="1" baseSize="0%"/>
                             </layoutData>
-                            <f:Card class="jhahDataCard" width="100%">
+                            <f:Card id="_IDGenCard7" class="jhahDataCard" width="100%">
                                 <f:content>
-                                    <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
+                                    <VBox id="_IDGenVBox8" class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
 
                                         <!-- The user has an active card -->
-                                        <VBox
+                                        <VBox id="_IDGenVBox9"
                                             visible="{dashboard>active/hasData}"
                                             renderType="Bare"
                                             width="100%"
                                             class="jhahIdCardBody">
-                                            <HBox
+                                            <HBox id="_IDGenHBox10"
                                                 class="jhahIdCardHeader"
                                                 renderType="Bare"
                                                 width="100%"
                                                 justifyContent="SpaceBetween"
                                                 alignItems="Center">
-                                                <HBox renderType="Bare" alignItems="Center">
-                                                    <core:Icon src="sap-icon://badge" class="jhahIdCardHeaderIcon"/>
-                                                    <VBox class="jhahIdCardHeaderText" renderType="Bare">
-                                                        <Label text="{i18n>idCardActive}" class="jhahMutedText"/>
-                                                        <Text
+                                                <HBox id="_IDGenHBox11" renderType="Bare" alignItems="Center">
+                                                    <core:Icon id="_IDGenIcon4" src="sap-icon://badge" class="jhahIdCardHeaderIcon"/>
+                                                    <VBox id="_IDGenVBox10" class="jhahIdCardHeaderText" renderType="Bare">
+                                                        <Label id="_IDGenLabel4" text="{i18n>idCardActive}" class="jhahMutedText"/>
+                                                        <Text id="_IDGenText4"
                                                             text="{dashboard>active/idNumber}"
                                                             tooltip="{dashboard>active/idNumber}"
                                                             class="jhahIdCardName"/>
                                                     </VBox>
                                                 </HBox>
-                                                <ObjectStatus
+                                                <ObjectStatus id="_IDGenObjectStatus"
                                                     text="{= ${dashboard>active/isExpiringSoon} ? ${i18n>idCardStatusExpiringSoon} : ${i18n>idCardStatusActive} }"
                                                     state="{dashboard>active/statusState}"
                                                     class="jhahBadgeStatus"/>
                                             </HBox>
 
-                                            <VBox class="jhahIdCardExpiry" renderType="Bare" width="100%">
-                                                <HBox justifyContent="SpaceBetween" class="jhahIdCardRow" renderType="Bare">
-                                                    <Label text="{i18n>idCardDaysToExpiry}" class="jhahIdCardLabel"/>
-                                                    <Text text="{dashboard>active/daysToExpire}" class="jhahIdCardValue"/>
+                                            <VBox id="_IDGenVBox11" class="jhahIdCardExpiry" renderType="Bare" width="100%">
+                                                <HBox id="_IDGenHBox12" justifyContent="SpaceBetween" class="jhahIdCardRow" renderType="Bare">
+                                                    <Label id="_IDGenLabel5" text="{i18n>idCardDaysToExpiry}" class="jhahIdCardLabel"/>
+                                                    <Text id="_IDGenText5" text="{dashboard>active/daysToExpire}" class="jhahIdCardValue"/>
                                                 </HBox>
-                                                <ProgressIndicator
+                                                <ProgressIndicator id="_IDGenProgressIndicator"
                                                     percentValue="{dashboard>active/expiryPercent}"
                                                     showValue="false"
                                                     state="{dashboard>active/statusState}"
@@ -92,13 +92,13 @@
                                         </VBox>
 
                                         <!-- No active card -->
-                                        <VBox
+                                        <VBox id="_IDGenVBox12"
                                             visible="{= !${dashboard>active/hasData} }"
                                             renderType="Bare"
                                             justifyContent="Start"
                                             width="100%">
-                                            <Label text="{i18n>idCardActive}" class="jhahMutedText"/>
-                                            <Text text="{i18n>noData}" class="jhahMutedText jhahNoDataValue"/>
+                                            <Label id="_IDGenLabel6" text="{i18n>idCardActive}" class="jhahMutedText"/>
+                                            <Text id="_IDGenText6" text="{i18n>noData}" class="jhahMutedText jhahNoDataValue"/>
                                         </VBox>
 
                                     </VBox>

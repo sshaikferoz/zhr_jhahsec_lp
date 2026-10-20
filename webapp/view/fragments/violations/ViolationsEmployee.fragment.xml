@@ -4,53 +4,53 @@
     xmlns:f="sap.f">
 
     <!-- Traffic Violation System, employee view: the user's own figures. -->
-    <f:Card
+    <f:Card id="_IDGenCard19"
         width="100%"
         binding="{dashboard>/violations/employee}"
         class="jhahDataCard">
         <f:content>
-            <VBox width="100%" renderType="Bare" class="jhahSection">
+            <VBox id="_IDGenVBox21" width="100%" renderType="Bare" class="jhahSection">
 
-                <HBox justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
-                    <HBox alignItems="Center">
+                <HBox id="_IDGenHBox33" justifyContent="SpaceBetween" alignItems="Center" class="jhahSectionHeader">
+                    <HBox id="_IDGenHBox34" alignItems="Center">
                         <Title
-                            id="title"
+                            id="title6"
                             text="{i18n>violationsTitle}"
                             level="H5"
                             class="jhahSectionTitle"/>
                     </HBox>
+                      <!-- visible="{dashboard>/hasAdminSection}" -->
                     <SegmentedButton
-                        id="viewModeToggle"
-                        ariaLabelledBy="title"
-                        visible="{dashboard>/hasAdminSection}"
-                        enabled="{dashboard>/sections/violations/isAdmin}"
+                        id="viewModeToggleVE"
+                        ariaLabelledBy="title"                      
+                        visible="{dashboard>/sections/violations/isAdmin}"
                         selectedKey="{dashboard>/sections/violations/viewMode}"
                         selectionChange=".onViewModeChange($event, 'violations')"
                         width="180px"
                         class="jhahTVSSegmentedButton">
                         <items>
-                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
-                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem10" key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem11" key="employee" text="{i18n>viewModeEmployee}"/>
                         </items>
                     </SegmentedButton>
                 </HBox>
 
-                <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-                    <f:Card
+                <HBox id="_IDGenHBox35" class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+                    <f:Card id="_IDGenCard20"
                         class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon"
                         tooltip="{i18n>violationsOwnInProgressTooltip}">
                         <f:content>
-                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                                <core:Icon src="sap-icon://in-progress" class="jhahKpiIcon jhahKpiIconOrange"/>
-                                <VBox class="jhahKpiTextCol" renderType="Bare">
-                                    <Label text="{i18n>kpiInProgress}" class="jhahKpiTitle"/>
-                                    <ObjectNumber
+                            <HBox id="_IDGenHBox36" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon id="_IDGenIcon11" src="sap-icon://in-progress" class="jhahKpiIcon jhahKpiIconOrange"/>
+                                <VBox id="_IDGenVBox32" class="jhahKpiTextCol" renderType="Bare">
+                                    <Label id="_IDGenLabel14" text="{i18n>kpiInProgress}" class="jhahKpiTitle"/>
+                                    <ObjectNumber id="_IDGenObjectNumber9"
                                         number="{dashboard>kpi/inProgress}"
                                         emphasized="true"
                                         state="Warning"
                                         class="jhahKpiValue"
                                         visible="{dashboard>kpi/hasData}"/>
-                                    <Text
+                                    <Text id="_IDGenText22"
                                         text="{i18n>noData}"
                                         class="jhahMutedText jhahNoDataValue"
                                         visible="{= !${dashboard>kpi/hasData} }"/>
@@ -60,20 +60,20 @@
                     </f:Card>
                     <!-- Titles are kept short so the three cards fit across the
                          dashboard column; the tooltips carry the detail. -->
-                    <f:Card
+                    <f:Card id="_IDGenCard21"
                         class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
                         tooltip="{i18n>violationsOwnLast12MonthsTooltip}">
                         <f:content>
-                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                                <core:Icon src="sap-icon://history" class="jhahKpiIcon jhahKpiIconBlue"/>
-                                <VBox class="jhahKpiTextCol" renderType="Bare">
-                                    <Label text="{i18n>violationsOwnLast12Months}" class="jhahKpiTitle"/>
-                                    <ObjectNumber
+                            <HBox id="_IDGenHBox37" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon id="_IDGenIcon12" src="sap-icon://history" class="jhahKpiIcon jhahKpiIconBlue"/>
+                                <VBox id="_IDGenVBox33" class="jhahKpiTextCol" renderType="Bare">
+                                    <Label id="_IDGenLabel15" text="{i18n>violationsOwnLast12Months}" class="jhahKpiTitle"/>
+                                    <ObjectNumber id="_IDGenObjectNumber10"
                                         number="{dashboard>kpi/last12Months}"
                                         emphasized="true"
                                         class="jhahKpiValue"
                                         visible="{dashboard>kpi/hasData}"/>
-                                    <Text
+                                    <Text id="_IDGenText23"
                                         text="{i18n>noData}"
                                         class="jhahMutedText jhahNoDataValue"
                                         visible="{= !${dashboard>kpi/hasData} }"/>
@@ -81,20 +81,20 @@
                             </HBox>
                         </f:content>
                     </f:Card>
-                    <f:Card
+                    <f:Card id="_IDGenCard22"
                         class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon"
                         tooltip="{i18n>violationsOwnLifetimeTooltip}">
                         <f:content>
-                            <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                                <core:Icon src="sap-icon://sum" class="jhahKpiIcon jhahKpiIconBlue"/>
-                                <VBox class="jhahKpiTextCol" renderType="Bare">
-                                    <Label text="{i18n>violationsOwnLifetime}" class="jhahKpiTitle"/>
-                                    <ObjectNumber
+                            <HBox id="_IDGenHBox38" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                                <core:Icon id="_IDGenIcon13" src="sap-icon://sum" class="jhahKpiIcon jhahKpiIconBlue"/>
+                                <VBox id="_IDGenVBox34" class="jhahKpiTextCol" renderType="Bare">
+                                    <Label id="_IDGenLabel16" text="{i18n>violationsOwnLifetime}" class="jhahKpiTitle"/>
+                                    <ObjectNumber id="_IDGenObjectNumber11"
                                         number="{dashboard>kpi/lifetime}"
                                         emphasized="true"
                                         class="jhahKpiValue"
                                         visible="{dashboard>kpi/hasData}"/>
-                                    <Text
+                                    <Text id="_IDGenText24"
                                         text="{i18n>noData}"
                                         class="jhahMutedText jhahNoDataValue"
                                         visible="{= !${dashboard>kpi/hasData} }"/>
@@ -104,40 +104,40 @@
                     </f:Card>
                 </HBox>
 
-                <f:Card width="100%" class="jhahDataCard sapUiSmallMarginTop">
+                <f:Card id="_IDGenCard23" width="100%" class="jhahDataCard sapUiSmallMarginTop">
                     <f:content>
-                        <VBox class="sapUiSmallMargin" renderType="Bare" width="100%">
-                            <HBox alignItems="Center" class="sapUiSmallMarginBottom">
-                                <Title id="requestsTitle" text="{i18n>violationsRequestsTitle}" level="H6"/>
+                        <VBox id="_IDGenVBox35" class="sapUiSmallMargin" renderType="Bare" width="100%">
+                            <HBox id="_IDGenHBox39" alignItems="Center" class="sapUiSmallMarginBottom">
+                                <Title id="requestsTitle2" text="{i18n>violationsRequestsTitle}" level="H6"/>
                             </HBox>
                             <Table
-                                id="requestsTable"
+                                id="requestsTable2"
                                 ariaLabelledBy="requestsTitle"
                                 class="jhahInnerTable"
                                 fixedLayout="false"
                                 noDataText="{i18n>violationsNoRequests}"
                                 items="{dashboard>requests}">
                                 <columns>
-                                    <Column><Text text="{i18n>violationsNumber}"/></Column>
-                                    <Column><Text text="{i18n>userJhahId}"/></Column>
-                                    <Column><Text text="{i18n>violationsEmployeeName}"/></Column>
-                                    <Column><Text text="{i18n>violationsDate}"/></Column>
-                                    <Column><Text text="{i18n>columnLocation}"/></Column>
-                                    <Column><Text text="{i18n>violationsType}"/></Column>
-                                    <Column><Text text="{i18n>violationsPoints}"/></Column>
-                                    <Column><Text text="{i18n>columnStatus}"/></Column>
+                                    <Column id="_IDGenColumn3"><Text id="_IDGenText25" text="{i18n>violationsNumber}"/></Column>
+                                    <Column id="_IDGenColumn4"><Text id="_IDGenText26" text="{i18n>userJhahId}"/></Column>
+                                    <Column id="_IDGenColumn5"><Text id="_IDGenText27" text="{i18n>violationsEmployeeName}"/></Column>
+                                    <Column id="_IDGenColumn6"><Text id="_IDGenText28" text="{i18n>violationsDate}"/></Column>
+                                    <Column id="_IDGenColumn7"><Text id="_IDGenText29" text="{i18n>columnLocation}"/></Column>
+                                    <Column id="_IDGenColumn8"><Text id="_IDGenText30" text="{i18n>violationsType}"/></Column>
+                                    <Column id="_IDGenColumn9"><Text id="_IDGenText31" text="{i18n>violationsPoints}"/></Column>
+                                    <Column id="_IDGenColumn10"><Text id="_IDGenText32" text="{i18n>columnStatus}"/></Column>
                                 </columns>
                                 <items>
-                                    <ColumnListItem>
+                                    <ColumnListItem id="_IDGenColumnListItem1">
                                         <cells>
-                                            <Text text="{dashboard>ViolationNo}"/>
-                                            <Text text="{dashboard>JhahId}"/>
-                                            <Text text="{dashboard>ViolatorName}"/>
-                                            <Text text="{dashboard>ViolationDate}"/>
-                                            <Text text="{dashboard>LocationDesc}"/>
-                                            <Text text="{dashboard>ViolationTypeDesc}"/>
-                                            <ObjectNumber number="{dashboard>ViolationPoints}" unit="{i18n>violationsPoints}"/>
-                                            <ObjectStatus text="{dashboard>StatusDesc}" state="Warning"/>
+                                            <Text id="_IDGenText33" text="{dashboard>ViolationNo}"/>
+                                            <Text id="_IDGenText34" text="{dashboard>JhahId}"/>
+                                            <Text id="_IDGenText35" text="{dashboard>ViolatorName}"/>
+                                            <Text id="_IDGenText36" text="{dashboard>ViolationDate}"/>
+                                            <Text id="_IDGenText37" text="{dashboard>LocationDesc}"/>
+                                            <Text id="_IDGenText38" text="{dashboard>ViolationTypeDesc}"/>
+                                            <ObjectNumber id="_IDGenObjectNumber12" number="{dashboard>ViolationPoints}" unit="{i18n>violationsPoints}"/>
+                                            <ObjectStatus id="_IDGenObjectStatus3" text="{dashboard>StatusDesc}" state="Warning"/>
                                         </cells>
                                     </ColumnListItem>
                                 </items>
