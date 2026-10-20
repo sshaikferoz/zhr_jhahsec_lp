@@ -79,16 +79,33 @@ html.jhahHtml body,
   overflow: hidden;
 }
 
-.jhahSideNavContainer {
+/* .jhahSideNavContainer {
   width: 250px;
   min-width: 250px;
   max-width: 250px;
   height: 100%;
   flex-shrink: 0;
   box-sizing: border-box;
-}
+} */
 
+.jhahSideNavContainer {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  height: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
 .jhahSideNavWrap {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  height: 100%;
+  flex-shrink: 0;
+  background: #183a53;
+  box-sizing: border-box;
+}
+/* .jhahSideNavWrap {
   width: 250px;
   min-width: 250px;
   max-width: 250px;
@@ -96,7 +113,7 @@ html.jhahHtml body,
   flex-shrink: 0;
   background: #183a53;
   box-sizing: border-box;
-}
+} */
 
 .jhahMainArea {
   flex: 1 1 auto;
@@ -1721,9 +1738,17 @@ html.jhahHtml body,
    between sidebar and main content.
 */
 
-.jhahAppShell > .sapMFlexItem {
+/* .jhahAppShell > .sapMFlexItem {
   margin: 0 !important;
 
+  padding: 0 !important;
+} */
+ .jhahAppShell > .sapMFlexItem:first-child {
+  flex: 0 0 300px !important;
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  margin: 0 !important;
   padding: 0 !important;
 }
 

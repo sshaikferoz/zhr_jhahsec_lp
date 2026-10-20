@@ -25,11 +25,11 @@
                             level="H5"
                             class="jhahSectionTitle"/>
                     </HBox>
+                    <!-- visible="{dashboard>/hasAdminSection}" -->
                     <SegmentedButton
                         id="viewModeToggle"
-                        ariaLabelledBy="title"
-                        visible="{dashboard>/hasAdminSection}"
-                        enabled="{dashboard>/sections/idCard/isAdmin}"
+                        ariaLabelledBy="title"                        
+                        visible="{dashboard>/sections/idCard/isAdmin}"
                         selectedKey="{dashboard>/sections/idCard/viewMode}"
                         selectionChange=".onViewModeChange($event, 'idCard')"
                         width="180px">
