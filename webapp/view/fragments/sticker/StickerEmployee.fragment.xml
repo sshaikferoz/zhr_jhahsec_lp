@@ -5,36 +5,36 @@
 
     <!-- Sticker Management, employee view: the user's own request counts and
          their active sticker. -->
-    <f:Card
+    <f:Card id="_IDGenCard10"
         width="100%"
         binding="{dashboard>/sticker/employee}"
         class="jhahDataCard">
         <f:content>
-            <VBox width="100%" renderType="Bare" class="jhahSection">
+            <VBox id="_IDGenVBox16" width="100%" renderType="Bare" class="jhahSection">
 
-                <HBox
+                <HBox id="_IDGenHBox16"
                     width="100%"
                     renderType="Bare"
                     alignItems="Center"
                     justifyContent="SpaceBetween"
                     class="jhahKpiRow">
-                    <HBox renderType="Bare" alignItems="Center">
+                    <HBox id="_IDGenHBox17" renderType="Bare" alignItems="Center">
                         <Title
-                            id="title"
+                            id="title4"
                             text="{i18n>stickerTitle}"
                             level="H5"
                             class="jhahSectionTitle"/>
                     </HBox>
+                    <!-- visible="{dashboard>/hasAdminSection}" -->
                     <SegmentedButton
-                        id="viewModeToggle"
-                        ariaLabelledBy="title"
-                        visible="{dashboard>/hasAdminSection}"
-                        enabled="{dashboard>/sections/sticker/isAdmin}"
+                        id="viewModeToggleSE"
+                        ariaLabelledBy="title"                        
+                        visible="{dashboard>/sections/sticker/isAdmin}"
                         selectedKey="{dashboard>/sections/sticker/viewMode}"
                         selectionChange=".onViewModeChange($event, 'sticker')">
                         <items>
-                            <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
-                            <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem6" key="admin" text="{i18n>viewModeAdmin}"/>
+                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem7" key="employee" text="{i18n>viewModeEmployee}"/>
                         </items>
                     </SegmentedButton>
                 </HBox>
@@ -43,57 +43,57 @@
                     fragmentName="com.jhah.zhrjhahseclp.view.fragments.sticker.StickerKpis"
                     type="XML"/>
 
-                <HBox class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
-                    <VBox
+                <HBox id="_IDGenHBox18" class="jhahTwoColRow" renderType="Bare" alignItems="Stretch" width="100%">
+                    <VBox id="_IDGenVBox17"
                         binding="{dashboard>/sticker/own/active}"
                         class="jhahHalfCardWrap"
                         renderType="Bare">
                         <layoutData>
-                            <FlexItemData growFactor="1" baseSize="0%"/>
+                            <FlexItemData id="_IDGenFlexItemData2" growFactor="1" baseSize="0%"/>
                         </layoutData>
-                        <f:Card class="jhahDataCard" width="100%">
+                        <f:Card id="_IDGenCard11" class="jhahDataCard" width="100%">
                             <f:content>
-                                <VBox class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
-                                    <Label text="{i18n>stickerActive}" class="jhahMutedText"/>
+                                <VBox id="_IDGenVBox18" class="jhahPairCardInner" renderType="Bare" justifyContent="Start" width="100%">
+                                    <Label id="_IDGenLabel7" text="{i18n>stickerActive}" class="jhahMutedText"/>
 
                                     <!-- No active sticker -->
-                                    <Text
+                                    <Text id="_IDGenText11"
                                         text="{i18n>noData}"
                                         class="jhahMutedText jhahNoDataValue"
                                         visible="{= !${dashboard>hasData} }"/>
 
                                     <!-- Active sticker details -->
-                                    <VBox
+                                    <VBox id="_IDGenVBox19"
                                         renderType="Bare"
                                         class="jhahActiveSticker"
                                         visible="{dashboard>hasData}">
-                                        <HBox alignItems="Center">
-                                            <Avatar
+                                        <HBox id="_IDGenHBox19" alignItems="Center">
+                                            <Avatar id="_IDGenAvatar"
                                                 src="sap-icon://car-rental"
                                                 displaySize="S"
                                                 displayShape="Square"
                                                 backgroundColor="Accent6"
                                                 class="sapUiSmallMarginEnd"/>
-                                            <VBox renderType="Bare">
-                                                <Title
+                                            <VBox id="_IDGenVBox20" renderType="Bare">
+                                                <Title id="_IDGenTitle"
                                                     text="{dashboard>plate}"
                                                     level="H5"
                                                     class="jhahHighlightValue"/>
-                                                <ObjectAttribute text="{dashboard>type}"/>
+                                                <ObjectAttribute id="_IDGenObjectAttribute" text="{dashboard>type}"/>
                                             </VBox>
                                         </HBox>
-                                        <ObjectAttribute
+                                        <ObjectAttribute id="_IDGenObjectAttribute1"
                                             text="{dashboard>vehicle}"
                                             class="sapUiTinyMarginTop"
                                             visible="{= !!${dashboard>vehicle} }"/>
-                                        <HBox
+                                        <HBox id="_IDGenHBox20"
                                             class="jhahActiveStickerFooter sapUiSmallMarginTop"
                                             alignItems="Center"
                                             justifyContent="SpaceBetween">
-                                            <ObjectStatus
+                                            <ObjectStatus id="_IDGenObjectStatus2"
                                                 text="{dashboard>status}"
                                                 state="{dashboard>statusState}"/>
-                                            <ObjectAttribute
+                                            <ObjectAttribute id="_IDGenObjectAttribute2"
                                                 title="{i18n>stickerExpires}"
                                                 text="{dashboard>expiry}"/>
                                         </HBox>

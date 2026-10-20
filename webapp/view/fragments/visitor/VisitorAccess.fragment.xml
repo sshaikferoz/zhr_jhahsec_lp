@@ -7,9 +7,9 @@
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
 
     <!-- Business Visitor Access. Both views of the section show this content. -->
-    <VBox class="jhahSection" renderType="Bare">
+    <VBox id="_IDGenVBox36" class="jhahSection" renderType="Bare">
 
-        <HBox
+        <HBox id="_IDGenHBox40"
             width="100%"
             renderType="Bare"
             alignItems="Center"
@@ -20,28 +20,28 @@
                 text="{i18n>visitorTitle}"
                 level="H5"
                 class="jhahSectionTitle"/>
+                <!-- visible="{dashboard>/hasAdminSection}" -->
             <SegmentedButton
                 id="viewModeToggle"
-                ariaLabelledBy="title"
-                visible="{dashboard>/hasAdminSection}"
-                enabled="{dashboard>/sections/visitor/isAdmin}"
+                ariaLabelledBy="title"                
+                visible="{dashboard>/sections/visitor/isAdmin}"
                 selectedKey="{dashboard>/sections/visitor/viewMode}"
                 selectionChange=".onViewModeChange($event, 'visitor')">
                 <items>
-                    <SegmentedButtonItem key="admin" text="{i18n>viewModeAdmin}"/>
-                    <SegmentedButtonItem key="employee" text="{i18n>viewModeEmployee}"/>
+                    <SegmentedButtonItem id="_IDGenSegmentedButtonItem13" key="admin" text="{i18n>viewModeAdmin}"/>
+                    <SegmentedButtonItem id="_IDGenSegmentedButtonItem14" key="employee" text="{i18n>viewModeEmployee}"/>
                 </items>
             </SegmentedButton>
         </HBox>
 
-        <HBox class="jhahKpiRow" renderType="Bare" wrap="Wrap">
-            <f:Card class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
+        <HBox id="_IDGenHBox41" class="jhahKpiRow" renderType="Bare" wrap="Wrap">
+            <f:Card id="_IDGenCard18" class="jhahKpiCard jhahAccentBlue jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                        <core:Icon src="sap-icon://supplier" class="jhahKpiIcon jhahKpiIconBlue"/>
-                        <VBox class="jhahKpiTextCol" renderType="Bare">
-                            <Label text="{i18n>kpiTotalRequests}" class="jhahKpiTitle"/>
-                            <ObjectNumber
+                    <HBox id="_IDGenHBox42" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon id="_IDGenIcon14" src="sap-icon://supplier" class="jhahKpiIcon jhahKpiIconBlue"/>
+                        <VBox id="_IDGenVBox37" class="jhahKpiTextCol" renderType="Bare">
+                            <Label id="_IDGenLabel17" text="{i18n>kpiTotalRequests}" class="jhahKpiTitle"/>
+                            <ObjectNumber id="_IDGenObjectNumber13"
                                 number="{dashboard>/visitor/kpi/total}"
                                 emphasized="true"
                                 class="jhahKpiValue"/>
@@ -49,13 +49,13 @@
                     </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
+            <f:Card id="_IDGenCard24" class="jhahKpiCard jhahAccentGreen jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                        <core:Icon src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen"/>
-                        <VBox class="jhahKpiTextCol" renderType="Bare">
-                            <Label text="{i18n>kpiApproved}" class="jhahKpiTitle"/>
-                            <ObjectNumber
+                    <HBox id="_IDGenHBox43" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon id="_IDGenIcon15" src="sap-icon://accept" class="jhahKpiIcon jhahKpiIconGreen"/>
+                        <VBox id="_IDGenVBox38" class="jhahKpiTextCol" renderType="Bare">
+                            <Label id="_IDGenLabel18" text="{i18n>kpiApproved}" class="jhahKpiTitle"/>
+                            <ObjectNumber id="_IDGenObjectNumber14"
                                 number="{dashboard>/visitor/kpi/approved}"
                                 emphasized="true"
                                 state="Success"
@@ -64,13 +64,13 @@
                     </HBox>
                 </f:content>
             </f:Card>
-            <f:Card class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
+            <f:Card id="_IDGenCard25" class="jhahKpiCard jhahAccentOrange jhahThirdCard jhahKpiCardIcon">
                 <f:content>
-                    <HBox class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
-                        <core:Icon src="sap-icon://pending" class="jhahKpiIcon jhahKpiIconOrange"/>
-                        <VBox class="jhahKpiTextCol" renderType="Bare">
-                            <Label text="{i18n>kpiInProgress}" class="jhahKpiTitle"/>
-                            <ObjectNumber
+                    <HBox id="_IDGenHBox44" class="jhahKpiCardInner jhahKpiCardIconInner" renderType="Bare" alignItems="Center">
+                        <core:Icon id="_IDGenIcon16" src="sap-icon://pending" class="jhahKpiIcon jhahKpiIconOrange"/>
+                        <VBox id="_IDGenVBox39" class="jhahKpiTextCol" renderType="Bare">
+                            <Label id="_IDGenLabel19" text="{i18n>kpiInProgress}" class="jhahKpiTitle"/>
+                            <ObjectNumber id="_IDGenObjectNumber15"
                                 number="{dashboard>/visitor/kpi/inProgress}"
                                 emphasized="true"
                                 state="Warning"
@@ -81,14 +81,14 @@
             </f:Card>
         </HBox>
 
-        <Title
+        <Title id="_IDGenTitle2"
             text="{i18n>visitorChartTitle}"
             level="H6"
             class="jhahSubSectionTitle"/>
 
-        <f:Card class="jhahDataCard">
+        <f:Card id="_IDGenCard26" class="jhahDataCard">
             <f:content>
-                <VBox width="100%" class="jhahChartWrap">
+                <VBox id="_IDGenVBox40" width="100%" class="jhahChartWrap">
                     <viz:VizFrame
                         id="categoryChart"
                         uiConfig="{applicationSet:'fiori'}"
@@ -97,22 +97,22 @@
                         height="320px"
                         vizProperties="{title: {visible: false}}">
                         <viz:dataset>
-                            <viz.data:FlattenedDataset data="{dashboard>/visitor/chart}">
+                            <viz.data:FlattenedDataset id="_IDGenFlattenedDataset" data="{dashboard>/visitor/chart}">
                                 <viz.data:dimensions>
-                                    <viz.data:DimensionDefinition
+                                    <viz.data:DimensionDefinition id="_IDGenDimensionDefinition"
                                         name="Category"
                                         value="{dashboard>category}"/>
                                 </viz.data:dimensions>
                                 <viz.data:measures>
-                                    <viz.data:MeasureDefinition
+                                    <viz.data:MeasureDefinition id="_IDGenMeasureDefinition"
                                         name="Count"
                                         value="{dashboard>count}"/>
                                 </viz.data:measures>
                             </viz.data:FlattenedDataset>
                         </viz:dataset>
                         <viz:feeds>
-                            <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
-                            <viz.feeds:FeedItem uid="color" type="Dimension" values="Category"/>
+                            <viz.feeds:FeedItem id="_IDGenFeedItem" uid="size" type="Measure" values="Count"/>
+                            <viz.feeds:FeedItem id="_IDGenFeedItem1" uid="color" type="Dimension" values="Category"/>
                         </viz:feeds>
                     </viz:VizFrame>
                 </VBox>
